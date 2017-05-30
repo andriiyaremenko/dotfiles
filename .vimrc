@@ -95,7 +95,7 @@ set list
 set cursorline
 set encoding=utf-8
 set fileencoding=utf-8
-set tabstop=2 softtabstop=0 shiftwidth=2 smarttab
+set tabstop=2 softtabstop=0 shiftwidth=2 expandtab smarttab
 map ; :
 
 " vim-plug setup (https://github.com/junegunn/vim-plug)

@@ -90,12 +90,12 @@ endif
 
 " My own settings:
 set number
-set listchars=tab:>-,trail:~
+set listchars=trail:~
 set list
 set cursorline
 set encoding=utf-8
 set fileencoding=utf-8
-set tabstop=2 softtabstop=0 shiftwidth=2
+set tabstop=2 softtabstop=0 shiftwidth=2 smarttab
 map ; :
 
 " vim-plug setup (https://github.com/junegunn/vim-plug)
@@ -106,6 +106,15 @@ Plug 'OmniSharp/omnisharp-vim'
 Plug 'rust-lang/rust.vim'
 Plug 'dracula/vim'
 Plug 'tpope/vim-dispatch'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'tpope/vim-commentary'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'kchmck/vim-coffee-script'
+Plug 'tpope/vim-vinegar'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tpope/vim-fugitive'
 " Initialize plugin system
 call plug#end()
 
@@ -131,3 +140,9 @@ autocmd FileType javascript let b:syntastic_javascript_eslint_args =
 
 " Dracula color-scheme
 color dracula
+" ctrlp setup
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_root_markers = ['project.json', '\w+\.sln$', '\w+\.csproj$', '\w+\.fsproj$']
+" airline setup
+set laststatus=2

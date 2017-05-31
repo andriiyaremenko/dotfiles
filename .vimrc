@@ -96,6 +96,9 @@ set cursorline
 set encoding=utf-8
 set fileencoding=utf-8
 set tabstop=2 softtabstop=0 shiftwidth=2 expandtab smarttab
+set foldmethod=syntax
+set foldnestmax=5
+set foldlevelstart=20
 map ; :
 
 " vim-plug setup (https://github.com/junegunn/vim-plug)
@@ -115,31 +118,33 @@ Plug 'tpope/vim-vinegar'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
+Plug 'heavenshell/vim-jsdoc'
 " Initialize plugin system
 call plug#end()
+
+" vinegar configuration
+set wildignore+=*.*~
+" vim-javascript configuration
+let g:javascript_plugin_jsdoc = 1
 
 " Syntatic configuration
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
+let g:syntastic_mode_map = { 'mode': 'active',
+                            \ 'active_filetypes': ['javascript'],
+                            \ 'passive_filetypes': [] }
+
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['syntastic-javascript-eslint']
-
-function! FindConfig(prefix, what, where)
-  let cfg = findfile(a:what, escape(a:where, ' ') . ';')
-  return cfg !=# '' ? ' ' . a:prefix . ' ' . shellescape(cfg) : ''
-endfunction
-
-autocmd FileType javascript let b:syntastic_javascript_eslint_args =
-  \ get(g:, 'syntastic_javascript_eslint_args', '') .
-  \ FindConfig('-c', '.eslintrc', expand('<afile>:p:h', 1))
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
 
 " Dracula color-scheme
-color dracula
+colorscheme dracula
 " ctrlp setup
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'

@@ -99,6 +99,7 @@ set tabstop=2 softtabstop=0 shiftwidth=2 expandtab smarttab
 set foldmethod=syntax
 set foldnestmax=5
 set foldlevelstart=20
+set spell spelllang=en_us
 map ; :
 
 " vim-plug setup (https://github.com/junegunn/vim-plug)

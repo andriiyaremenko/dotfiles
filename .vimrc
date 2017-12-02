@@ -70,7 +70,7 @@ endif
 
 " My own settings:
 set number
-set listchars=trail:~
+set listchars=trail:~,tab:>-
 set list
 set cursorline
 set encoding=utf-8
@@ -103,6 +103,10 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'heavenshell/vim-jsdoc'
+Plug 'tpope/vim-dispatch'
+Plug 'Quramy/tsuquyomi'
+Plug 'leafgarland/typescript-vim'
+Plug 'Quramy/vim-js-pretty-template'
 " Initialize plugin system
 call plug#end()
 

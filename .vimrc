@@ -75,7 +75,7 @@ set list
 set cursorline
 set encoding=utf-8
 set fileencoding=utf-8
-set tabstop=2 softtabstop=0 shiftwidth=2 expandtab smarttab
+set tabstop=4 softtabstop=0 shiftwidth=4 expandtab smarttab
 set foldmethod=syntax
 set foldnestmax=5
 set foldlevelstart=20
@@ -89,7 +89,6 @@ map ; :
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/plugged')
 Plug 'vim-syntastic/syntastic'
-Plug 'OmniSharp/omnisharp-vim'
 Plug 'rust-lang/rust.vim'
 Plug 'dracula/vim'
 Plug 'tpope/vim-dispatch'
@@ -107,15 +106,25 @@ Plug 'tpope/vim-dispatch'
 Plug 'Quramy/tsuquyomi'
 Plug 'leafgarland/typescript-vim'
 Plug 'Quramy/vim-js-pretty-template'
+Plug 'fsharp/vim-fsharp', {
+      \ 'for': 'fsharp',
+      \ 'do':  'make fsautocomplete',
+      \}
+Plug 'ervandew/supertab'
 " Initialize plugin system
 call plug#end()
+
+" ctrlp configuration
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_root_markers = ['project.json', '\w+\.sln$', '\w+\.fsproj$']
 
 " vinegar configuration
 set wildignore+=*.*~
 " vim-javascript configuration
 let g:javascript_plugin_jsdoc = 1
 
-" Syntatic configuration
+" Syntastic configuration
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -133,9 +142,21 @@ let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
 
 " Dracula color-scheme
 colorscheme dracula
-" ctrlp setup
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_root_markers = ['project.json', '\w+\.sln$', '\w+\.csproj$', '\w+\.fsproj$']
+"
 " airline setup
 set laststatus=2
+
+filetype plugin on
+
+set completeopt=longest,menuone,preview
+set previewheight=5
+
+" fshqrp settings
+let g:fsharp_helptext_comments = 1
+let g:fsharp_completion_helptext = 1
+
+" typescript
+let g:syntastic_typescript_checkers = ['tsuquyomi']
+set ballooneval
+autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
+let g:tsuquyomi_shortest_import_path = 1

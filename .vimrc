@@ -102,7 +102,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'heavenshell/vim-jsdoc'
-Plug 'tpope/vim-dispatch'
 Plug 'Quramy/tsuquyomi'
 Plug 'leafgarland/typescript-vim'
 Plug 'Quramy/vim-js-pretty-template'
@@ -117,7 +116,8 @@ call plug#end()
 " ctrlp configuration
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_root_markers = ['project.json', '\w+\.sln$', '\w+\.fsproj$']
+let g:ctrlp_root_markers = ['project.json', '\w+\.sln$', '\w+\.csproj$', '\w+\.fsproj$']
+nnoremap <leader>. :CtrlPTag<cr>
 
 " vinegar configuration
 set wildignore+=*.*~

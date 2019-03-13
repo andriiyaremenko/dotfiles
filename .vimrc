@@ -89,15 +89,16 @@ map ; :
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/plugged')
 Plug 'vim-syntastic/syntastic'
-Plug 'rust-lang/rust.vim'
-Plug 'dracula/vim'
+"Plug 'w0rp/ale' "turn on after https://github.com/fsharp/vim-fsharp/pull/82 completed
+Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-dispatch'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-commentary'
 Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
-Plug 'kchmck/vim-coffee-script'
-Plug 'tpope/vim-vinegar'
+Plug 'scrooloose/nerdtree'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+"Plug 'tpope/vim-vinegar' "replace with nerdTree
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
@@ -110,13 +111,19 @@ Plug 'fsharp/vim-fsharp', {
       \ 'do':  'make fsautocomplete',
       \}
 Plug 'ervandew/supertab'
+Plug 'Yggdroot/indentLine'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'mhinz/vim-signify'
+Plug 'mattn/emmet-vim'
+Plug 'othree/html5.vim'
+Plug 'SirVer/ultisnips'
 " Initialize plugin system
 call plug#end()
 
 " ctrlp configuration
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_root_markers = ['project.json', '\w+\.sln$', '\w+\.csproj$', '\w+\.fsproj$']
+let g:ctrlp_root_markers = ['project.json', '\w+\.fsproj$', '\w+\.csproj$', '\w+\.sln$']
 nnoremap <leader>. :CtrlPTag<cr>
 
 " vinegar configuration
@@ -129,19 +136,26 @@ set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
 
-let g:syntastic_mode_map = { 'mode': 'active',
-                            \ 'active_filetypes': ['javascript'],
-                            \ 'passive_filetypes': [] }
-
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
+let g:syntastic_error_symbol = '✘'
+let g:syntastic_warning_symbol = '⚠'
 
-" Dracula color-scheme
-colorscheme dracula
+" ale configuration
+"let g:ale_completion_enabled = 1
+"let g:ale_sign_error = '✘'
+"let g:ale_sign_warning = '⚠'
+" Set this. Airline will handle the rest.
+"let g:airline#extensions#ale#enabled = 1
+
+" Gruvbox color-scheme
+:set bg=dark
+colorscheme gruvbox
+let g:gruvbox_contrast_dark = 'hard'
 "
 " airline setup
 set laststatus=2
@@ -151,7 +165,8 @@ filetype plugin on
 set completeopt=longest,menuone,preview
 set previewheight=5
 
-" fshqrp settings
+" fsharp settings
+let g:syntastic_fsharp_checkers=['syntax']
 let g:fsharp_helptext_comments = 1
 let g:fsharp_completion_helptext = 1
 
@@ -160,3 +175,13 @@ let g:syntastic_typescript_checkers = ['tsuquyomi']
 set ballooneval
 autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
 let g:tsuquyomi_shortest_import_path = 1
+
+" Rainbow Parentheses
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+
+" NERDTree
+map <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif

@@ -37,6 +37,7 @@
       (append
         '(
           rainbow-delimiters
+          undo-tree
           )
         (mapcar 'el-get-as-symbol (mapcar 'el-get-source-name el-get-sources))))
 
@@ -56,6 +57,8 @@
                         omnisharp
                         fsharp-mode
                         tide
+                        goto-chg
+                        evil
                         ))
 
 (defun cfg:install-packages ()
@@ -84,7 +87,6 @@
 
 ;; NEOTree
 (add-to-list 'load-path "~/.emacs.d/el-get/neotree")
-(require 'neotree)
 (global-set-key [(control ?x) (control ?n)] 'neotree-toggle)
 (setq neo-theme (if (display-graphic-p) 'icons 'classic))
 
@@ -133,6 +135,14 @@
 (add-hook 'before-save-hook 'tide-format-before-save)
 
 (add-hook 'typescript-mode-hook #'setup-tide-mode)
+
+;; undo-tree
+(add-to-list 'load-path "~/.emacs.d/el-get/undo-tree")
+(global-undo-tree-mode)
+
+;; evil
+(evil-mode 1)
+(add-to-list 'evil-emacs-state-modes 'neotree)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

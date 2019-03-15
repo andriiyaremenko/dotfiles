@@ -36,8 +36,16 @@
 (setq required-packages
       (append
         '(
-          rainbow-delimiters
           undo-tree
+          rainbow-delimiters
+          neotree
+          all-the-icons
+          flycheck
+          magit
+          fsharp-mode
+          tide
+          goto-chg
+          evil
           )
         (mapcar 'el-get-as-symbol (mapcar 'el-get-source-name el-get-sources))))
 
@@ -49,16 +57,8 @@
 
 (defvar elpa-packages '(
                         darktooth-theme
-                        neotree
-                        all-the-icons
                         company
-                        flycheck
-                        magit
                         omnisharp
-                        fsharp-mode
-                        tide
-                        goto-chg
-                        evil
                         ))
 
 (defun cfg:install-packages ()
@@ -107,7 +107,7 @@
 (add-hook 'csharp-mode-hook #'company-mode)
 
 ;; fsharp
-(add-to-list 'load-path "~/.emacs.d/fsharp-mode/")
+(add-to-list 'load-path "~/.emacs.d/el-get/fsharp-mode/")
 (autoload 'fsharp-mode "fsharp-mode"     "Major mode for editing F# code." t)
 (add-to-list 'auto-mode-alist '("\\.fs[iylx]?$" . fsharp-mode))
 (add-hook 'fsharp-mode-hook
@@ -142,8 +142,6 @@
 
 ;; evil
 (evil-mode 1)
-(add-to-list 'evil-emacs-state-modes 'neotree)
-
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -151,7 +149,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (exec-path-from-shell omnisharp magit flycheck company neotree gruvbox-theme fsharp-mode all-the-icons))))
+    (omnisharp exec-path-from-shell darktooth-theme company))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

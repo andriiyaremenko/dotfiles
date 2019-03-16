@@ -1,0 +1,4 @@
+(:name darktooth-theme
+       :type github
+       :pkgname "emacsfodder/emacs-theme-darktooth"
+       :prepare (add-to-list (quote custom-theme-load-path) default-directory))

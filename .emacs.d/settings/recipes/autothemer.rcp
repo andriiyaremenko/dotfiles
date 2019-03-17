@@ -1,0 +1,4 @@
+(:name autothemer
+ :type git
+ :url "git@github.com:jasonm23/autothemer.git")
+

@@ -11,13 +11,14 @@
         undo-tree
         rainbow-delimiters
         neotree
-;        all-the-icons
+        ;        all-the-icons
         flycheck
         magit
         fsharp-mode
         tide
         goto-chg
         evil
+        evil-collection
         )
       )
 
@@ -29,6 +30,13 @@
 
 (package-initialize)
 (add-to-list 'load-path "~/.emacs.d/el-get/el-get")
+
+;; evil-collection hook
+(setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+(setq evil-want-keybinding nil)
+(when (require 'evil-collection nil t)
+  (evil-collection-init))
+
 
 (unless (require 'el-get nil t)
   (package-refresh-contents)

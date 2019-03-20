@@ -43,6 +43,9 @@
 (global-undo-tree-mode)
 
 ;; evil
-(evil-mode 1)
+(setq evil-search-module 'evil-search
+      evil-want-C-u-scroll t
+      evil-want-C-w-in-emacs-state t)
+(evil-mode t)
 
 (provide 'hooks_my)

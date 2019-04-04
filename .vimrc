@@ -88,8 +88,7 @@ map ; :
 " vim-plug setup (https://github.com/junegunn/vim-plug)
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/plugged')
-Plug 'vim-syntastic/syntastic'
-"Plug 'w0rp/ale' "turn on after https://github.com/fsharp/vim-fsharp/pull/82 completed
+Plug 'w0rp/ale' "turn on after https://github.com/fsharp/vim-fsharp/pull/82 completed
 Plug 'morhetz/gruvbox'
 Plug 'tpope/vim-dispatch'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -98,27 +97,43 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 Plug 'scrooloose/nerdtree'
 Plug 'Xuyuanp/nerdtree-git-plugin'
-"Plug 'tpope/vim-vinegar' "replace with nerdTree
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tpope/vim-fugitive'
 Plug 'heavenshell/vim-jsdoc'
+" typescript
 Plug 'Quramy/tsuquyomi'
 Plug 'leafgarland/typescript-vim'
+Plug 'ianks/vim-tsx'
+
+" scss
+Plug 'cakebaker/scss-syntax.vim'
+
 Plug 'Quramy/vim-js-pretty-template'
-Plug 'fsharp/vim-fsharp', {
-      \ 'for': 'fsharp',
-      \ 'do':  'make fsautocomplete',
-      \}
-Plug 'ervandew/supertab'
+"Plug 'fsharp/vim-fsharp', {
+"      \ 'for': 'fsharp',
+"      \ 'do':  'make fsautocomplete',
+"      \}
 Plug 'Yggdroot/indentLine'
 Plug 'kien/rainbow_parentheses.vim'
 Plug 'mhinz/vim-signify'
 Plug 'mattn/emmet-vim'
 Plug 'othree/html5.vim'
 Plug 'SirVer/ultisnips'
+
+" Elixir/Phoenix
+Plug 'slashmili/alchemist.vim'
+Plug 'elixir-editors/vim-elixir'
+
+" deoplete
+"Plug 'Shougo/deoplete.nvim'
+"Plug 'roxma/nvim-yarp'
+"Plug 'roxma/vim-hug-neovim-rpc'
 " Initialize plugin system
 call plug#end()
+
+" deoplete
+"let g:deoplete#enable_at_startup = 1
 
 " ctrlp configuration
 let g:ctrlp_map = '<c-p>'
@@ -131,26 +146,12 @@ set wildignore+=*.*~
 " vim-javascript configuration
 let g:javascript_plugin_jsdoc = 1
 
-" Syntastic configuration
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
-
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_javascript_eslint_exe = '$(npm bin)/eslint'
-let g:syntastic_error_symbol = '✘'
-let g:syntastic_warning_symbol = '⚠'
-
 " ale configuration
-"let g:ale_completion_enabled = 1
-"let g:ale_sign_error = '✘'
-"let g:ale_sign_warning = '⚠'
+let g:ale_completion_enabled = 1
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
 " Set this. Airline will handle the rest.
-"let g:airline#extensions#ale#enabled = 1
+let g:airline#extensions#ale#enabled = 1
 
 " Gruvbox color-scheme
 :set bg=dark
@@ -166,15 +167,20 @@ set completeopt=longest,menuone,preview
 set previewheight=5
 
 " fsharp settings
-let g:syntastic_fsharp_checkers=['syntax']
-let g:fsharp_helptext_comments = 1
-let g:fsharp_completion_helptext = 1
+"let g:syntastic_fsharp_checkers=['syntax']
+"let g:fsharp_helptext_comments = 1
+"let g:fsharp_completion_helptext = 1
 
 " typescript
-let g:syntastic_typescript_checkers = ['tsuquyomi']
-set ballooneval
-autocmd FileType typescript setlocal balloonexpr=tsuquyomi#balloonexpr()
+let g:tsuquyomi_disable_quickfix = 1
+let g:ale_linters = {
+\   'typescript': ['tsserver'],
+\}
+"let g:syntastic_typescript_checkers = ['tsuquyomi']
 let g:tsuquyomi_shortest_import_path = 1
+let g:tsuquyomi_single_quote_import= 1
+nnoremap <silent> ,<space> :TsuImport<CR>
+autocmd FileType typescript setlocal completeopt+=menu,preview
 
 " Rainbow Parentheses
 au VimEnter * RainbowParenthesesToggle

@@ -169,7 +169,17 @@ map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " neoclide settings
-"let g:coc_status_error_sign = '✘'
-"let g:coc_status_warning_sign = '⚠'
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+call coc#config('coc.preferences', {
+  \   'diagnostic.errorSign'  : '✘',
+  \   'diagnostic.warningSign': '⚠',
+  \   'diagnostic.infoSign'   : 'ⓘ',
+  \   'diagnostic.hintSign'   : '✦',
+  \   'languageserver': {
+  \       'elixirLS': {
+  \           'command': '~/.vim/language-servers/elixir-ls/release/language_server.sh',
+  \           'filetypes': ['elixir', 'eelixir']
+  \       }
+  \   }
+  \ })

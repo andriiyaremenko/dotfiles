@@ -1,0 +1,12 @@
+{
+     "diagnostic.errorSign"  : "✘",
+     "diagnostic.warningSign": "⚠",
+     "diagnostic.infoSign"   : "ⓘ",
+     "diagnostic.hintSign"   : "✦",
+     "languageserver": {
+         "elixirLS": {
+             "command": "~/.vim/language-servers/elixir-ls/release/language_server.sh",
+             "filetypes": ["elixir", "eelixir"]
+         }
+     }
+   }

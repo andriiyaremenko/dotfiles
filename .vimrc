@@ -171,15 +171,3 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 " neoclide settings
 let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-call coc#config('coc.preferences', {
-  \   'diagnostic.errorSign'  : '✘',
-  \   'diagnostic.warningSign': '⚠',
-  \   'diagnostic.infoSign'   : 'ⓘ',
-  \   'diagnostic.hintSign'   : '✦',
-  \   'languageserver': {
-  \       'elixirLS': {
-  \           'command': '~/.vim/language-servers/elixir-ls/release/language_server.sh',
-  \           'filetypes': ['elixir', 'eelixir']
-  \       }
-  \   }
-  \ })

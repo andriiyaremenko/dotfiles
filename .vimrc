@@ -89,6 +89,7 @@ set spell spelllang=en_us
 set ignorecase
 set smartcase
 set showmatch
+set t_Co=256
 map ; :
 
 " vim-plug setup (https://github.com/junegunn/vim-plug)
@@ -111,14 +112,14 @@ Plug 'ianks/vim-tsx'
 
 " autocompletion coc
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-Plug 'neoclide/coc-json'
-Plug 'neoclide/coc-tsserver'
-Plug 'neoclide/coc-tslint-plugin'
-Plug 'iamcco/coc-angular'
-Plug 'neoclide/coc-html'
-Plug 'neoclide/coc-css'
-Plug 'neoclide/coc-highlight'
-Plug 'neoclide/coc-emmet'
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
+Plug 'iamcco/coc-angular', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-css', {'do': 'yarn install'}
+Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
 
 " scss
 "Plug 'cakebaker/scss-syntax.vim'

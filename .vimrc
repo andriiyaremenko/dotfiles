@@ -101,11 +101,16 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-commentary'
 Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/nerdtree'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tpope/vim-fugitive'
 Plug 'heavenshell/vim-jsdoc'
+
+" git
+Plug 'airblade/vim-gitgutter'
+Plug 'jreybert/vimagit'
+Plug 'tpope/vim-fugitive'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+
 " typescript
 Plug 'leafgarland/typescript-vim'
 Plug 'ianks/vim-tsx'
@@ -115,14 +120,14 @@ Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
-Plug 'iamcco/coc-angular', {'do': 'yarn install --frozen-lockfile'}
+Plug 'iamcco/coc-angular', {'do': 'yarn install'}
 Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-css', {'do': 'yarn install'}
 Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
 
 " scss
-"Plug 'cakebaker/scss-syntax.vim'
+" Plug 'cakebaker/scss-syntax.vim'
 
 Plug 'Quramy/vim-js-pretty-template'
 Plug 'Yggdroot/indentLine'
@@ -136,20 +141,21 @@ Plug 'elixir-editors/vim-elixir'
 call plug#end()
 
 " ctrlp configuration
-let g:ctrlp_map = '<c-p>'
-let g:ctrlp_cmd = 'CtrlP'
-let g:ctrlp_root_markers = ['project.json', '\w+\.fsproj$', '\w+\.csproj$', '\w+\.sln$']
-nnoremap <leader>. :CtrlPTag<cr>
+let g:ctrlp_map='<c-p>'
+let g:ctrlp_cmd='CtrlP'
+let g:ctrlp_root_markers=['project.json', '\w+\.fsproj$', '\w+\.csproj$', '\w+\.sln$']
+nnoremap <Leader>. :CtrlPTag<cr>
 
 " vinegar configuration
 set wildignore+=*.*~
 " vim-javascript configuration
-"let g:javascript_plugin_jsdoc = 1
+" let g:javascript_plugin_jsdoc=1
 
 " Gruvbox color-scheme
 :set bg=dark
 colorscheme gruvbox
-let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_contrast_dark='hard'
+let g:gruvbox_termcolors=16
 "
 " airline setup
 set laststatus=2
@@ -170,5 +176,33 @@ map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " neoclide settings
-let g:airline_section_error = '%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning = '%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+let g:airline_section_error='%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning='%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+
+" gitgutter
+let g:gitgutter_sign_added='+'
+let g:gitgutter_sign_modified='>'
+let g:gitgutter_sign_removed='-'
+let g:gitgutter_sign_removed_first_line='^'
+let g:gitgutter_sign_modified_removed='<'
+let g:gitgutter_override_sign_column_highlight=1
+highlight SignColumn guibg=bg
+highlight SignColumn ctermbg=bg
+" git next
+nmap <Leader>gn <Plug>GitGutterNextHunk
+" git previous
+nmap <Leader>gp <Plug>GitGutterPrevHunk
+" git add (chunk)
+nmap <Leader>ga <Plug>GitGutterStageHunk
+" git undo (chunk)
+nmap <Leader>gu <Plug>GitGutterUndoHunk
+
+" vimagit
+" git status
+nnoremap <Leader>gs :Magit<CR>
+" git push
+nnoremap <Leader>gP :! git push<CR>
+
+" vim-fugitive
+" git blame
+nnoremap <Leader>gb :Gblame<CR>

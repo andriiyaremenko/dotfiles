@@ -109,7 +109,6 @@ Plug 'heavenshell/vim-jsdoc'
 Plug 'airblade/vim-gitgutter'
 Plug 'jreybert/vimagit'
 Plug 'tpope/vim-fugitive'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 
 " typescript
 Plug 'leafgarland/typescript-vim'

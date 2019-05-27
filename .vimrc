@@ -14,6 +14,9 @@ set cmdheight=2 " Better display for messages
 set updatetime=300 " Smaller updatetime for CursorHold & CursorHoldI
 set shortmess+=c " don't give |ins-completion-menu| messages.
 set signcolumn=yes " always show signcolumns
+set laststatus=2
+set completeopt=longest,menuone,preview
+set previewheight=5
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -157,12 +160,7 @@ let g:gruvbox_contrast_dark='hard'
 let g:gruvbox_termcolors=16
 "
 " airline setup
-set laststatus=2
-
-filetype plugin on
-
-set completeopt=longest,menuone,preview
-set previewheight=5
+"let g:airline_powerline_fonts=1
 
 " Rainbow Parentheses
 au VimEnter * RainbowParenthesesToggle

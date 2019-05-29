@@ -8,7 +8,6 @@ set history=50		" keep 50 lines of command line history
 set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
-
 set hidden " if hidden is not set, TextEdit might fail
 set cmdheight=2 " Better display for messages
 set updatetime=300 " Smaller updatetime for CursorHold & CursorHoldI
@@ -17,6 +16,7 @@ set signcolumn=yes " always show signcolumns
 set laststatus=2
 set completeopt=longest,menuone,preview
 set previewheight=5
+set wildignore+=*.*~
 
 " Don't use Ex mode, use Q for formatting
 map Q gq
@@ -24,11 +24,6 @@ map Q gq
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
-
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-syntax on
-set hlsearch
 
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
@@ -78,6 +73,10 @@ if has('langmap') && exists('+langnoremap')
 endif
 
 " My own settings:
+
+
+syntax on " Switch syntax highlighting on, when the terminal has colors
+set hlsearch " Also switch on highlighting the last used search pattern.
 set number
 set listchars=trail:~,tab:>-
 set list
@@ -93,8 +92,13 @@ set ignorecase
 set smartcase
 set showmatch
 set t_Co=256
+set bg=dark
 map ; :
+let g:mapleader=',' " Remap leader key to ,
 
+" ================================================================================================================================= "
+" ===                                                    Plugin Installation                                                    === "
+" ================================================================================================================================= "
 " vim-plug setup (https://github.com/junegunn/vim-plug)
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/plugged')
@@ -106,7 +110,6 @@ Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'heavenshell/vim-jsdoc'
 
 " git
 Plug 'airblade/vim-gitgutter'
@@ -142,41 +145,56 @@ Plug 'SirVer/ultisnips'
 Plug 'elixir-editors/vim-elixir'
 call plug#end()
 
-" ctrlp configuration
+" ================================================================================================================================= "
+" ===                                                    Plugin Configuration                                                   === "
+" ================================================================================================================================= "
+
+" ===                                                    CtrlP                                                                  === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
 let g:ctrlp_map='<c-p>'
 let g:ctrlp_cmd='CtrlP'
 let g:ctrlp_root_markers=['project.json', '\w+\.fsproj$', '\w+\.csproj$', '\w+\.sln$']
 nnoremap <Leader>. :CtrlPTag<cr>
 
-" vinegar configuration
-set wildignore+=*.*~
-" vim-javascript configuration
-" let g:javascript_plugin_jsdoc=1
 
-" Gruvbox color-scheme
-:set bg=dark
+" ===                                                    Gruvbox                                                                === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
 colorscheme gruvbox
 let g:gruvbox_contrast_dark='hard'
 let g:gruvbox_termcolors=16
-"
-" airline setup
-"let g:airline_powerline_fonts=1
 
-" Rainbow Parentheses
+" ===                                                    Airline                                                                === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+" Update section z to just have line number
+let g:airline_section_z = airline#section#create(['linenr'])
+
+" Do not draw separators for empty sections (only for the active window) >
+let g:airline_skip_empty_sections = 1
+"
+" Smartly uniquify buffers names with similar filename, suppressing common parts of paths.
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+"
+" Custom setup that removes filetype/whitespace from default vim airline bar
+let g:airline#extensions#default#layout = [['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
+let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
+let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
+let g:airline_section_error='%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
+let g:airline_section_warning='%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+
+" ===                                                    Rainbow Parentheses                                                    === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
 au VimEnter * RainbowParenthesesToggle
 au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
-" NERDTree
+" ===                                                    NERDTree                                                               === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
 map <C-n> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" neoclide settings
-let g:airline_section_error='%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning='%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
-
-" gitgutter
+" ===                                                    GitGutter                                                              === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
 let g:gitgutter_sign_added='+'
 let g:gitgutter_sign_modified='>'
 let g:gitgutter_sign_removed='-'
@@ -194,12 +212,20 @@ nmap <Leader>ga <Plug>GitGutterStageHunk
 " git undo (chunk)
 nmap <Leader>gu <Plug>GitGutterUndoHunk
 
-" vimagit
+" ===                                                    ViMagit                                                                === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
 " git status
 nnoremap <Leader>gs :Magit<CR>
 " git push
 nnoremap <Leader>gP :! git push<CR>
 
-" vim-fugitive
+" ===                                                    Vim-Fugitive                                                           === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
 " git blame
 nnoremap <Leader>gb :Gblame<CR>
+
+" ===                                                    neoclide/CoC                                                           === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+nmap <silent> <leader>fd <Plug>(coc-definition)
+nmap <silent> <leader>fr <Plug>(coc-references)
+nmap <silent> <leader>fi <Plug>(coc-implementation)

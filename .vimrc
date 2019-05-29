@@ -73,8 +73,6 @@ if has('langmap') && exists('+langnoremap')
 endif
 
 " My own settings:
-
-
 syntax on " Switch syntax highlighting on, when the terminal has colors
 set hlsearch " Also switch on highlighting the last used search pattern.
 set number
@@ -93,6 +91,10 @@ set smartcase
 set showmatch
 set t_Co=256
 set bg=dark
+set termguicolors " Enable true color support
+set splitbelow " Set preview window to appear at bottom
+set noshowmode " Don't dispay mode in command line (airilne already shows it)
+set autoread " Automatically re-read file if a change was detected outside of vim
 map ; :
 let g:mapleader=',' " Remap leader key to ,
 
@@ -166,18 +168,18 @@ let g:gruvbox_termcolors=16
 " ===                                                    Airline                                                                === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 " Update section z to just have line number
-let g:airline_section_z = airline#section#create(['linenr'])
+let g:airline_section_z=airline#section#create(['linenr'])
 
 " Do not draw separators for empty sections (only for the active window) >
 let g:airline_skip_empty_sections = 1
 "
 " Smartly uniquify buffers names with similar filename, suppressing common parts of paths.
-let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#formatter='unique_tail'
 "
 " Custom setup that removes filetype/whitespace from default vim airline bar
-let g:airline#extensions#default#layout = [['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
-let airline#extensions#coc#stl_format_err = '%E{[%e(#%fe)]}'
-let airline#extensions#coc#stl_format_warn = '%W{[%w(#%fw)]}'
+let g:airline#extensions#default#layout=[['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
+let airline#extensions#coc#stl_format_err='%E{[%e(#%fe)]}'
+let airline#extensions#coc#stl_format_warn='%W{[%w(#%fw)]}'
 let g:airline_section_error='%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
 let g:airline_section_warning='%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
 
@@ -190,7 +192,16 @@ au Syntax * RainbowParenthesesLoadBraces
 
 " ===                                                    NERDTree                                                               === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
+" Show hidden files/directories
+let g:NERDTreeShowHidden=1
+" Remove bookmarks and help text from NERDTree
+let g:NERDTreeMinimalUI=1
+" Hide certain files and directories from NERDTree
+let g:NERDTreeIgnore=['^\.DS_Store$', '^tags$', '\.git$[[dir]]', '\.idea$[[dir]]', '\.sass-cache$']
+" Toggle NERDTree on/off
 map <C-n> :NERDTreeToggle<CR>
+" Opens current file location in NERDTree
+nmap <leader>f :NERDTreeFind<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " ===                                                    GitGutter                                                              === "

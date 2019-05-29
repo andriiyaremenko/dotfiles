@@ -91,7 +91,6 @@ set smartcase
 set showmatch
 set t_Co=256
 set bg=dark
-set termguicolors " Enable true color support
 set splitbelow " Set preview window to appear at bottom
 set noshowmode " Don't dispay mode in command line (airilne already shows it)
 set autoread " Automatically re-read file if a change was detected outside of vim

@@ -96,6 +96,24 @@ set noshowmode " Don't dispay mode in command line (airilne already shows it)
 set autoread " Automatically re-read file if a change was detected outside of vim
 map ; :
 let g:mapleader=',' " Remap leader key to ,
+" autoclose tags
+inoremap ( ()<Left>
+inoremap { {}<Left>
+inoremap [ []<Left>
+inoremap < <><Left>
+inoremap " ""<Left>
+inoremap ' ''<Left>
+inoremap ` ``<Left>
+" create new buffer
+nnoremap <Leader>B :enew<cr>
+" close current buffer
+nnoremap <Leader>bq :bp <bar> bd! #<cr>
+" switch to next open buffer
+nnoremap <Leader>bn :bnext<cr>
+" switch to previous open buffer
+nnoremap <Leader>bp :bprevious<cr>
+" cycle between last two open buffers
+nnoremap <Leader><Leader> <c-^>
 
 " ================================================================================================================================= "
 " ===                                                    Plugin Installation                                                    === "

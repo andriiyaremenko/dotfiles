@@ -18,6 +18,10 @@ set completeopt=longest,menuone,preview
 set previewheight=5
 set wildignore+=*.*~
 
+" Enable completion where available.
+" This setting must be set before ALE is loaded.
+let g:ale_completion_enabled = 1
+
 " Don't use Ex mode, use Q for formatting
 map Q gq
 
@@ -139,6 +143,8 @@ Plug 'tpope/vim-fugitive'
 Plug 'leafgarland/typescript-vim'
 Plug 'ianks/vim-tsx'
 
+Plug 'w0rp/ale'
+
 " autocompletion coc
 Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
@@ -172,7 +178,7 @@ call plug#end()
 " --------------------------------------------------------------------------------------------------------------------------------- "
 let g:ctrlp_map='<c-p>'
 let g:ctrlp_cmd='CtrlP'
-let g:ctrlp_root_markers=['project.json', '\w+\.fsproj$', '\w+\.csproj$', '\w+\.sln$']
+let g:ctrlp_root_markers=['project.json', 'mix.exs', '.gitignore']
 nnoremap <Leader>. :CtrlPTag<cr>
 
 
@@ -195,10 +201,8 @@ let g:airline#extensions#tabline#formatter='unique_tail'
 "
 " Custom setup that removes filetype/whitespace from default vim airline bar
 let g:airline#extensions#default#layout=[['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
-let airline#extensions#coc#stl_format_err='%E{[%e(#%fe)]}'
-let airline#extensions#coc#stl_format_warn='%W{[%w(#%fw)]}'
-let g:airline_section_error='%{airline#util#wrap(airline#extensions#coc#get_error(),0)}'
-let g:airline_section_warning='%{airline#util#wrap(airline#extensions#coc#get_warning(),0)}'
+
+let g:airline#extensions#ale#enabled = 1
 
 " ===                                                    Rainbow Parentheses                                                    === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
@@ -214,7 +218,7 @@ let g:NERDTreeShowHidden=1
 " Remove bookmarks and help text from NERDTree
 let g:NERDTreeMinimalUI=1
 " Hide certain files and directories from NERDTree
-let g:NERDTreeIgnore=['^\.DS_Store$', '^tags$', '\.git$[[dir]]', '\.idea$[[dir]]', '\.sass-cache$']
+let g:NERDTreeIgnore=['^\.DS_Store$', '^\.elixir_ls$', '\.git$[[dir]]', '\.idea$[[dir]]', '\.sass-cache$']
 " Toggle NERDTree on/off
 map <C-n> :NERDTreeToggle<CR>
 " Opens current file location in NERDTree
@@ -257,3 +261,13 @@ nnoremap <Leader>gb :Gblame<CR>
 nmap <silent> <leader>fd <Plug>(coc-definition)
 nmap <silent> <leader>fr <Plug>(coc-references)
 nmap <silent> <leader>fi <Plug>(coc-implementation)
+
+" ===                                                    Ale                                                                    === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+let g:ale_sign_error = '✘'
+let g:ale_sign_warning = '⚠'
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+let g:ale_open_list = 1
+let g:ale_list_window_size = 5

@@ -170,6 +170,12 @@ Plug 'SirVer/ultisnips'
 Plug 'elixir-editors/vim-elixir'
 call plug#end()
 
+" Automatically install missing plugins on startup
+autocmd VimEnter *
+  \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \|   PlugInstall --sync | q
+  \| endif
+
 " ================================================================================================================================= "
 " ===                                                    Plugin Configuration                                                   === "
 " ================================================================================================================================= "

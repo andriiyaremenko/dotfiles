@@ -18,10 +18,6 @@ set completeopt=longest,menuone,preview
 set previewheight=5
 set wildignore+=*.*~
 
-" Enable completion where available.
-" This setting must be set before ALE is loaded.
-let g:ale_completion_enabled = 1
-
 " Don't use Ex mode, use Q for formatting
 map Q gq
 
@@ -276,6 +272,8 @@ nmap <silent> <leader>fi <Plug>(coc-implementation)
 
 " ===                                                    Ale                                                                    === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
+set omnifunc=ale#completion#OmniFunc
+let g:ale_lint_on_text_changed = 'never'
 let g:ale_sign_error = '✘'
 let g:ale_sign_warning = '⚠'
 let g:ale_echo_msg_error_str = 'E'

@@ -94,9 +94,6 @@ set bg=dark
 set splitbelow " Set preview window to appear at bottom
 set noshowmode " Don't dispay mode in command line (airilne already shows it)
 set autoread " Automatically re-read file if a change was detected outside of vim
-if (has("termguicolors"))
-    set termguicolors
-endif
 set redrawtime=10000
 map ; :
 let g:mapleader=',' " Remap leader key to ,

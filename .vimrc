@@ -98,6 +98,10 @@ set bg=dark
 set splitbelow " Set preview window to appear at bottom
 set noshowmode " Don't dispay mode in command line (airilne already shows it)
 set autoread " Automatically re-read file if a change was detected outside of vim
+if (has("termguicolors"))
+    set termguicolors
+endif
+set redrawtime=10000
 map ; :
 let g:mapleader=',' " Remap leader key to ,
 " autoclose tags
@@ -132,14 +136,13 @@ endif
 " vim-plug setup (https://github.com/junegunn/vim-plug)
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/plugged')
-Plug 'morhetz/gruvbox'
+Plug 'arcticicestudio/nord-vim'
 Plug 'tpope/vim-dispatch'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-commentary'
 Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 
 " git
 Plug 'airblade/vim-gitgutter'
@@ -195,11 +198,9 @@ let g:ctrlp_root_markers=['project.json', 'mix.exs', '.gitignore']
 nnoremap <Leader>. :CtrlPTag<cr>
 
 
-" ===                                                    Gruvbox                                                                === "
+" ===                                                    Theme                                                                  === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
-colorscheme gruvbox
-let g:gruvbox_contrast_dark='hard'
-let g:gruvbox_termcolors=16
+colorscheme nord
 
 " ===                                                    Airline                                                                === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
@@ -246,8 +247,6 @@ let g:gitgutter_sign_removed='-'
 let g:gitgutter_sign_removed_first_line='^'
 let g:gitgutter_sign_modified_removed='<'
 let g:gitgutter_override_sign_column_highlight=1
-highlight SignColumn guibg=bg
-highlight SignColumn ctermbg=bg
 " git next
 nmap <Leader>gn <Plug>GitGutterNextHunk
 " git previous

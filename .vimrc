@@ -190,16 +190,12 @@ let g:ctrlp_cmd='CtrlP'
 let g:ctrlp_root_markers=['project.json', 'mix.exs', '.gitignore']
 nnoremap <Leader>. :CtrlPTag<cr>
 
-
 " ===                                                    Theme                                                                  === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 colorscheme nord
 
 " ===                                                    Airline                                                                === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
-" Update section z to just have line number
-let g:airline_section_z=airline#section#create(['linenr'])
-
 " Do not draw separators for empty sections (only for the active window) >
 let g:airline_skip_empty_sections = 1
 "

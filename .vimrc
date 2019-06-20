@@ -89,12 +89,12 @@ set spell spelllang=en_us
 set ignorecase
 set smartcase
 set showmatch
-set t_Co=256
 set bg=dark
 set splitbelow " Set preview window to appear at bottom
 set noshowmode " Don't dispay mode in command line (airilne already shows it)
 set autoread " Automatically re-read file if a change was detected outside of vim
 set redrawtime=10000
+set termguicolors
 map ; :
 let g:mapleader=',' " Remap leader key to ,
 " autoclose tags
@@ -106,15 +106,20 @@ inoremap " ""<Left>
 inoremap ' ''<Left>
 inoremap ` ``<Left>
 " create new buffer
-nnoremap <Leader>B :enew<cr>
+nnoremap <Leader>B :enew<CR>
 " close current buffer
-nnoremap <Leader>bq :bp <bar> bd! #<cr>
+nnoremap <Leader>bq :bp <bar> bd! #<CR>
 " switch to next open buffer
-nnoremap <Leader>bn :bnext<cr>
+nnoremap <Leader>bn :bnext<CR>
 " switch to previous open buffer
-nnoremap <Leader>bp :bprevious<cr>
+nnoremap <Leader>bp :bprevious<CR>
 " cycle between last two open buffers
 nnoremap <Leader><Leader> <c-^>
+
+" ===                                                    ctags                                                                  === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+" go to definition
+nmap <silent> <leader>d <C-w>]
 
 " ================================================================================================================================= "
 " ===                                                    Plugin Installation                                                    === "
@@ -129,9 +134,13 @@ endif
 " vim-plug setup (https://github.com/junegunn/vim-plug)
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/plugged')
+" ctgas
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'majutsushi/tagbar'
+
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'arcticicestudio/nord-vim'
 Plug 'tpope/vim-dispatch'
-Plug 'ctrlpvim/ctrlp.vim'
 Plug 'tpope/vim-commentary'
 Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/nerdtree'
@@ -188,7 +197,7 @@ autocmd VimEnter *
 let g:ctrlp_map='<c-p>'
 let g:ctrlp_cmd='CtrlP'
 let g:ctrlp_root_markers=['project.json', 'mix.exs', '.gitignore']
-nnoremap <Leader>. :CtrlPTag<cr>
+nnoremap <Leader>. :CtrlPTag<CR>
 
 " ===                                                    Theme                                                                  === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
@@ -257,12 +266,6 @@ nnoremap <Leader>gP :! git push<CR>
 " git blame
 nnoremap <Leader>gb :Gblame<CR>
 
-" ===                                                    neoclide/CoC                                                           === "
-" --------------------------------------------------------------------------------------------------------------------------------- "
-nmap <silent> <leader>fd <Plug>(coc-definition)
-nmap <silent> <leader>fr <Plug>(coc-references)
-nmap <silent> <leader>fi <Plug>(coc-implementation)
-
 " ===                                                    Ale                                                                    === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 set omnifunc=ale#completion#OmniFunc
@@ -274,3 +277,55 @@ let g:ale_echo_msg_warning_str = 'W'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 let g:ale_open_list = 1
 let g:ale_list_window_size = 5
+
+" ===                                                    Tagbar                                                                 === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+nmap <Leader>tt :TagbarToggle<CR>
+" Elixir
+let g:tagbar_type_elixir = {
+    \ 'ctagstype' : 'elixir',
+    \ 'kinds' : [
+        \ 'p:protocols',
+        \ 'm:modules',
+        \ 'e:exceptions',
+        \ 'y:types',
+        \ 'd:delegates',
+        \ 'f:functions',
+        \ 'c:callbacks',
+        \ 'a:macros',
+        \ 't:tests',
+        \ 'i:implementations',
+        \ 'o:operators',
+        \ 'r:records'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 'p' : 'protocol',
+        \ 'm' : 'module'
+    \ },
+    \ 'scope2kind' : {
+        \ 'protocol' : 'p',
+        \ 'module' : 'm'
+    \ },
+    \ 'sort' : 0
+\ }
+
+" Typescript
+let g:tagbar_type_typescript = {
+  \ 'ctagsbin' : 'tstags',
+  \ 'ctagsargs' : '-f-',
+  \ 'kinds': [
+    \ 'e:enums:0:1',
+    \ 'f:function:0:1',
+    \ 't:typealias:0:1',
+    \ 'M:Module:0:1',
+    \ 'I:import:0:1',
+    \ 'i:interface:0:1',
+    \ 'C:class:0:1',
+    \ 'm:method:0:1',
+    \ 'p:property:0:1',
+    \ 'v:variable:0:1',
+    \ 'c:const:0:1',
+  \ ],
+  \ 'sort' : 0
+\}

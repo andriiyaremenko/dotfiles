@@ -94,7 +94,7 @@ set splitbelow " Set preview window to appear at bottom
 set noshowmode " Don't dispay mode in command line (airilne already shows it)
 set autoread " Automatically re-read file if a change was detected outside of vim
 set redrawtime=10000
-set termguicolors
+"set termguicolors
 map ; :
 let g:mapleader=',' " Remap leader key to ,
 " autoclose tags
@@ -167,6 +167,10 @@ Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-css', {'do': 'yarn install'}
 Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-vetur', {'do': 'yarn install --frozen-lockfile'}
+
+" vue syntax
+Plug 'posva/vim-vue'
 
 " scss
 " Plug 'cakebaker/scss-syntax.vim'
@@ -246,13 +250,13 @@ let g:gitgutter_sign_removed_first_line='^'
 let g:gitgutter_sign_modified_removed='<'
 let g:gitgutter_override_sign_column_highlight=1
 " git next
-nmap <Leader>gn <Plug>GitGutterNextHunk
+nmap <Leader>gn <Plug>(GitGutterNextHunk)
 " git previous
-nmap <Leader>gp <Plug>GitGutterPrevHunk
+nmap <Leader>gp <Plug>(GitGutterPrevHunk)
 " git add (chunk)
-nmap <Leader>ga <Plug>GitGutterStageHunk
+nmap <Leader>ga <Plug>(GitGutterStageHunk)
 " git undo (chunk)
-nmap <Leader>gu <Plug>GitGutterUndoHunk
+nmap <Leader>gu <Plug>(GitGutterUndoHunk)
 
 " ===                                                    ViMagit                                                                === "
 " --------------------------------------------------------------------------------------------------------------------------------- "

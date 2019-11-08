@@ -96,12 +96,13 @@ set autoread " Automatically re-read file if a change was detected outside of vi
 set redrawtime=10000
 "set termguicolors
 map ; :
-let g:mapleader=',' " Remap leader key to ,
+nnoremap <SPACE> <Nop>
+let g:mapleader=' ' " Remap leader key to space
 " autoclose tags
 inoremap ( ()<Left>
 inoremap { {}<Left>
 inoremap [ []<Left>
-inoremap < <><Left>
+inoremap <> <><Left>
 inoremap " ""<Left>
 inoremap ' ''<Left>
 inoremap ` ``<Left>
@@ -115,11 +116,6 @@ nnoremap <Leader>bn :bnext<CR>
 nnoremap <Leader>bp :bprevious<CR>
 " cycle between last two open buffers
 nnoremap <Leader><Leader> <c-^>
-
-" ===                                                    ctags                                                                  === "
-" --------------------------------------------------------------------------------------------------------------------------------- "
-" go to definition
-nmap <silent> <leader>d <C-w>]
 
 " ================================================================================================================================= "
 " ===                                                    Plugin Installation                                                    === "
@@ -333,3 +329,30 @@ let g:tagbar_type_typescript = {
   \ ],
   \ 'sort' : 0
 \}
+
+" ===                                                    CoC                                                                    === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+" Remap keys for gotos
+nmap <silent> <Leader>d <Plug>(coc-definition)
+nmap <silent> <Leader>y <Plug>(coc-type-definition)
+nmap <silent> <Leader>i <Plug>(coc-implementation)
+nmap <silent> <Leader>r <Plug>(coc-references)
+" Use K to show documentation in preview window
+nnoremap <silent> <Leader>K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+" Fix autofix problem of current line
+nmap <Leader>qf  <Plug>(coc-fix-current)
+
+" Use `:Format` to format current buffer
+command! -nargs=0 Format :call CocAction('format')
+
+" Use `:Fold` to fold current buffer
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)

@@ -110,7 +110,7 @@ inoremap ` ``<Left>
 inoremap fn- fn ->  end<Left><Left><Left><Left>
 inoremap def<Space> def  do<CR>end<Esc>k<Right>a
 inoremap defp<Space> defp  do<CR>end<Esc>k<Right><Right>a
-inoremap defmodule<Space> defmodule  do<CR>end<Esc>k<Right><Right><Right><Right><Right><Right><Right>a
+inoremap defmod defmodule  do<CR>end<Esc>k<Right><Right><Right><Right><Right><Right><Right>a
 inoremap do<Enter> do<CR>end<Esc>O
 " create new buffer
 nnoremap <Leader>B :enew<CR>
@@ -359,6 +359,7 @@ nmap <Leader>qf  <Plug>(coc-fix-current)
 
 " Use `:Format` to format current buffer
 command! -nargs=0 Format :call CocAction('format')
+nmap <Leader>kd :Format<CR>
 
 " Use `:Fold` to fold current buffer
 command! -nargs=? Fold :call     CocAction('fold', <f-args>)

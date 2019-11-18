@@ -1,5 +1,6 @@
 {
      "diagnostic.displayByAle": true,
+     "coc.preferences.hoverTarget": "preview",
      "languageserver": {
          "elixirLS": {
              "command": "~/.vim/language-servers/elixir-ls/release/language_server.sh",

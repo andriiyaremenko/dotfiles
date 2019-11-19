@@ -152,6 +152,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'airblade/vim-gitgutter'
 Plug 'jreybert/vimagit'
 Plug 'tpope/vim-fugitive'
+Plug 'junegunn/gv.vim'
 
 " typescript
 Plug 'leafgarland/typescript-vim'

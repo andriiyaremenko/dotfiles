@@ -112,6 +112,7 @@ inoremap def<Space> def  do<CR>end<Esc>k<Right>a
 inoremap defp<Space> defp  do<CR>end<Esc>k<Right><Right>a
 inoremap defmod defmodule  do<CR>end<Esc>k<Right><Right><Right><Right><Right><Right><Right>a
 inoremap do<Enter> do<CR>end<Esc>O
+inoremap @type<Space>t<Space> @type t :: %__MODULE__{}<Left><Enter><Esc>O
 " create new buffer
 nnoremap <Leader>B :enew<CR>
 " close current buffer

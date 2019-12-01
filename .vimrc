@@ -156,8 +156,10 @@ Plug 'jreybert/vimagit'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 
+" Language syntax highlight
+Plug 'sheerun/vim-polyglot'
+
 " typescript
-Plug 'leafgarland/typescript-vim'
 Plug 'ianks/vim-tsx'
 
 Plug 'w0rp/ale'
@@ -173,12 +175,9 @@ Plug 'neoclide/coc-css', {'do': 'yarn install'}
 Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-vetur', {'do': 'yarn install --frozen-lockfile'}
-
-" vue syntax
-Plug 'posva/vim-vue'
+Plug 'coc-extensions/coc-omnisharp', {'do': 'yarn install --frozen-lockfile'}
 
 " scss
-" Plug 'cakebaker/scss-syntax.vim'
 
 Plug 'Quramy/vim-js-pretty-template'
 Plug 'Yggdroot/indentLine'

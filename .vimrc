@@ -110,10 +110,11 @@ inoremap ` ``<Left>
 inoremap fn- fn ->  end<Left><Left><Left><Left>
 inoremap def<Space> def  do<CR>end<Esc>k<Right>a
 inoremap defp<Space> defp  do<CR>end<Esc>k<Right><Right>a
-inoremap defmod defmodule  do<CR>end<Esc>k<Right><Right><Right><Right><Right><Right><Right>a
+inoremap defmo defmodule  do<CR>end<Esc>k<Right><Right><Right><Right><Right><Right><Right>a
 inoremap do<Enter> do<CR>end<Esc>O
-inoremap @type<Space>t<Space> @type t :: %__MODULE__{}<Left><Enter><Esc>O
-inoremap defd defdelegate  (), to:<Left><Left><Left><Left><Left><Left><Left><Left>
+inoremap @typet<Space> @type t :: %__MODULE__{}<Left><Enter><Esc>O
+inoremap @typet( @type t() :: %__MODULE__{}<Left><Enter><Esc>O
+inoremap defd defdelegate (), to:<Left><Left><Left><Left><Left><Left><Left>
 " create new buffer
 nnoremap <Leader>B :enew<CR>
 " close current buffer

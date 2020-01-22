@@ -163,22 +163,10 @@ Plug 'sheerun/vim-polyglot'
 " typescript
 Plug 'ianks/vim-tsx'
 
-Plug 'w0rp/ale'
-
-" autocompletion coc
-Plug 'neoclide/coc.nvim', {'do': { -> coc#util#install()}}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tslint-plugin', {'do': 'yarn install --frozen-lockfile'}
-Plug 'iamcco/coc-angular', {'do': 'yarn install'}
-Plug 'neoclide/coc-html', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-css', {'do': 'yarn install'}
-Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-emmet', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-vetur', {'do': 'yarn install --frozen-lockfile'}
-Plug 'coc-extensions/coc-omnisharp', {'do': 'yarn install --frozen-lockfile'}
-
-" scss
+" lsp client
+Plug 'prabirshrestha/async.vim'
+Plug 'prabirshrestha/vim-lsp'
+Plug 'prabirshrestha/asyncomplete.vim'
 
 Plug 'Quramy/vim-js-pretty-template'
 Plug 'Yggdroot/indentLine'
@@ -275,18 +263,6 @@ nnoremap <Leader>gP :! git push<CR>
 " git blame
 nnoremap <Leader>gb :Gblame<CR>
 
-" ===                                                    Ale                                                                    === "
-" --------------------------------------------------------------------------------------------------------------------------------- "
-set omnifunc=ale#completion#OmniFunc
-let g:ale_lint_on_text_changed = 'never'
-let g:ale_sign_error = '✘'
-let g:ale_sign_warning = '⚠'
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
-let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
-let g:ale_open_list = 1
-let g:ale_list_window_size = 5
-
 " ===                                                    Tagbar                                                                 === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 nmap <Leader>tt :TagbarToggle<CR>
@@ -339,30 +315,56 @@ let g:tagbar_type_typescript = {
   \ 'sort' : 0
 \}
 
-" ===                                                    CoC                                                                    === "
+" ===                                                    LSP                                                                    === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
-" Remap keys for gotos
-nmap <silent> <Leader>d <Plug>(coc-definition)
-nmap <silent> <Leader>y <Plug>(coc-type-definition)
-nmap <silent> <Leader>i <Plug>(coc-implementation)
-nmap <silent> <Leader>r <Plug>(coc-references)
-" Use K to show documentation in preview window
-nnoremap <silent> <Leader>K :call <SID>show_documentation()<CR>
+augroup elixir_lsp
+  au!
+  au User lsp_setup call lsp#register_server({
+    \ 'name': 'elixir-ls',
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, '~/.vim/language-servers/elixir-ls/release/language_server.sh']},
+    \ 'whitelist': ['elixir', 'eelixir'],
+    \ })
+augroup END
+augroup fsharp_lsp
+  au!
+  au User lsp_setup call lsp#register_server({
+    \ 'name': 'FSAC',
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'dotnet ~/.vim/language-servers/FsAutoComplete/bin/release_netcore/fsautocomplete.dll']},
+    \ 'whitelist': ['fsharp'],
+    \ })
+augroup END
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  else
-    call CocAction('doHover')
-  endif
+let g:lsp_signs_enabled = 1         " enable signs
+let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
+let g:lsp_signs_error = {'text': '✘'}
+let g:lsp_signs_warning = {'text': '⚠'} " icons require GUI
+let g:lsp_signs_hint = {'text': '!'} " icons require GUI
+let g:lsp_highlights_enabled = 0
+let g:lsp_textprop_enabled = 0
+let g:lsp_highlight_references_enabled = 1
+highlight link LspErrorText ALEErrorSign
+highlight link LspWarningText ALEWarningSign
+highlight link LspErrorLine ALEErrorSign
+highlight link LspWarningLine ALEWarningSign
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+nmap <silent> <Leader>e <Plug>(lsp-next-error)
+nmap <silent> <Leader>w <Plug>(lsp-next-warning)
+nmap <silent> <Leader>D <Plug>(lsp-declaration)
+nmap <silent> <Leader>d <Plug>(lsp-definition)
+nmap <silent> <Leader>i <Plug>(lsp-implementation)
+nmap <silent> <Leader>r <Plug>(lsp-references)
+nmap <silent> <Leader>dd <Plug>(lsp-document-diagnostics)
+" Use K to show documentation in preview window
+nmap <silent> <Leader>K <Plug>(lsp-hover)
+nmap <Leader>kd <Plug>(lsp-document-format)
+    " refer to doc to add more commands
 endfunction
 
-" Fix autofix problem of current line
-nmap <Leader>qf  <Plug>(coc-fix-current)
-
-" Use `:Format` to format current buffer
-command! -nargs=0 Format :call CocAction('format')
-nmap <Leader>kd :Format<CR>
-
-" Use `:Fold` to fold current buffer
-command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END

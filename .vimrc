@@ -321,16 +321,154 @@ augroup elixir_lsp
   au!
   au User lsp_setup call lsp#register_server({
     \ 'name': 'elixir-ls',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, '~/.vim/language-servers/elixir-ls/release/language_server.sh']},
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, '~/.lsp/elixir-ls/release/language_server.sh']},
     \ 'whitelist': ['elixir', 'eelixir'],
     \ })
 augroup END
 augroup fsharp_lsp
   au!
+  "au User lsp_setup call lsp#register_server({
+  "  \ 'name': 'fsharp-language-server',
+  "  \ 'cmd': {server_info->[&shell, &shellcmdflag,
+  "                  \ 'dotnet ~/.lsp/fsharp-language-server/src/FSharpLanguageServer/bin/Release/netcoreapp2.0/FSharpLanguageServer.dll --stdio']},
+  "  \ 'whitelist': ['fsharp'],
+  "  \ })
   au User lsp_setup call lsp#register_server({
     \ 'name': 'FSAC',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'dotnet ~/.vim/language-servers/FsAutoComplete/bin/release_netcore/fsautocomplete.dll']},
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'dotnet ~/.lsp/fsac/fsautocomplete.dll --background-service-enabled']},
+    \ 'workspace_config': {
+        \ 'settings': {
+            \ 'FSharp': {
+                \ 'AutomaticWorkspaceInit': 1,
+                \ 'keywordsAutocomplete': 1,
+                \ 'ExternalAutocomplete': 1,
+                \ 'Linter': 1,
+                \ 'UnionCaseStubGeneration': 1,
+                \ 'UnionCaseStubGenerationBody': 'failwith \"Not Implemented\"',
+                \ 'RecordStubGeneration': 1,
+                \ 'RecordStubGenerationBody': 'failwith \"Not Implemented\"',
+                \ 'InterfaceStubGeneration': 1,
+                \ 'InterfaceStubGenerationObjectIdentifier': 'this',
+                \ 'InterfaceStubGenerationMethodBody': 'failwith \"Not Implemented\"',
+                \ 'UnusedOpensAnalyzer': 1,
+                \ 'UnusedDeclarationsAnalyzer': 1,
+                \ 'UseSdkScripts': 1,
+                \ 'SimplifyNameAnalyzer': 0,
+                \ 'ResolveNamespaces': 1,
+                \ 'EnableReferenceCodeLens': 0,
+                \ 'dotNetRoot': '/usr/local/share/dotnet',
+                \ 'fsiExtraParameters': []
+            \ }
+        \ }
+    \ },
     \ 'whitelist': ['fsharp'],
+    \ })
+augroup END
+if executable('gopls')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'gopls',
+        \ 'cmd': {server_info->['gopls']},
+        \ 'whitelist': ['go'],
+        \ })
+    autocmd BufWritePre *.go LspDocumentFormatSync
+endif
+if executable('typescript-language-server')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'typescript-language-server',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+        \ 'whitelist': ['typescript', 'typescript.tsx'],
+        \ })
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'javascript support using typescript-language-server',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'package.json'))},
+        \ 'whitelist': ['javascript', 'javascript.jsx', 'javascriptreact'],
+        \ })
+endif
+if executable('html-languageserver')
+  au User lsp_setup call lsp#register_server({
+    \ 'name': 'html-languageserver',
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'html-languageserver --stdio']},
+    \ 'whielist': ['html'],
+  \ })
+endif
+if executable('css-languageserver')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'css-languageserver',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
+        \ 'whitelist': ['css', 'less', 'sass'],
+        \ })
+endif
+if executable('docker-langserver')
+    au User lsp_setup call lsp#register_server({
+        \ 'name': 'docker-langserver',
+        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'docker-langserver --stdio']},
+        \ 'whitelist': ['dockerfile'],
+        \ })
+endif
+augroup vimlsp_settings_vim_language_server
+  au!
+  au User lsp_setup call lsp#register_server({
+    \ 'name': 'vim-language-server',
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'vim-language-server --stdio']},
+    \ 'initialization_options': { 'vimruntime': $VIMRUNTIME, 'runtimepath': &rtp },
+    \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), ['.git/', '.vim/', 'vimfiles/']))},
+    \ 'whitelist': ['vim'],
+    \ })
+augroup END
+augroup vimlsp_settings_bash_language_server
+  au!
+  au User lsp_setup call lsp#register_server({
+    \ 'name': 'bash-language-server',
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'vim-language-server --stdio']},
+    \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), ['.git/']))},
+    \ 'whitelist': ['sh'],
+    \ })
+augroup END
+
+let g:lsp_signs_enabled = 1         " enable signs
+let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
+let g:lsp_signs_error = {'text': '✘'}
+let g:lsp_signs_warning = {'text': '⚠'} " icons require GUI
+let g:lsp_signs_hint = {'text': '!'} " icons require GUI
+let g:lsp_highlights_enabled = 0
+let g:lsp_textprop_enabled = 0
+let g:lsp_highlight_references_enabled = 1
+highlight link LspErrorText ALEErrorSign
+highlight link LspWarningText ALEWarningSign
+highlight link LspErrorLine ALEErrorSign
+highlight link LspWarningLine ALEWarningSign
+
+function! s:on_lsp_buffer_enabled() abort
+    setlocal omnifunc=lsp#complete
+    setlocal signcolumn=yes
+nmap <silent> <Leader>e <Plug>(lsp-next-error)
+nmap <silent> <Leader>w <Plug>(lsp-next-warning)
+nmap <silent> <Leader>D <Plug>(lsp-declaration)
+nmap <silent> <Leader>d <Plug>(lsp-definition)
+nmap <silent> <Leader>i <Plug>(lsp-implementation)
+nmap <silent> <Leader>r <Plug>(lsp-references)
+nmap <silent> <Leader>dd <Plug>(lsp-document-diagnostics)
+" Use K to show documentation in preview window
+nmap <silent> <Leader>K <Plug>(lsp-hover)
+nmap <Leader>kd <Plug>(lsp-document-format)
+    " refer to doc to add more commands
+endfunction
+
+augroup lsp_install
+    au!
+    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
+    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
+augroup END
+augroup vimlsp_settings_vim_language_server
+  au!
+  au User lsp_setup call lsp#register_server({
+    \ 'name': 'vim-language-server',
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'vim-language-server --stdio']},
+    \ 'initialization_options': { 'vimruntime': $VIMRUNTIME, 'runtimepath': &rtp },
+    \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), ['.git/', '.vim/', 'vimfiles/']))},
+    \ 'whitelist': ['vim'],
     \ })
 augroup END
 

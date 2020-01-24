@@ -327,38 +327,30 @@ augroup elixir_lsp
 augroup END
 augroup fsharp_lsp
   au!
-  "au User lsp_setup call lsp#register_server({
-  "  \ 'name': 'fsharp-language-server',
-  "  \ 'cmd': {server_info->[&shell, &shellcmdflag,
-  "                  \ 'dotnet ~/.lsp/fsharp-language-server/src/FSharpLanguageServer/bin/Release/netcoreapp2.0/FSharpLanguageServer.dll --stdio']},
-  "  \ 'whitelist': ['fsharp'],
-  "  \ })
   au User lsp_setup call lsp#register_server({
     \ 'name': 'FSAC',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'dotnet ~/.lsp/fsac/fsautocomplete.dll --background-service-enabled']},
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'dotnet ~/.lsp/FsAutoComplete/bin/release_netcore/fsautocomplete.dll --background-service-enabled']},
+    \ 'initialization_options': {'AutomaticWorkspaceInit': 1},
     \ 'workspace_config': {
-        \ 'settings': {
-            \ 'FSharp': {
-                \ 'AutomaticWorkspaceInit': 1,
-                \ 'keywordsAutocomplete': 1,
-                \ 'ExternalAutocomplete': 1,
-                \ 'Linter': 1,
-                \ 'UnionCaseStubGeneration': 1,
-                \ 'UnionCaseStubGenerationBody': 'failwith \"Not Implemented\"',
-                \ 'RecordStubGeneration': 1,
-                \ 'RecordStubGenerationBody': 'failwith \"Not Implemented\"',
-                \ 'InterfaceStubGeneration': 1,
-                \ 'InterfaceStubGenerationObjectIdentifier': 'this',
-                \ 'InterfaceStubGenerationMethodBody': 'failwith \"Not Implemented\"',
-                \ 'UnusedOpensAnalyzer': 1,
-                \ 'UnusedDeclarationsAnalyzer': 1,
-                \ 'UseSdkScripts': 1,
-                \ 'SimplifyNameAnalyzer': 0,
-                \ 'ResolveNamespaces': 1,
-                \ 'EnableReferenceCodeLens': 0,
-                \ 'dotNetRoot': '/usr/local/share/dotnet',
-                \ 'fsiExtraParameters': []
-            \ }
+        \ 'FSharp': {
+            \ 'keywordsAutocomplete': 1,
+            \ 'ExternalAutocomplete': 1,
+            \ 'Linter': 1,
+            \ 'UnionCaseStubGeneration': 1,
+            \ 'UnionCaseStubGenerationBody': 'failwith \"Not Implemented\"',
+            \ 'RecordStubGeneration': 1,
+            \ 'RecordStubGenerationBody': 'failwith \"Not Implemented\"',
+            \ 'InterfaceStubGeneration': 1,
+            \ 'InterfaceStubGenerationObjectIdentifier': 'this',
+            \ 'InterfaceStubGenerationMethodBody': 'failwith \"Not Implemented\"',
+            \ 'UnusedOpensAnalyzer': 1,
+            \ 'UnusedDeclarationsAnalyzer': 1,
+            \ 'UseSdkScripts': 1,
+            \ 'SimplifyNameAnalyzer': 0,
+            \ 'ResolveNamespaces': 1,
+            \ 'EnableReferenceCodeLens': 0,
+            \ 'dotNetRoot': '/usr/local/share/dotnet',
+            \ 'fsiExtraParameters': []
         \ }
     \ },
     \ 'whitelist': ['fsharp'],

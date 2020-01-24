@@ -357,49 +357,67 @@ augroup fsharp_lsp
     \ })
 augroup END
 if executable('gopls')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'gopls',
-        \ 'cmd': {server_info->['gopls']},
-        \ 'whitelist': ['go'],
-        \ })
-    autocmd BufWritePre *.go LspDocumentFormatSync
+    augroup go_lsp
+        au!
+        au User lsp_setup call lsp#register_server({
+            \ 'name': 'gopls',
+            \ 'cmd': {server_info->['gopls']},
+            \ 'whitelist': ['go'],
+            \ })
+        autocmd BufWritePre *.go LspDocumentFormatSync
+    augroup END
 endif
 if executable('typescript-language-server')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'typescript-language-server',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-        \ 'whitelist': ['typescript', 'typescript.tsx'],
-        \ })
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'javascript support using typescript-language-server',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-        \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'package.json'))},
-        \ 'whitelist': ['javascript', 'javascript.jsx', 'javascriptreact'],
-        \ })
+    augroup typescript_lsp
+        au!
+        au User lsp_setup call lsp#register_server({
+            \ 'name': 'typescript-language-server',
+            \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+            \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
+            \ 'whitelist': ['typescript', 'typescript.tsx'],
+            \ })
+    augroup END
+    augroup js_lsp
+        au!
+        au User lsp_setup call lsp#register_server({
+            \ 'name': 'javascript support using typescript-language-server',
+            \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
+            \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'package.json'))},
+            \ 'whitelist': ['javascript', 'javascript.jsx', 'javascriptreact'],
+            \ })
+    augroup END
 endif
 if executable('html-languageserver')
-  au User lsp_setup call lsp#register_server({
-    \ 'name': 'html-languageserver',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'html-languageserver --stdio']},
-    \ 'whielist': ['html'],
-  \ })
+    augroup html_lsp
+        au!
+        au User lsp_setup call lsp#register_server({
+          \ 'name': 'html-languageserver',
+          \ 'cmd': {server_info->[&shell, &shellcmdflag, 'html-languageserver --stdio']},
+          \ 'whielist': ['html'],
+        \ })
+    augroup END
 endif
 if executable('css-languageserver')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'css-languageserver',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
-        \ 'whitelist': ['css', 'less', 'sass'],
-        \ })
+    augroup css_lsp
+        au!
+            au User lsp_setup call lsp#register_server({
+                \ 'name': 'css-languageserver',
+                \ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
+                \ 'whitelist': ['css', 'less', 'sass'],
+                \ })
+    augroup END
 endif
 if executable('docker-langserver')
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'docker-langserver',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'docker-langserver --stdio']},
-        \ 'whitelist': ['dockerfile'],
-        \ })
+    augroup docker_lsp
+        au!
+        au User lsp_setup call lsp#register_server({
+            \ 'name': 'docker-langserver',
+            \ 'cmd': {server_info->[&shell, &shellcmdflag, 'docker-langserver --stdio']},
+            \ 'whitelist': ['dockerfile'],
+            \ })
+    augroup END
 endif
-augroup vimlsp_settings_vim_language_server
+augroup vim_lsp
   au!
   au User lsp_setup call lsp#register_server({
     \ 'name': 'vim-language-server',
@@ -409,13 +427,21 @@ augroup vimlsp_settings_vim_language_server
     \ 'whitelist': ['vim'],
     \ })
 augroup END
-augroup vimlsp_settings_bash_language_server
+augroup bash_lsp
   au!
   au User lsp_setup call lsp#register_server({
     \ 'name': 'bash-language-server',
     \ 'cmd': {server_info->[&shell, &shellcmdflag, 'vim-language-server --stdio']},
     \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), ['.git/']))},
     \ 'whitelist': ['sh'],
+    \ })
+augroup END
+augroup csharp_lsp
+  au!
+  au User lsp_setup call lsp#register_server({
+    \ 'name': 'omnisharp-lsp',
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, '~/.lsp/omnisharp-osx/run -lsp']},
+    \ 'whitelist': ['cs'],
     \ })
 augroup END
 
@@ -452,16 +478,6 @@ augroup lsp_install
     au!
     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
-augroup vimlsp_settings_vim_language_server
-  au!
-  au User lsp_setup call lsp#register_server({
-    \ 'name': 'vim-language-server',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'vim-language-server --stdio']},
-    \ 'initialization_options': { 'vimruntime': $VIMRUNTIME, 'runtimepath': &rtp },
-    \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), ['.git/', '.vim/', 'vimfiles/']))},
-    \ 'whitelist': ['vim'],
-    \ })
 augroup END
 
 let g:lsp_signs_enabled = 1         " enable signs

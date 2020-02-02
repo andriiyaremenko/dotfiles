@@ -1,3 +1,0 @@
-(:name company
- :type github
- :pkgname "company-mode/company-mode")

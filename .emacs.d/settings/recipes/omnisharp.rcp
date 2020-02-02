@@ -1,3 +1,0 @@
-(:name omnisharp
-       :type github
-       :pkgname "OmniSharp/omnisharp-emacs")

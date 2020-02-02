@@ -1,4 +1,0 @@
-(:name darktooth-theme
- :type github
- :pkgname "emacsfodder/emacs-theme-darktooth"
- :depends (autothemer))

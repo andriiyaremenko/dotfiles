@@ -76,7 +76,7 @@ endif
 syntax on " Switch syntax highlighting on, when the terminal has colors
 set hlsearch " Also switch on highlighting the last used search pattern.
 set number
-set listchars=trail:~,tab:>-
+set listchars=trail:~,tab:··
 set list
 set cursorline
 set encoding=utf-8
@@ -442,6 +442,9 @@ augroup csharp_lsp
     \ 'name': 'omnisharp-lsp',
     \ 'cmd': {server_info->[&shell, &shellcmdflag, '~/.lsp/omnisharp-osx/run -lsp']},
     \ 'whitelist': ['cs'],
+    \ 'initialization_options': {},
+    \ 'config': {},
+    \ 'workspace_config': {},
     \ })
 augroup END
 

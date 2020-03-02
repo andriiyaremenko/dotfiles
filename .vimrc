@@ -482,38 +482,3 @@ augroup lsp_install
     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
-
-let g:lsp_signs_enabled = 1         " enable signs
-let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
-let g:lsp_signs_error = {'text': '✘'}
-let g:lsp_signs_warning = {'text': '⚠'} " icons require GUI
-let g:lsp_signs_hint = {'text': '!'} " icons require GUI
-let g:lsp_highlights_enabled = 0
-let g:lsp_textprop_enabled = 0
-let g:lsp_highlight_references_enabled = 1
-highlight link LspErrorText ALEErrorSign
-highlight link LspWarningText ALEWarningSign
-highlight link LspErrorLine ALEErrorSign
-highlight link LspWarningLine ALEWarningSign
-
-function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
-    setlocal signcolumn=yes
-nmap <silent> <Leader>e <Plug>(lsp-next-error)
-nmap <silent> <Leader>w <Plug>(lsp-next-warning)
-nmap <silent> <Leader>D <Plug>(lsp-declaration)
-nmap <silent> <Leader>d <Plug>(lsp-definition)
-nmap <silent> <Leader>i <Plug>(lsp-implementation)
-nmap <silent> <Leader>r <Plug>(lsp-references)
-nmap <silent> <Leader>dd <Plug>(lsp-document-diagnostics)
-" Use K to show documentation in preview window
-nmap <silent> <Leader>K <Plug>(lsp-hover)
-nmap <Leader>kd <Plug>(lsp-document-format)
-    " refer to doc to add more commands
-endfunction
-
-augroup lsp_install
-    au!
-    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END

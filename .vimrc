@@ -192,7 +192,7 @@ autocmd VimEnter *
 " --------------------------------------------------------------------------------------------------------------------------------- "
 let g:ctrlp_map='<c-p>'
 let g:ctrlp_cmd='CtrlP'
-let g:ctrlp_root_markers=['project.json', 'mix.exs', '.gitignore']
+let g:ctrlp_root_markers=['project.json', 'go.mod', '*.sln', 'mix.exs', '.gitignore']
 nnoremap <Leader>. :CtrlPTag<CR>
 
 " ===                                                    Theme                                                                  === "
@@ -249,6 +249,36 @@ nmap <Leader>gh :diffget //3<CR>
 " ===                                                    Tagbar                                                                 === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 nmap <Leader>tt :TagbarToggle<CR>
+
+" Go
+let g:tagbar_type_go = {
+    \ 'ctagstype' : 'go',
+    \ 'kinds'     : [
+        \ 'p:package',
+        \ 'i:imports:1',
+        \ 'c:constants',
+        \ 'v:variables',
+        \ 't:types',
+        \ 'n:interfaces',
+        \ 'w:fields',
+        \ 'e:embedded',
+        \ 'm:methods',
+        \ 'r:constructor',
+        \ 'f:functions'
+    \ ],
+    \ 'sro' : '.',
+    \ 'kind2scope' : {
+        \ 't' : 'ctype',
+        \ 'n' : 'ntype'
+    \ },
+    \ 'scope2kind' : {
+        \ 'ctype' : 't',
+        \ 'ntype' : 'n'
+    \ },
+    \ 'ctagsbin'  : 'gotags',
+    \ 'ctagsargs' : '-sort -silent'
+\ }
+
 " Elixir
 let g:tagbar_type_elixir = {
     \ 'ctagstype' : 'elixir',

@@ -152,8 +152,7 @@ Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
 
 " git
-Plug 'airblade/vim-gitgutter'
-Plug 'jreybert/vimagit'
+Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 
@@ -211,8 +210,6 @@ let g:airline#extensions#tabline#formatter='unique_tail'
 " Custom setup that removes filetype/whitespace from default vim airline bar
 let g:airline#extensions#default#layout=[['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
 
-let g:airline#extensions#ale#enabled = 1
-
 " ===                                                    Rainbow Parentheses                                                    === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 au VimEnter * RainbowParenthesesToggle
@@ -234,34 +231,20 @@ map <C-n> :NERDTreeToggle<CR>
 nmap <leader>f :NERDTreeFind<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
-" ===                                                    GitGutter                                                              === "
-" --------------------------------------------------------------------------------------------------------------------------------- "
-let g:gitgutter_sign_added='+'
-let g:gitgutter_sign_modified='>'
-let g:gitgutter_sign_removed='-'
-let g:gitgutter_sign_removed_first_line='^'
-let g:gitgutter_sign_modified_removed='<'
-let g:gitgutter_override_sign_column_highlight=1
-" git next
-nmap <Leader>gn <Plug>(GitGutterNextHunk)
-" git previous
-nmap <Leader>gp <Plug>(GitGutterPrevHunk)
-" git add (chunk)
-nmap <Leader>ga <Plug>(GitGutterStageHunk)
-" git undo (chunk)
-nmap <Leader>gu <Plug>(GitGutterUndoHunk)
-
-" ===                                                    ViMagit                                                                === "
-" --------------------------------------------------------------------------------------------------------------------------------- "
-" git status
-nnoremap <Leader>gs :Magit<CR>
-" git push
-nnoremap <Leader>gP :! git push<CR>
-
 " ===                                                    Vim-Fugitive                                                           === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 " git blame
-nnoremap <Leader>gb :Gblame<CR>
+nmap <Leader>gb :Gblame<CR>
+" git status
+nmap <Leader>gs :G<CR>
+" git commit
+nmap <Leader>gc :Gcommit<CR>
+" git push
+nmap <Leader>gp :Gpush<CR>
+" git merge select left
+nmap <Leader>gf :diffget //2<CR>
+" git merge select right
+nmap <Leader>gh :diffget //3<CR>
 
 " ===                                                    Tagbar                                                                 === "
 " --------------------------------------------------------------------------------------------------------------------------------- "

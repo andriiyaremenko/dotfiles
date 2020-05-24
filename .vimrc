@@ -72,10 +72,12 @@ if has('langmap') && exists('+langnoremap')
   set langnoremap
 endif
 
+" Line numbers
+:set number relativenumber
+
 " My own settings:
 syntax on " Switch syntax highlighting on, when the terminal has colors
 set hlsearch " Also switch on highlighting the last used search pattern.
-set number
 set listchars=trail:~,tab:··
 set list
 set cursorline
@@ -237,6 +239,8 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isT
 nmap <Leader>gb :Gblame<CR>
 " git status
 nmap <Leader>gs :G<CR>
+" git diff
+nmap <Leader>gd :Gdiffsplit<CR>
 " git commit
 nmap <Leader>gc :Gcommit<CR>
 " git push

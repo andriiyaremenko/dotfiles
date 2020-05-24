@@ -75,6 +75,9 @@ endif
 " Line numbers
 :set number relativenumber
 
+" Center screen around cursor
+:set so=999
+
 " My own settings:
 syntax on " Switch syntax highlighting on, when the terminal has colors
 set hlsearch " Also switch on highlighting the last used search pattern.

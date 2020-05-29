@@ -198,7 +198,8 @@ autocmd VimEnter *
 let g:ctrlp_map='<c-p>'
 let g:ctrlp_cmd='CtrlP'
 let g:ctrlp_root_markers=['project.json', 'go.mod', '*.sln', 'mix.exs', '.gitignore']
-nnoremap <Leader>. :CtrlPTag<CR>
+map <C-b> :CtrlPBuffer<CR>
+map <C-c> :CtrlPClearAllCaches<CR>
 
 " ===                                                    Theme                                                                  === "
 " --------------------------------------------------------------------------------------------------------------------------------- "

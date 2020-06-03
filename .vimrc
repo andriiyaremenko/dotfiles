@@ -132,8 +132,8 @@ nnoremap <Leader>bp :bprevious<CR>
 nnoremap <Leader><Leader> <c-^>
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
-nnoremap <C-a> :vertical resize +10<CR>
-nnoremap <C-d> :vertical resize -10<CR>
+nnoremap <C-]> :vertical resize +10<CR>
+nnoremap <C-[> :vertical resize -10<CR>
 
 " ================================================================================================================================= "
 " ===                                                    Plugin Installation                                                    === "

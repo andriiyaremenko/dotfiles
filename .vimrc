@@ -130,6 +130,8 @@ nnoremap <Leader>bn :bnext<CR>
 nnoremap <Leader>bp :bprevious<CR>
 " cycle between last two open buffers
 nnoremap <Leader><Leader> <c-^>
+" <Ctrl-l> redraws the screen and removes any search highlighting.
+nnoremap <silent> <C-l> :nohl<CR><C-l>
 
 " ================================================================================================================================= "
 " ===                                                    Plugin Installation                                                    === "

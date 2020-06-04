@@ -129,11 +129,11 @@ nnoremap <Leader>bn :bnext<CR>
 " switch to previous open buffer
 nnoremap <Leader>bp :bprevious<CR>
 " cycle between last two open buffers
-nnoremap <Leader><Leader> <c-^>
+nnoremap <Leader><Leader> <C-^>
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
-nnoremap <C-]> :vertical resize +10<CR>
-nnoremap <C-[> :vertical resize -10<CR>
+nnoremap <C-@> :vertical resize +5<CR>
+nnoremap <C-\> :vertical resize -5<CR>
 
 " ================================================================================================================================= "
 " ===                                                    Plugin Installation                                                    === "
@@ -238,7 +238,7 @@ let g:NERDTreeIgnore=['^\.DS_Store$', '^\.elixir_ls$', '\.git$[[dir]]', '\.idea$
 " Toggle NERDTree on/off
 map <C-n> :NERDTreeToggle<CR>
 " Opens current file location in NERDTree
-nmap <leader>f :NERDTreeFind<CR>
+nmap <Leader>f :NERDTreeFind<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
 " ===                                                    Vim-Fugitive                                                           === "

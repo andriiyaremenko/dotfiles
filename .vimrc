@@ -183,6 +183,9 @@ Plug 'mhinz/vim-signify'
 Plug 'othree/html5.vim'
 Plug 'SirVer/ultisnips'
 
+" Go
+Plug 'sebdah/vim-delve'
+
 " Elixir/Phoenix
 Plug 'elixir-editors/vim-elixir'
 call plug#end()
@@ -560,3 +563,9 @@ augroup lsp_install
     " call s:on_lsp_buffer_enabled only for languages that has the server registered.
     autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
 augroup END
+
+" ===                                                    VIM-DELVE                                                              === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+nmap <silent> <Leader>b :DlvToggleBreakpoint<CR>
+let g:delve_breakpoint_sign = "◉"
+let g:delve_breakpoint_sign_highlight = "ALEErrorSign"

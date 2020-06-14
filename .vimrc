@@ -569,3 +569,4 @@ augroup END
 nmap <silent> <Leader>b :DlvToggleBreakpoint<CR>
 let g:delve_breakpoint_sign = "◉"
 let g:delve_breakpoint_sign_highlight = "ALEErrorSign"
+let g:delve_new_command = 'enew'

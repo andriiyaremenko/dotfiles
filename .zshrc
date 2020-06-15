@@ -9,3 +9,5 @@ if [ -f /Users/andriiyaremenko/.tnsrc ]; then
     source /Users/andriiyaremenko/.tnsrc 
 fi
 ###-tns-completion-end-###
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

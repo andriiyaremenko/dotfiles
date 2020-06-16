@@ -220,12 +220,14 @@ colorscheme nord
 " Do not draw separators for empty sections (only for the active window) >
 let g:airline_skip_empty_sections = 1
 "
-" Smartly uniquify buffers names with similar filename, suppressing common parts of paths.
+" Smartly minify buffers names with similar filename, suppressing common parts of paths.
 let g:airline#extensions#tabline#formatter='unique_tail'
 "
 " Custom setup that removes file-type/white-space from default vim airline bar
 let g:airline#extensions#default#layout=[['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
 
+" show current time
+let g:airline_section_b = '%{strftime("%H:%M")}'
 " ===                                                    Rainbow Parentheses                                                    === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 au VimEnter * RainbowParenthesesToggle

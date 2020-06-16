@@ -57,14 +57,6 @@ else
 
 endif " has("autocmd")
 
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-" Only define it when not defined already.
-if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r ++edit # | 0d_ | diffthis
-		  \ | wincmd p | diffthis
-endif
-
 if has('langmap') && exists('+langnoremap')
   " Prevent that the langmap option applies to characters that result from a
   " mapping.  If unset (default), this may break plugins (but it's backward
@@ -94,12 +86,11 @@ set spell spelllang=en_us
 set ignorecase
 set smartcase
 set showmatch
-set bg=dark
+set splitright " Set preview window to appear on the right
 set splitbelow " Set preview window to appear at bottom
 set noshowmode " Don't dispay mode in command line (airilne already shows it)
 set autoread " Automatically re-read file if a change was detected outside of vim
 set redrawtime=10000
-"set termguicolors
 map ; :
 nnoremap <SPACE> <Nop>
 let g:mapleader=' ' " Remap leader key to space
@@ -210,6 +201,15 @@ map <C-c> :CtrlPClearAllCaches<CR>
 
 " ===                                                    Theme                                                                  === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
+" support italics
+let &t_ZH="\e[3m"
+let &t_ZR="\e[23m"
+
+let g:nord_uniform_diff_background = 1
+let g:nord_italic = 1
+let g:nord_italic_comments = 1
+let g:nord_underline = 1
+let g:nord_cursor_line_number_background = 1
 colorscheme nord
 
 " ===                                                    Airline                                                                === "
@@ -220,7 +220,7 @@ let g:airline_skip_empty_sections = 1
 " Smartly uniquify buffers names with similar filename, suppressing common parts of paths.
 let g:airline#extensions#tabline#formatter='unique_tail'
 "
-" Custom setup that removes filetype/whitespace from default vim airline bar
+" Custom setup that removes file-type/white-space from default vim airline bar
 let g:airline#extensions#default#layout=[['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
 
 " ===                                                    Rainbow Parentheses                                                    === "

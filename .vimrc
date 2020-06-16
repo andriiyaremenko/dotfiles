@@ -82,7 +82,7 @@ set tabstop=4 softtabstop=0 shiftwidth=4 expandtab smarttab
 set foldmethod=syntax
 set foldnestmax=5
 set foldlevelstart=20
-set spell spelllang=en_us
+set nospell
 set ignorecase
 set smartcase
 set showmatch
@@ -150,6 +150,9 @@ Plug 'tpope/vim-commentary'
 Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/nerdtree'
 Plug 'vim-airline/vim-airline'
+
+" spell check
+Plug 'kamykn/spelunker.vim'
 
 " git
 Plug 'mhinz/vim-signify'
@@ -570,3 +573,9 @@ nmap <silent> <Leader>b :DlvToggleBreakpoint<CR>
 let g:delve_breakpoint_sign = "◉"
 let g:delve_breakpoint_sign_highlight = "ALEErrorSign"
 let g:delve_new_command = 'enew'
+
+" ===                                                    Spelunker                                                              === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+" 2: Spellcheck displayed words in buffer. Fast and dynamic. The waiting time
+" depends on the setting of CursorHold `set updatetime=1000`.
+let g:spelunker_check_type = 2

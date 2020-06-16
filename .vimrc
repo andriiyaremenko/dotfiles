@@ -227,7 +227,14 @@ let g:airline#extensions#tabline#formatter='unique_tail'
 let g:airline#extensions#default#layout=[['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
 
 " show current time
-let g:airline_section_z = airline#section#create(['%{strftime("%H:%M %z")}'.g:airline_symbols.space, 'windowswap', 'linenr', 'maxlinenr', ' :%3c '])
+let g:airline_section_z = airline#section#create([
+    \'%{strftime("%a %H:%M")}'.g:airline_symbols.space,
+    \'%{strftime("%Z")}'.g:airline_symbols.space,
+    \'windowswap',
+    \'linenr',
+    \'maxlinenr',
+    \' :%3c '
+    \])
 " ===                                                    Rainbow Parentheses                                                    === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 au VimEnter * RainbowParenthesesToggle

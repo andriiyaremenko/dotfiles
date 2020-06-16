@@ -227,7 +227,7 @@ let g:airline#extensions#tabline#formatter='unique_tail'
 let g:airline#extensions#default#layout=[['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
 
 " show current time
-let g:airline_section_b = '%{strftime("%H:%M")}'
+let g:airline_section_z = airline#section#create(['%{strftime("%H:%M %z")}'.g:airline_symbols.space, 'windowswap', 'linenr', 'maxlinenr', ' :%3c '])
 " ===                                                    Rainbow Parentheses                                                    === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 au VimEnter * RainbowParenthesesToggle
@@ -575,6 +575,7 @@ nmap <silent> <Leader>b :DlvToggleBreakpoint<CR>
 let g:delve_breakpoint_sign = "◉"
 let g:delve_breakpoint_sign_highlight = "ALEErrorSign"
 let g:delve_new_command = 'enew'
+let g:delve_enable_syntax_highlighting = 1
 
 " ===                                                    Spelunker                                                              === "
 " --------------------------------------------------------------------------------------------------------------------------------- "

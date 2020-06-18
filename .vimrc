@@ -230,6 +230,7 @@ let g:airline#extensions#default#layout=[['a', 'b', 'c'], ['x', 'z', 'warning', 
 let g:airline_section_z = airline#section#create([
     \'%{strftime("%a %H:%M")}'.g:airline_symbols.space,
     \'%{strftime("%Z")}'.g:airline_symbols.space,
+    \'%{strftime("%d %b")}'.g:airline_symbols.space,
     \'windowswap',
     \'linenr',
     \'maxlinenr',

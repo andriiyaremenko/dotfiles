@@ -269,6 +269,10 @@ nmap <Leader>gd :Gdiffsplit<CR>
 nmap <Leader>gc :Gcommit<CR>
 " git push
 nmap <Leader>gp :Gpush<CR>
+" set vertical diff split
+set diffopt+=vertical
+" git diff for merge (3 tabs)
+nmap <Leader>gm :Gdiffsplit!<CR>
 " git merge select left
 nmap <Leader>gf :diffget //2<CR>
 " git merge select right

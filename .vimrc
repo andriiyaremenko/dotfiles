@@ -574,6 +574,7 @@ nmap <silent> <Leader>pt <Plug>(lsp-peek-type-definition)
 nmap <silent> <Leader>r <Plug>(lsp-references)
 nmap <silent> <Leader>dd <Plug>(lsp-document-diagnostics)
 nmap <silent> <Leader>cl <Plug>(lsp-code-lens)
+nmap <silent> <Leader>R <Plug>(lsp-rename)
 " Use K to show documentation in preview window
 nmap <silent> <Leader>K <Plug>(lsp-hover)
 nmap <Leader>kd <Plug>(lsp-document-format)

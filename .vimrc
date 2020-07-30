@@ -123,6 +123,7 @@ nnoremap <Leader>bp :bprevious<CR>
 nnoremap <Leader><Leader> <C-^>
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
+" Ctrl-Space
 nnoremap <C-@> :vertical resize +5<CR>
 nnoremap <C-\> :vertical resize -5<CR>
 
@@ -182,6 +183,12 @@ Plug 'sebdah/vim-delve'
 
 " Elixir/Phoenix
 Plug 'elixir-editors/vim-elixir'
+
+" code screenshot
+Plug 'segeljakt/vim-silicon'
+
+" Scroll
+Plug 'psliwka/vim-smoothie'
 call plug#end()
 
 " Automatically install missing plugins on startup
@@ -600,3 +607,25 @@ let g:delve_enable_syntax_highlighting = 1
 " 2: Spellcheck displayed words in buffer. Fast and dynamic. The waiting time
 " depends on the setting of CursorHold `set updatetime=1000`.
 let g:spelunker_check_type = 2
+
+" ===                                                    ESLint                                                                 === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+nmap <silent> <Leader>El :execute '!eslint -c .eslintrc.js --fix ' . '"' . bufname('%') . '"'<CR>
+"
+" ===                                                    Silicon                                                                === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+let g:silicon = {
+      \   'theme': 'Nord',
+      \   'font': 'Hack',
+      \   'background': '#AAAAFF',
+      \   'shadow-color': '#555555',
+      \   'line-pad': 2,
+      \   'pad-horiz': 80,
+      \   'pad-vert': 100,
+      \   'shadow-blur-radius': 0,
+      \   'shadow-offset-x': 0,
+      \   'shadow-offset-y': 0,
+      \   'line-number': v:true,
+      \   'round-corner': v:true,
+      \   'window-controls': v:true,
+      \ }

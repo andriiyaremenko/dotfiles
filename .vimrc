@@ -179,6 +179,7 @@ Plug 'othree/html5.vim'
 Plug 'SirVer/ultisnips'
 
 " Go
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'sebdah/vim-delve'
 
 " Elixir/Phoenix
@@ -611,7 +612,7 @@ let g:spelunker_check_type = 2
 " ===                                                    ESLint                                                                 === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 nmap <silent> <Leader>El :execute '!eslint -c .eslintrc.js --fix ' . '"' . bufname('%') . '"'<CR>
-"
+
 " ===                                                    Silicon                                                                === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 let g:silicon = {
@@ -629,3 +630,13 @@ let g:silicon = {
       \   'round-corner': v:true,
       \   'window-controls': v:true,
       \ }
+
+" ===                                                    vim-go                                                                 === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+let g:go_fmt_fail_silently = 1
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1

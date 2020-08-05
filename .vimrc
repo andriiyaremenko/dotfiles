@@ -421,6 +421,20 @@ let g:tagbar_type_typescript = {
   \ 'sort' : 0
 \}
 
+" ===                                                    vim-go                                                                 === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+let g:go_gopls_enabled = 0
+let g:go_fmt_fail_silently = 1
+let g:go_diagnostics_enabled = 0
+let g:go_highlight_diagnostic_errors = 0
+let g:go_highlight_diagnostic_warnings = 0
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_extra_types = 1
+
 " ===                                                    LSP                                                                    === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 augroup elixir_lsp
@@ -630,13 +644,3 @@ let g:silicon = {
       \   'round-corner': v:true,
       \   'window-controls': v:true,
       \ }
-
-" ===                                                    vim-go                                                                 === "
-" --------------------------------------------------------------------------------------------------------------------------------- "
-let g:go_fmt_fail_silently = 1
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_extra_types = 1

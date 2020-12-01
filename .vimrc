@@ -79,7 +79,7 @@ set cursorline
 set encoding=utf-8
 set fileencoding=utf-8
 set tabstop=4 softtabstop=0 shiftwidth=4 expandtab smarttab
-set foldmethod=syntax
+set foldmethod=indent
 set foldnestmax=5
 set foldlevelstart=20
 set nospell
@@ -206,7 +206,7 @@ autocmd VimEnter *
 " --------------------------------------------------------------------------------------------------------------------------------- "
 let g:ctrlp_map='<c-p>'
 let g:ctrlp_cmd='CtrlP'
-let g:ctrlp_root_markers=['project.json', 'go.mod', '*.sln', 'mix.exs', '.gitignore']
+let g:ctrlp_root_markers=['project.json', 'go.mod', '*.sln', '*.fsproj', 'mix.exs', '.gitignore']
 map <C-b> :CtrlPBuffer<CR>
 map <C-c> :CtrlPClearAllCaches<CR>
 
@@ -462,18 +462,19 @@ augroup fsharp_lsp
             \ 'RecordStubGeneration': 1,
             \ 'RecordStubGenerationBody': 'failwith \"Not Implemented\"',
             \ 'InterfaceStubGeneration': 1,
-            \ 'InterfaceStubGenerationObjectIdentifier': 'this',
+            \ 'InterfaceStubGenerationObjectIdentifier': '__',
             \ 'InterfaceStubGenerationMethodBody': 'failwith \"Not Implemented\"',
             \ 'UnusedOpensAnalyzer': 1,
             \ 'UnusedDeclarationsAnalyzer': 1,
             \ 'UseSdkScripts': 1,
             \ 'SimplifyNameAnalyzer': 0,
             \ 'ResolveNamespaces': 1,
-            \ 'EnableReferenceCodeLens': 0,
+            \ 'EnableReferenceCodeLens': 1,
             \ 'dotNetRoot': '/usr/local/share/dotnet',
-            \ 'fsiExtraParameters': []
+            \ 'fsiExtraParameters': ['--langversion:preview']
         \ }
     \ },
+    \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '*.fsproj'))},
     \ 'whitelist': ['fsharp'],
     \ })
 augroup END

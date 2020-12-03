@@ -450,7 +450,7 @@ augroup fsharp_lsp
   au!
   au User lsp_setup call lsp#register_server({
     \ 'name': 'FSAC',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'dotnet ~/.lsp/FsAutoComplete/bin/release_netcore/fsautocomplete.dll --background-service-enabled']},
+    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'dotnet ~/.lsp/fsac/fsautocomplete.dll --background-service-enabled']},
     \ 'initialization_options': {'AutomaticWorkspaceInit': 1},
     \ 'workspace_config': {
         \ 'FSharp': {

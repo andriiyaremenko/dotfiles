@@ -88,7 +88,7 @@ set smartcase
 set showmatch
 set splitright " Set preview window to appear on the right
 set splitbelow " Set preview window to appear at bottom
-set noshowmode " Don't dispay mode in command line (airilne already shows it)
+set noshowmode " Don't dispay mode in command line (lightline already shows it)
 set autoread " Automatically re-read file if a change was detected outside of vim
 set redrawtime=10000
 map ; :
@@ -144,13 +144,15 @@ call plug#begin('~/.vim/plugged')
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 
+" navigation
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'arcticicestudio/nord-vim'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-commentary'
-Plug 'pangloss/vim-javascript'
 Plug 'scrooloose/nerdtree'
-Plug 'vim-airline/vim-airline'
+
+" appearance
+Plug 'arcticicestudio/nord-vim'
+Plug 'itchyny/lightline.vim'
+Plug 'kien/rainbow_parentheses.vim'
+Plug 'Yggdroot/indentLine'
 
 " spell check
 Plug 'kamykn/spelunker.vim'
@@ -159,6 +161,7 @@ Plug 'kamykn/spelunker.vim'
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
+Plug 'mhinz/vim-signify'
 
 " Language syntax highlight
 Plug 'sheerun/vim-polyglot'
@@ -167,15 +170,17 @@ Plug 'sheerun/vim-polyglot'
 Plug 'ianks/vim-tsx'
 
 " lsp client
+Plug 'tpope/vim-dispatch'
 Plug 'prabirshrestha/async.vim'
 Plug 'prabirshrestha/vim-lsp'
 Plug 'prabirshrestha/asyncomplete.vim'
 
+" js / html / css
+Plug 'pangloss/vim-javascript'
 Plug 'Quramy/vim-js-pretty-template'
-Plug 'Yggdroot/indentLine'
-Plug 'kien/rainbow_parentheses.vim'
-Plug 'mhinz/vim-signify'
 Plug 'othree/html5.vim'
+
+" snippets
 Plug 'SirVer/ultisnips'
 
 " Go
@@ -223,27 +228,28 @@ let g:nord_underline = 1
 let g:nord_cursor_line_number_background = 1
 colorscheme nord
 
-" ===                                                    Airline                                                                === "
+" ===                                                   LightLine                                                               === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
-" Do not draw separators for empty sections (only for the active window) >
-let g:airline_skip_empty_sections = 1
-"
-" Smartly minify buffers names with similar filename, suppressing common parts of paths.
-let g:airline#extensions#tabline#formatter='unique_tail'
-"
-" Custom setup that removes file-type/white-space from default vim airline bar
-let g:airline#extensions#default#layout=[['a', 'b', 'c'], ['x', 'z', 'warning', 'error']]
-
-" show current time
-let g:airline_section_z = airline#section#create([
-    \'%{strftime("%a %H:%M")}'.g:airline_symbols.space,
-    \'%{strftime("%Z")}'.g:airline_symbols.space,
-    \'%{strftime("%d %b")}'.g:airline_symbols.space,
-    \'windowswap',
-    \'linenr',
-    \'maxlinenr',
-    \' :%3c '
-    \])
+let g:lightline = {
+      \ 'colorscheme': 'nord',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ],
+      \             [ 'fileencoding', 'filetype' ] ],
+      \   'right': [ [ 'date', 'lineinfo' , 'linescount' ] ]
+      \ },
+      \ 'inactive': {
+      \   'left': [ [ 'filename' ] ],
+      \   'right': [ [ 'linescount' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'FugitiveHead',
+      \ },
+      \ 'component': {
+      \   'linescount': "%{line('$')}",
+      \   'date': '%{strftime("%a %H:%M, %d %b (%Z)")}',
+      \ },
+      \ }
 " ===                                                    Rainbow Parentheses                                                    === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 au VimEnter * RainbowParenthesesToggle

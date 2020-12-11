@@ -246,7 +246,7 @@ let g:lightline = {
       \ },
       \ 'component': {
       \   'linescount': "%{line('$')}",
-      \   'date': '%{strftime("%a %H:%M, %d %b (%Z)")}',
+      \   'date': '%{strftime("%a %H:%M, %d %b %z")}',
       \ },
       \ }
 " ===                                                    Rainbow Parentheses                                                    === "

@@ -184,7 +184,6 @@ Plug 'othree/html5.vim'
 Plug 'SirVer/ultisnips'
 
 " Go
-Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'sebdah/vim-delve'
 
 " Elixir/Phoenix
@@ -427,20 +426,13 @@ let g:tagbar_type_typescript = {
   \ 'sort' : 0
 \}
 
-" ===                                                    vim-go                                                                 === "
+" ===                                                      go                                                                   === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
-let g:go_gopls_enabled = 0
-let g:go_code_completion_enabled = 0
-let g:go_diagnostics_enabled = 0
-let g:go_highlight_diagnostic_errors = 0
-let g:go_highlight_diagnostic_warnings = 0
-let g:go_fmt_fail_silently = 1
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_function_calls = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_extra_types = 1
+au BufRead,BufNewFile *.go set filetype=go
+au BufRead,BufNewFile *.tmpl set filetype=gotexttmpl
+au BufRead,BufNewFile *.html.tmpl set filetype=gohtmltmpl
+au BufRead,BufNewFile go.mod set filetype=gomod
+au BufRead,BufNewFile go.sum set filetype=gosum
 
 " ===                                                    LSP                                                                    === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
@@ -583,7 +575,9 @@ let g:lsp_signs_warning = {'text': '⚠'} " icons require GUI
 let g:lsp_signs_hint = {'text': '!'} " icons require GUI
 let g:lsp_highlights_enabled = 0
 let g:lsp_textprop_enabled = 0
+let g:lsp_preview_keep_focus = 0
 let g:lsp_highlight_references_enabled = 1
+let g:lsp_signs_priority = 11
 highlight link LspErrorText ALEErrorSign
 highlight link LspWarningText ALEWarningSign
 highlight link LspErrorLine ALEErrorSign
@@ -592,6 +586,7 @@ highlight link LspWarningLine ALEWarningSign
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete
     setlocal signcolumn=yes
+" refer to doc to add more commands
 nmap <silent> <Leader>e <Plug>(lsp-next-error)
 nmap <silent> <Leader>w <Plug>(lsp-next-warning)
 nmap <silent> <Leader>D <Plug>(lsp-declaration)
@@ -608,7 +603,6 @@ nmap <silent> <Leader>R <Plug>(lsp-rename)
 " Use K to show documentation in preview window
 nmap <silent> <Leader>K <Plug>(lsp-hover)
 nmap <Leader>kd <Plug>(lsp-document-format)
-    " refer to doc to add more commands
 endfunction
 
 augroup lsp_install

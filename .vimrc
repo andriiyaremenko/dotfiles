@@ -161,7 +161,6 @@ Plug 'kamykn/spelunker.vim'
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
-Plug 'mhinz/vim-signify'
 
 " Language syntax highlight
 Plug 'sheerun/vim-polyglot'
@@ -233,7 +232,7 @@ let g:lightline = {
       \ 'colorscheme': 'nord',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'relativepath', 'modified' ],
+      \             [ 'gitbranch', 'readonly', 'relativepath' ],
       \             [ 'fileencoding', 'filetype' ] ],
       \   'right': [ [ 'date', 'lineinfo' , 'linescount' ] ]
       \ },
@@ -242,13 +241,52 @@ let g:lightline = {
       \   'right': [ [ 'linescount' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'FugitiveHead',
-      \ },
-      \ 'component': {
-      \   'linescount': "%{line('$')}",
-      \   'date': '%{strftime("%a %H:%M, %d %b %z")}',
+      \   'relativepath': 'LightlineRelativePath',
+      \   'date': 'LightlineDate',
+      \   'linescount': "LightlineCount",
+      \   'paste': "LightlinePaste",
+      \   'gitbranch': "LightlineGitbranch",
+      \   'fileencoding': "LightlineFileEncoding",
+      \   'filetype': "LightlineFileType",
+      \   'readonly': "LightlineReadonly",
       \ },
       \ }
+
+function! LightlineReadonly()
+  return winwidth(0) > 70 && &ft !~? 'help' && &readonly ? 'RO' : ''
+endfunction
+
+function! LightlineFileType()
+  return winwidth(0) > 70 ? &filetype : ''
+endfunction
+
+function! LightlineFileEncoding()
+  return winwidth(0) > 70 ? &fileencoding : ''
+endfunction
+
+function! LightlineGitbranch()
+  return winwidth(0) > 70 ? FugitiveHead() : ''
+endfunction
+
+function! LightlinePaste()
+  return winwidth(0) > 70 && &paste ? 'PASTE' : ''
+endfunction
+
+function! LightlineCount()
+  return winwidth(0) > 70 ? line('$') : ''
+endfunction
+
+function! LightlineDate()
+  return winwidth(0) > 70 ? strftime("%a %H:%M, %d %b %z") : ''
+endfunction
+
+function! LightlineRelativePath()
+  let relativepath = expand('%:f') !=# '' ? expand('%:f') : '[No Name]'
+  let modified = &modified ? ' +' : ''
+  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
+
+  return winwidth(0) > 70 ? relativepath . modified : filename
+endfunction
 " ===                                                    Rainbow Parentheses                                                    === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 au VimEnter * RainbowParenthesesToggle
@@ -264,6 +302,8 @@ let g:NERDTreeShowHidden=1
 let g:NERDTreeMinimalUI=1
 " Hide certain files and directories from NERDTree
 let g:NERDTreeIgnore=['^\.DS_Store$', '^\.elixir_ls$', '\.git$[[dir]]', '\.idea$[[dir]]', '\.sass-cache$']
+" window width
+let g:NERDTreeWinSize=30
 " Toggle NERDTree on/off
 map <C-n> :NERDTreeToggle<CR>
 " Opens current file location in NERDTree

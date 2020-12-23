@@ -17,6 +17,7 @@ set laststatus=2
 set completeopt=longest,menuone,preview
 set previewheight=5
 set wildignore+=*.*~
+set colorcolumn=100
 
 " Don't use Ex mode, use Q for formatting
 map Q gq

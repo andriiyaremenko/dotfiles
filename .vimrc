@@ -608,20 +608,19 @@ augroup csharp_lsp
     \ })
 augroup END
 
-let g:lsp_signs_enabled = 1         " enable signs
+let g:lsp_diagnostics_signs_enabled = 1         " enable signs
 let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
-let g:lsp_signs_error = {'text': '✘'}
-let g:lsp_signs_warning = {'text': '⚠'} " icons require GUI
-let g:lsp_signs_hint = {'text': '!'} " icons require GUI
-let g:lsp_highlights_enabled = 0
-let g:lsp_textprop_enabled = 0
+let g:lsp_diagnostics_signs_error = {'text': '✘'}
+let g:lsp_diagnostics_signs_warning = {'text': '𝙬'} " icons require GUI
+let g:lsp_diagnostics_signs_hint = {'text': '𝙞'} " icons require GUI
+let g:lsp_diagnostics_signs_priority = 11
+let g:lsp_document_code_action_signs_enabled = 1
+let g:lsp_document_code_action_signs_hint = {'text': '𝙖'}
 let g:lsp_preview_keep_focus = 0
-let g:lsp_highlight_references_enabled = 1
-let g:lsp_signs_priority = 11
+highlight link LspErrorHighlight ALEErrorSign
+highlight link LspWarningHighlight ALEWarningSign
 highlight link LspErrorText ALEErrorSign
 highlight link LspWarningText ALEWarningSign
-highlight link LspErrorLine ALEErrorSign
-highlight link LspWarningLine ALEWarningSign
 
 function! s:on_lsp_buffer_enabled() abort
     setlocal omnifunc=lsp#complete

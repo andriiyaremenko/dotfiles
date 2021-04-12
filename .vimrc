@@ -611,7 +611,7 @@ augroup END
 let g:lsp_diagnostics_signs_enabled = 1         " enable signs
 let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
 let g:lsp_diagnostics_signs_error = {'text': '✘'}
-let g:lsp_diagnostics_signs_warning = {'text': '𝙬'} " icons require GUI
+let g:lsp_diagnostics_signs_warning = {'text': '⚡'} " icons require GUI
 let g:lsp_diagnostics_signs_hint = {'text': '𝙞'} " icons require GUI
 let g:lsp_diagnostics_signs_priority = 11
 let g:lsp_document_code_action_signs_enabled = 1
@@ -639,6 +639,7 @@ nmap <silent> <Leader>r <Plug>(lsp-references)
 nmap <silent> <Leader>dd <Plug>(lsp-document-diagnostics)
 nmap <silent> <Leader>cl <Plug>(lsp-code-lens)
 nmap <silent> <Leader>R <Plug>(lsp-rename)
+nmap <silent> <Leader>ca <Plug>(lsp-code-action)
 " Use K to show documentation in preview window
 nmap <silent> <Leader>K <Plug>(lsp-hover)
 nmap <Leader>kd <Plug>(lsp-document-format)

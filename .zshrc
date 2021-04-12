@@ -1,3 +1,5 @@
+export PATH="/opt/homebrew/opt/icu4c/bin:$PATH"
+export PATH="/opt/homebrew/opt/icu4c/sbin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="$HOME/.mix/escripts:$PATH"
 export PATH=$PATH:$(go env GOPATH)/bin

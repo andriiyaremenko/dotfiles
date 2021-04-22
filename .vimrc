@@ -88,7 +88,7 @@ set smartcase
 set showmatch
 set splitright " Set preview window to appear on the right
 set splitbelow " Set preview window to appear at bottom
-set noshowmode " Don't dispay mode in command line (lightline already shows it)
+set noshowmode " Don't display mode in command line (lightline already shows it)
 set autoread " Automatically re-read file if a change was detected outside of vim
 set redrawtime=10000
 map ; :
@@ -146,7 +146,8 @@ Plug 'majutsushi/tagbar'
 
 " navigation
 Plug 'ctrlpvim/ctrlp.vim'
-Plug 'scrooloose/nerdtree'
+Plug 'lambdalisue/fern.vim'
+Plug 'lambdalisue/fern-git-status.vim'
 
 " appearance
 Plug 'arcticicestudio/nord-vim'
@@ -294,21 +295,76 @@ au Syntax * RainbowParenthesesLoadRound
 au Syntax * RainbowParenthesesLoadSquare
 au Syntax * RainbowParenthesesLoadBraces
 
-" ===                                                    NERDTree                                                               === "
+" ===                                                      Fern                                                                 === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
-" Show hidden files/directories
-let g:NERDTreeShowHidden=1
-" Remove bookmarks and help text from NERDTree
-let g:NERDTreeMinimalUI=1
-" Hide certain files and directories from NERDTree
-let g:NERDTreeIgnore=['^\.DS_Store$', '^\.elixir_ls$', '\.git$[[dir]]', '\.idea$[[dir]]', '\.sass-cache$']
-" window width
-let g:NERDTreeWinSize=30
-" Toggle NERDTree on/off
-map <C-n> :NERDTreeToggle<CR>
-" Opens current file location in NERDTree
-nmap <Leader>f :NERDTreeFind<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" Disable netrw.
+let g:loaded_netrw  = 1
+let g:loaded_netrwPlugin = 1
+let g:loaded_netrwSettings = 1
+let g:loaded_netrwFileHandlers = 1
+
+augroup my-fern-hijack
+  autocmd!
+  autocmd BufEnter * ++nested call s:hijack_directory()
+augroup END
+
+function! s:hijack_directory() abort
+  let path = expand('%:p')
+  if !isdirectory(path)
+    return
+  endif
+  bwipeout %
+  execute printf('Fern %s', fnameescape(path))
+endfunction
+
+let g:fern#disable_default_mappings = 1
+let g:fern#disable_drawer_auto_quit = 1
+let g:fern#renderer#default#leading = "│"
+let g:fern#renderer#default#root_symbol = "┬ "
+let g:fern#renderer#default#leaf_symbol = "├─ "
+let g:fern#renderer#default#collapsed_symbol = "├─ "
+let g:fern#renderer#default#expanded_symbol = "├┬ "
+let g:fern#mark_symbol = '✓'
+"
+" Toggle Fern on/off
+noremap <silent> <C-n> :Fern . -drawer -width=35 -toggle -reveal=%<CR><C-w>=
+
+function! FernInit() abort
+  nmap <buffer><expr>
+        \ <Plug>(fern-my-open-expand-collapse)
+        \ fern#smart#leaf(
+        \   "\<Plug>(fern-action-open:select)",
+        \   "\<Plug>(fern-action-expand)",
+        \   "\<Plug>(fern-action-collapse)",
+        \ )
+  nmap <buffer> <CR> <Plug>(fern-my-open-expand-collapse)
+  nmap <buffer> n <Plug>(fern-action-new-path)
+  nmap <buffer> d <Plug>(fern-action-remove)
+  nmap <buffer> m <Plug>(fern-action-move)
+  nmap <buffer> M <Plug>(fern-action-rename)
+  nmap <buffer> h <Plug>(fern-action-hidden-toggle)
+  nmap <buffer> r <Plug>(fern-action-reload)
+  nmap <buffer> b <Plug>(fern-action-open:split)
+  nmap <buffer> v <Plug>(fern-action-open:vsplit)
+  nmap <buffer> K <Plug>(fern-action-mark:toggle)
+  nmap <buffer><nowait> < <Plug>(fern-action-leave)
+  nmap <buffer><nowait> > <Plug>(fern-action-enter)
+endfunction
+
+augroup FernEvents
+  autocmd!
+  autocmd FileType fern call FernInit()
+augroup END
+
+" automatically update fern on entering
+augroup FernTypeGroup
+    autocmd! * <buffer>
+    autocmd BufEnter <buffer> silent execute "normal \<Plug>(fern-action-reload)"
+augroup END
+
+" ===                                                 Fern Git Status                                                           === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+let g:fern_git_status#disable_ignored = 1
 
 " ===                                                    Vim-Fugitive                                                           === "
 " --------------------------------------------------------------------------------------------------------------------------------- "

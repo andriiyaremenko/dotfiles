@@ -145,7 +145,9 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 
 " navigation
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+Plug 'stsewd/fzf-checkout.vim'
 Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/fern-git-status.vim'
 
@@ -206,13 +208,22 @@ autocmd VimEnter *
 " ===                                                    Plugin Configuration                                                   === "
 " ================================================================================================================================= "
 
-" ===                                                    CtrlP                                                                  === "
+" ===                                                     FZF                                                                   === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
-let g:ctrlp_map='<c-p>'
-let g:ctrlp_cmd='CtrlP'
-let g:ctrlp_root_markers=['project.json', 'go.mod', '*.sln', '*.fsproj', 'mix.exs', '.gitignore']
-map <C-b> :CtrlPBuffer<CR>
-map <C-c> :CtrlPClearAllCaches<CR>
+nnoremap <silent> <C-p> :Files<CR>
+nnoremap <silent> <C-b> :Buffers<CR>
+nnoremap <silent> <C-g> :GFiles?<CR>
+
+let g:fzf_commits_log_options = '--graph --color=always
+  \ --format="%C(yellow)%h%C(red)%d%C(reset)
+  \ - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
+
+nnoremap <silent> <Leader>c  :Commits<CR>
+nnoremap <silent> <Leader>bc :BCommits<CR>
+
+" ===                                                 FZF Checkout                                                              === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+nnoremap <Leader>ch :GCheckout<CR>
 
 " ===                                                    Theme                                                                  === "
 " --------------------------------------------------------------------------------------------------------------------------------- "

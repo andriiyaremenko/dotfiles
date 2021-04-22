@@ -579,25 +579,40 @@ if executable('docker-langserver')
             \ })
     augroup END
 endif
-augroup vim_lsp
-  au!
-  au User lsp_setup call lsp#register_server({
-    \ 'name': 'vim-language-server',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'vim-language-server --stdio']},
-    \ 'initialization_options': { 'vimruntime': $VIMRUNTIME, 'runtimepath': &rtp },
-    \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), ['.git/', '.vim/', 'vimfiles/']))},
-    \ 'whitelist': ['vim'],
-    \ })
-augroup END
-augroup bash_lsp
-  au!
-  au User lsp_setup call lsp#register_server({
-    \ 'name': 'bash-language-server',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'bash-language-server --stdio']},
-    \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), ['.git/']))},
-    \ 'whitelist': ['sh'],
-    \ })
-augroup END
+if executable('vim-language-server')
+  augroup vim_lsp
+    au!
+    au User lsp_setup call lsp#register_server({
+      \ 'name': 'vim-language-server',
+      \ 'cmd': {server_info->[&shell, &shellcmdflag, 'vim-language-server --stdio']},
+      \ 'initialization_options': { 'vimruntime': $VIMRUNTIME, 'runtimepath': &rtp },
+      \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), ['.git/', '.vim/', 'vimfiles/']))},
+      \ 'whitelist': ['vim'],
+      \ })
+  augroup END
+endif
+if executable('bash-language-server')
+  augroup bash_lsp
+    au!
+    au User lsp_setup call lsp#register_server({
+      \ 'name': 'bash-language-server',
+      \ 'cmd': {server_info->[&shell, &shellcmdflag, 'bash-language-server --stdio']},
+      \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), ['.git/']))},
+      \ 'whitelist': ['sh'],
+      \ })
+  augroup END
+endif
+if executable('tsserver')
+  augroup angular_lsp
+    au!
+    au User lsp_setup call lsp#register_server({
+      \ 'name': 'angular-language-server',
+      \ 'cmd': {server_info->[&shell, &shellcmdflag, '. ~/.lsp/angular-language-server --stdio']},
+      \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), ['angular.json']))},
+      \ 'whitelist': ['html'],
+      \ })
+  augroup END
+endif
 augroup csharp_lsp
   au!
   au User lsp_setup call lsp#register_server({
@@ -610,11 +625,11 @@ augroup csharp_lsp
     \ })
 augroup END
 
-let g:lsp_diagnostics_signs_enabled = 1         " enable signs
+let g:lsp_diagnostics_signs_enabled = 1 " enable signs
 let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
 let g:lsp_diagnostics_signs_error = {'text': '✘'}
-let g:lsp_diagnostics_signs_warning = {'text': '⚡'} " icons require GUI
-let g:lsp_diagnostics_signs_hint = {'text': '𝙞'} " icons require GUI
+let g:lsp_diagnostics_signs_warning = {'text': '⚡'}
+let g:lsp_diagnostics_signs_hint = {'text': '𝙞'}
 let g:lsp_diagnostics_signs_priority = 11
 let g:lsp_document_code_action_signs_enabled = 1
 let g:lsp_document_code_action_signs_hint = {'text': '𝙖'}

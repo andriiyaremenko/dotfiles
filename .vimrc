@@ -213,6 +213,7 @@ autocmd VimEnter *
 nnoremap <silent> <C-p> :Files<CR>
 nnoremap <silent> <C-b> :Buffers<CR>
 nnoremap <silent> <C-g> :GFiles?<CR>
+nnoremap <silent> <C-f> :Ag<CR>
 
 let g:fzf_commits_log_options = '--graph --color=always
   \ --format="%C(yellow)%h%C(red)%d%C(reset)

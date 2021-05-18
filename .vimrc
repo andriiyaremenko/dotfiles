@@ -241,6 +241,13 @@ let g:nord_italic = 1
 let g:nord_italic_comments = 1
 let g:nord_underline = 1
 let g:nord_cursor_line_number_background = 1
+
+augroup nord-theme-overrides
+  autocmd!
+  autocmd ColorScheme nord highlight goTypeName ctermfg=3 guifg=#4C566A
+  autocmd ColorScheme nord highlight goReceiverType ctermfg=3 guifg=#4C566A
+  autocmd ColorScheme nord highlight goFunctionCall ctermfg=14 guifg=#8FBCBB
+augroup END
 colorscheme nord
 
 " ===                                                   LightLine                                                               === "

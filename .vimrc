@@ -154,7 +154,6 @@ Plug 'lambdalisue/fern-git-status.vim'
 " appearance
 Plug 'arcticicestudio/nord-vim'
 Plug 'itchyny/lightline.vim'
-Plug 'kien/rainbow_parentheses.vim'
 Plug 'Yggdroot/indentLine'
 
 " spell check
@@ -311,12 +310,6 @@ function! LightlineRelativePath()
 
   return winwidth(0) > 70 ? relativepath . modified : filename
 endfunction
-" ===                                                    Rainbow Parentheses                                                    === "
-" --------------------------------------------------------------------------------------------------------------------------------- "
-au VimEnter * RainbowParenthesesToggle
-au Syntax * RainbowParenthesesLoadRound
-au Syntax * RainbowParenthesesLoadSquare
-au Syntax * RainbowParenthesesLoadBraces
 
 " ===                                                      Fern                                                                 === "
 " --------------------------------------------------------------------------------------------------------------------------------- "

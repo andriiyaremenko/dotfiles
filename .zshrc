@@ -10,6 +10,8 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 # Create as alias for nuget
 alias nuget="mono /usr/local/bin/nuget.exe"
 
+precmd () {print -Pn "\e]0;${PWD##*/}\a"}
+
 ###-tns-completion-start-###
 if [ -f /Users/andriiyaremenko/.tnsrc ]; then 
     source /Users/andriiyaremenko/.tnsrc 

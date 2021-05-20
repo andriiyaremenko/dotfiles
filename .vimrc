@@ -246,6 +246,8 @@ augroup nord-theme-overrides
   autocmd ColorScheme nord highlight goTypeName ctermfg=3 guifg=#4C566A
   autocmd ColorScheme nord highlight goReceiverType ctermfg=3 guifg=#4C566A
   autocmd ColorScheme nord highlight goFunctionCall ctermfg=14 guifg=#8FBCBB
+  autocmd ColorScheme nord highlight Visual ctermfg=0 ctermbg=3 guifg=#2E3440 guibg=#4C566A
+  autocmd ColorScheme nord highlight VisualNOS ctermfg=0 ctermbg=3 guifg=#2E3440 guibg=#4C566A
 augroup END
 colorscheme nord
 

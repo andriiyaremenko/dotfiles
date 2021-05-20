@@ -275,6 +275,8 @@ let g:lightline = {
       \   'filetype': "LightlineFileType",
       \   'readonly': "LightlineReadonly",
       \ },
+      \ 'separator': { 'left': '', 'right': '' },
+      \ 'subseparator': { 'left': '╱', 'right': '╱' },
       \ }
 
 function! LightlineReadonly()

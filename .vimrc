@@ -235,6 +235,10 @@ let g:fzf_branch_actions = {
 let &t_ZH="\e[3m"
 let &t_ZR="\e[23m"
 
+if (has('termguicolors'))
+  set termguicolors
+endif
+
 let g:nord_uniform_diff_background = 1
 let g:nord_italic = 1
 let g:nord_italic_comments = 1
@@ -243,11 +247,11 @@ let g:nord_cursor_line_number_background = 1
 
 augroup nord-theme-overrides
   autocmd!
-  autocmd ColorScheme nord highlight goTypeName ctermfg=3 guifg=#4C566A
-  autocmd ColorScheme nord highlight goReceiverType ctermfg=3 guifg=#4C566A
+  autocmd ColorScheme nord highlight goTypeName ctermfg=3 guifg=#EBCB8B
+  autocmd ColorScheme nord highlight goReceiverType ctermfg=3 guifg=#EBCB8B
   autocmd ColorScheme nord highlight goFunctionCall ctermfg=14 guifg=#8FBCBB
-  autocmd ColorScheme nord highlight Visual ctermfg=0 ctermbg=3 guifg=#2E3440 guibg=#4C566A
-  autocmd ColorScheme nord highlight VisualNOS ctermfg=0 ctermbg=3 guifg=#2E3440 guibg=#4C566A
+  autocmd ColorScheme nord highlight Visual ctermfg=0 ctermbg=3 guifg=#2E3440 guibg=#EBCB8B
+  autocmd ColorScheme nord highlight VisualNOS ctermfg=0 ctermbg=3 guifg=#2E3440 guibg=#EBCB8B
 augroup END
 colorscheme nord
 

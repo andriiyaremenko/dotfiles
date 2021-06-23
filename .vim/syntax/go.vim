@@ -55,9 +55,9 @@ hi def link     goPredefinedIdentifiers    goBoolean
 syn keyword     goTodo              contained TODO FIXME XXX BUG
 syn cluster     goCommentGroup      contains=goTodo
 
-syn region      goComment           start="//" end="$" contains=goGenerate,@goCommentGroup,@Spell
-syn region    goComment           start="/\*" end="\*/" contains=@goCommentGroup,@Spell fold
-syn match     goComment           "\v(^\s*//.*\n)+" contains=goGenerate,@goCommentGroup,@Spell fold
+syn region      goComment           start="//" end="$" contains=goGenerate,goEmbed,@goCommentGroup,@Spell
+syn region      goComment           start="/\*" end="\*/" contains=@goCommentGroup,@Spell fold
+syn match       goComment           "\v(^\s*//.*\n)+" contains=goGenerate,@goCommentGroup,@Spell fold
 
 hi def link     goComment           Comment
 hi def link     goTodo              Todo
@@ -66,6 +66,10 @@ syn match       goGenerateVariables contained /\%(\$GOARCH\|\$GOOS\|\$GOFILE\|\$
 syn region      goGenerate          start="^\s*//go:generate" end="$" contains=goGenerateVariables
 hi def link     goGenerate          PreProc
 hi def link     goGenerateVariables Special
+syn match       goEmbedVariables    contained /\_s.*/
+syn region      goEmbed             start="^\s*//go:embed" end="$" contains=goEmbedVariables
+hi def link     goEmbed             PreProc
+hi def link     goEmbedVariables    Special
 
 " Go escapes
 syn match       goEscapeOctal       display contained "\\[0-7]\{3}"

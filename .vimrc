@@ -152,7 +152,7 @@ Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/fern-git-status.vim'
 
 " appearance
-Plug 'arcticicestudio/nord-vim'
+Plug 'gruvbox-community/gruvbox'
 Plug 'itchyny/lightline.vim'
 Plug 'Yggdroot/indentLine'
 
@@ -239,26 +239,39 @@ if (has('termguicolors'))
   set termguicolors
 endif
 
-let g:nord_uniform_diff_background = 1
-let g:nord_italic = 1
-let g:nord_italic_comments = 1
-let g:nord_underline = 1
-let g:nord_cursor_line_number_background = 1
+let g:gruvbox_contrast_dark = 'soft'
+let g:gruvbox_contrast_light = 'soft'
+let g:gruvbox_italic = 1
+let g:gruvbox_bold = 1
+let g:gruvbox_underline = 1
+let g:gruvbox_undercurl = 1
+let g:gruvbox_italicize_comments = 1
+let g:gruvbox_improved_warnings =1
+let g:gruvbox_improved_strings = 0
+let g:gruvbox_invert_selection=0
 
-augroup nord-theme-overrides
-  autocmd!
-  autocmd ColorScheme nord highlight goTypeName ctermfg=3 guifg=#EBCB8B
-  autocmd ColorScheme nord highlight goReceiverType ctermfg=3 guifg=#EBCB8B
-  autocmd ColorScheme nord highlight goFunctionCall ctermfg=14 guifg=#8FBCBB
-  autocmd ColorScheme nord highlight Visual ctermfg=0 ctermbg=3 guifg=#2E3440 guibg=#EBCB8B
-  autocmd ColorScheme nord highlight VisualNOS ctermfg=0 ctermbg=3 guifg=#2E3440 guibg=#EBCB8B
-augroup END
-colorscheme nord
+let iterm_profile = $TERM_PROFILE
+
+if iterm_profile == "dark"
+    set background=dark
+else
+    set background=light
+endif
+
+colorscheme gruvbox
+
+if (&background == 'dark')
+  hi Visual guibg=#98971a guifg=#ebdbb2
+else
+  hi Visual guibg=#98971a guifg=#3c3836
+endif
+
+"TODO: improve const and var regions
 
 " ===                                                   LightLine                                                               === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
 let g:lightline = {
-      \ 'colorscheme': 'nord',
+      \ 'colorscheme': 'gruvbox',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'gitbranch', 'readonly', 'relativepath' ],

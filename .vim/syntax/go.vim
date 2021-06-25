@@ -124,10 +124,10 @@ syn region    goBlock             start="{" end="}" transparent fold
 syn region    goImport            start='import (' end=')' transparent fold contains=goImport,goString,goComment
 
 " var, const
-syn region    goVar               start='var ('   end='^\s*)$' transparent fold
-                      \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
-syn region    goConst             start='const (' end='^\s*)$' transparent fold
-                      \ contains=ALLBUT,goParen,goBlock,goFunction,goTypeName,goReceiverType,goReceiverVar,goParamName,goParamType,goSimpleParams,goPointerOperator
+syn region    goVar               start='var ('   end=')' transparent fold
+                      \ contains=ALLBUT,goParen,goTypeName
+syn region    goConst             start='const (' end=')' transparent fold
+                      \ contains=ALLBUT,goParen,goBlock,goTypeName,goFunction,goReceiverType,goReceiverVar,goPointerOperator
 
 " Single-line var, const, and import.
 syn match       goSingleDecl        /\%(import\|var\|const\) [^(]\@=/ contains=goImport,goVar,goConst

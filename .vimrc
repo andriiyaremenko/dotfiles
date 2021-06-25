@@ -250,9 +250,9 @@ let g:gruvbox_improved_warnings =1
 let g:gruvbox_improved_strings = 0
 let g:gruvbox_invert_selection=0
 
-let iterm_profile = $TERM_PROFILE
+let term_profile = $TERM_PROFILE
 
-if iterm_profile == "dark"
+if term_profile == "dark"
     set background=dark
 else
     set background=light
@@ -265,8 +265,6 @@ if (&background == 'dark')
 else
   hi Visual guibg=#98971a guifg=#3c3836
 endif
-
-"TODO: improve const and var regions
 
 " ===                                                   LightLine                                                               === "
 " --------------------------------------------------------------------------------------------------------------------------------- "

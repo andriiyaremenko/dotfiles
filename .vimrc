@@ -252,7 +252,7 @@ let g:gruvbox_invert_selection=0
 
 let term_profile = $TERM_PROFILE
 
-if term_profile == "dark"
+if term_profile == "Night"
     set background=dark
 else
     set background=light

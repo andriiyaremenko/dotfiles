@@ -25,10 +25,12 @@ function my_ip
     curl -s https://ipinfo.io/ip
 end
 function my_postal
-    curl -s ipinfo.io/(my_ip) | jq '.postal'
+    set ip (my_ip)
+    test -n "$ip"; and curl -s ipinfo.io/"$ip" | jq '.postal'; or echo "-----"
 end
 function my_lat_lon
-    curl -s ipinfo.io/(my_ip) | jq '.loc'
+    set ip (my_ip)
+    test -n "$ip"; and curl -s ipinfo.io/"$ip" | jq '.loc'; or echo "-,-"
 end
 
 function daynight

@@ -69,7 +69,7 @@ SETUVAR pure_separate_prompt_on_error:false
 SETUVAR pure_show_jobs:false
 SETUVAR pure_show_prefix_root_prompt:false
 SETUVAR pure_show_subsecond_command_duration:false
-SETUVAR pure_show_system_time:true
+SETUVAR pure_show_system_time:false
 SETUVAR pure_symbol_git_dirty:\x2a
 SETUVAR pure_symbol_git_stash:\u2261
 SETUVAR pure_symbol_git_unpulled_commits:\u21e3

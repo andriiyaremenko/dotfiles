@@ -1,0 +1,20 @@
+[[battery.display]]
+threshold = 10
+style = "bold red"
+
+[[battery.display]]
+threshold = 55
+style = "bold yellow"
+
+[[battery.display]]
+threshold = 80
+style = "bold green"
+
+[golang]
+symbol = "go "
+
+[time]
+disabled = false
+
+[username]
+show_always = true

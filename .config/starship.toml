@@ -12,6 +12,7 @@ style = "bold green"
 
 [time]
 disabled = false
+time_format = "%H:%M"
 
 [username]
 show_always = true

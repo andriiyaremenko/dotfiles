@@ -5,22 +5,29 @@ export PATH="$HOME/.mix/escripts:$PATH"
 export PATH=$PATH:$(go env GOPATH)/bin
 export PATH="$PATH:$HOME/.cargo/bin"
 export LC_ALL=en_US.UTF-8
+
+eval "$(starship init zsh)"
+
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 # Create as alias for nuget
 alias nuget="mono /usr/local/bin/nuget.exe"
 
-my_ip() {print $(curl -s https://ipinfo.io/ip)}
-my_postal() {print $(curl -s ipinfo.io/$(my_ip) | jq '.postal')}
-my_lat_lon() {print $(curl -s ipinfo.io/$(my_ip) | jq '.loc')}
-daynight() {~/.tools/daynight -loc $(my_lat_lon)}
-
+# I honestly do not remember what it is for
 precmd () {print -Pn "\e]0;${PWD##*/}\a"}
 
-###-tns-completion-start-###
-if [ -f /Users/andriiyaremenko/.tnsrc ]; then 
-    source /Users/andriiyaremenko/.tnsrc 
-fi
-###-tns-completion-end-###
+my_ip() {
+  echo $(curl -s https://ipinfo.io/ip || echo "-.-.-.-")
+}
+
+my_postal() {
+  echo $(curl -s ipinfo.io/$(my_ip) || echo "{\"postal\": \"-----\"}" | jq '.postal')
+}
+
+my_lat_lon() {
+  echo $(curl -s ipinfo.io/$(my_ip) || echo "{\"loc\": \"-,-\"}"  | jq '.loc')
+}
+
+daynight() {~/.tools/daynight -loc $(my_lat_lon)}
 
 # automatically change kitty colors based on time of day
 export TERM_PROFILE=$(daynight)
@@ -28,9 +35,25 @@ export TERM_PROFILE=$(daynight)
 if [[ $TERM_PROFILE == "Night" ]]; then
     kitty @ set-colors -a -c "~/.config/kitty/themes/Gruvbox-dark.conf"
     export BAT_THEME="gruvbox-dark"
+    export FZF_DEFAULT_OPTS='
+      --color fg:#ebdbb2,bg:#32302f,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
+      --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54
+    '
 else
     kitty @ set-colors -a -c "~/.config/kitty/themes/Gruvbox-light.conf"
     export BAT_THEME="gruvbox-light"
+    export FZF_DEFAULT_OPTS='
+      --color fg:#3c3836,bg:#f2e5bc,hl:#b57614,fg+:#3c3836,bg+:#ebdbb2,hl+:#b57614
+      --color info:#076678,prompt:#665c54,spinner:#b57614,pointer:#076678,marker:#af3a03,header:#bdae93
+    '
 fi
+
+export PGP_HOME_DIR=~/.config/gnupg
+export GPG_TTY=$(tty)
+
+zstyle ':completion:*' menu select
+fpath=(/usr/local/share/zsh-completions $fpath)
+autoload -U compinit && compinit
+zmodload -i zsh/complist
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

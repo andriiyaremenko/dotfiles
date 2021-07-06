@@ -42,25 +42,25 @@ set -x TERM_PROFILE (daynight)
 if [ $TERM_PROFILE = "Night" ];
     kitty @ set-colors -a -c "~/.config/kitty/themes/Gruvbox-dark.conf"
     set -x BAT_THEME "gruvbox-dark"
+    set -x FZF_DEFAULT_OPTS '
+      --color fg:#ebdbb2,bg:#32302f,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
+      --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54
+    '
 else
     kitty @ set-colors -a -c "~/.config/kitty/themes/Gruvbox-light.conf"
     set -x BAT_THEME "gruvbox-light"
+    set -x FZF_DEFAULT_OPTS '
+      --color fg:#3c3836,bg:#f2e5bc,hl:#b57614,fg+:#3c3836,bg+:#ebdbb2,hl+:#b57614
+      --color info:#076678,prompt:#665c54,spinner:#b57614,pointer:#076678,marker:#af3a03,header:#bdae93
+    '
 end
 
-if [ $TERM_PROFILE = "Night" ];
-set -x FZF_DEFAULT_OPTS '
-  --color fg:#ebdbb2,bg:#32302f,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
-  --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54
-'
-else
-set -x FZF_DEFAULT_OPTS '
-  --color fg:#3c3836,bg:#f2e5bc,hl:#b57614,fg+:#3c3836,bg+:#ebdbb2,hl+:#b57614
-  --color info:#076678,prompt:#665c54,spinner:#b57614,pointer:#076678,marker:#af3a03,header:#bdae93
-'
-end
+set PGP_HOME_DIR ~/.config/gnupg
+set GPG_TTY (tty)
 
 if status is-interactive
     # Commands to run in interactive sessions can go here
 end
 
 starship init fish | source
+kitty + complete setup fish | source

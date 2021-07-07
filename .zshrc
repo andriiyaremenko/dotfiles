@@ -57,3 +57,5 @@ autoload -U compinit && compinit
 zmodload -i zsh/complist
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+$(brew info zsh-syntax-highlighting | grep source)

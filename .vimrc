@@ -163,6 +163,7 @@ Plug 'kamykn/spelunker.vim'
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
+Plug 'rhysd/git-messenger.vim'
 
 " Language syntax highlight
 Plug 'sheerun/vim-polyglot'
@@ -421,6 +422,16 @@ nmap <Leader>gm :Gdiffsplit!<CR>
 nmap <Leader>gf :diffget //2<CR>
 " git merge select right
 nmap <Leader>gh :diffget //3<CR>
+
+" ===                                                   Git-Messenger                                                           === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+let g:git_messenger_no_default_mappings = v:true
+let g:git_messenger_into_popup_after_show = v:true
+let g:git_messenger_close_on_cursor_moved = v:false
+nmap <Leader>m <Plug>(git-messenger)
+nmap <Leader>mc <Plug>(git-messenger-close)
+nmap <Leader>j <Plug>(git-messenger-scroll-down-half)
+nmap <Leader>k <Plug>(git-messenger-scroll-up-half)
 
 " ===                                                  Gutentags                                                                === "
 " --------------------------------------------------------------------------------------------------------------------------------- "

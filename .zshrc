@@ -30,23 +30,34 @@ my_lat_lon() {
 daynight() {~/.tools/daynight -loc $(my_lat_lon)}
 
 # automatically change kitty colors based on time of day
-export TERM_PROFILE=$(daynight)
+update_term_profile() {
+  export TERM_PROFILE=$(daynight)
 
-if [[ $TERM_PROFILE == "Night" ]]; then
+  if [[ $TERM_PROFILE == "Night" ]]; then
+    echo """import:\n  - ~/.config/alacritty/themes/Gruvbox-dark.yml""" > ~/.config/alacritty/themes/theme.yml
     kitty @ set-colors -a -c "~/.config/kitty/themes/Gruvbox-dark.conf"
     export BAT_THEME="gruvbox-dark"
     export FZF_DEFAULT_OPTS='
-      --color fg:#ebdbb2,bg:#32302f,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
-      --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54
+    --color fg:#ebdbb2,bg:#32302f,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
+    --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54
     '
-else
+  else
+    echo """import:\n  - ~/.config/alacritty/themes/Gruvbox-light.yml""" > ~/.config/alacritty/themes/theme.yml
     kitty @ set-colors -a -c "~/.config/kitty/themes/Gruvbox-light.conf"
     export BAT_THEME="gruvbox-light"
     export FZF_DEFAULT_OPTS='
-      --color fg:#3c3836,bg:#f2e5bc,hl:#b57614,fg+:#3c3836,bg+:#ebdbb2,hl+:#b57614
-      --color info:#076678,prompt:#665c54,spinner:#b57614,pointer:#076678,marker:#af3a03,header:#bdae93
+    --color fg:#3c3836,bg:#f2e5bc,hl:#b57614,fg+:#3c3836,bg+:#ebdbb2,hl+:#b57614
+    --color info:#076678,prompt:#665c54,spinner:#b57614,pointer:#076678,marker:#af3a03,header:#bdae93
     '
-fi
+  fi
+
+  # sleep 600
+
+  # update_term_profile
+}
+
+# TODO: spin single job for all sessions
+update_term_profile
 
 export PGP_HOME_DIR=~/.config/gnupg
 export GPG_TTY=$(tty)

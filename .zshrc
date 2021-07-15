@@ -12,6 +12,8 @@ alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 # Create as alias for nuget
 alias nuget="mono /usr/local/bin/nuget.exe"
 
+# alias tmux="TERM=screen-256color-bce tmux"
+
 # I honestly do not remember what it is for
 precmd () {print -Pn "\e]0;${PWD##*/}\a"}
 
@@ -27,15 +29,16 @@ my_lat_lon() {
   echo $(curl -s ipinfo.io/$(my_ip) || echo "{\"loc\": \"-,-\"}"  | jq '.loc')
 }
 
+export MY_LAT_LON=$(my_lat_lon)
+
 daynight() {~/.tools/daynight -loc $(my_lat_lon)}
 
-# automatically change kitty colors based on time of day
+# automatically change colors based on time of day
 update_term_profile() {
   export TERM_PROFILE=$(daynight)
 
   if [[ $TERM_PROFILE == "Night" ]]; then
     echo """import:\n  - ~/.config/alacritty/themes/Gruvbox-dark.yml""" > ~/.config/alacritty/themes/theme.yml
-    kitty @ set-colors -a -c "~/.config/kitty/themes/Gruvbox-dark.conf"
     export BAT_THEME="gruvbox-dark"
     export FZF_DEFAULT_OPTS='
     --color fg:#ebdbb2,bg:#32302f,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
@@ -43,7 +46,6 @@ update_term_profile() {
     '
   else
     echo """import:\n  - ~/.config/alacritty/themes/Gruvbox-light.yml""" > ~/.config/alacritty/themes/theme.yml
-    kitty @ set-colors -a -c "~/.config/kitty/themes/Gruvbox-light.conf"
     export BAT_THEME="gruvbox-light"
     export FZF_DEFAULT_OPTS='
     --color fg:#3c3836,bg:#f2e5bc,hl:#b57614,fg+:#3c3836,bg+:#ebdbb2,hl+:#b57614
@@ -70,3 +72,5 @@ zmodload -i zsh/complist
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 [ -f ~/.local.zsh ] && source ~/.local.zsh
+
+if [ "$TMUX" = "" ]; then tmux; fi

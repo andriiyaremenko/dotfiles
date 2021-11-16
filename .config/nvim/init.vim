@@ -14,7 +14,7 @@ set updatetime=300 " Smaller updatetime for CursorHold & CursorHoldI
 set shortmess+=c " don't give |ins-completion-menu| messages.
 set signcolumn=yes " always show signcolumns
 set laststatus=2
-set completeopt=longest,menuone,preview
+set completeopt=menuone,noinsert
 set previewheight=5
 set wildignore+=*.*~
 
@@ -131,29 +131,28 @@ nnoremap <C-\> :vertical resize -5<CR>
 " ===                                                    Plugin Installation                                                    === "
 " ================================================================================================================================= "
 
-if empty(glob('~/.vim/autoload/plug.vim'))
-    silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
-        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
+    silent sh -c 'curl -fLo "${XDG_DATA_HOME:-$HOME/.local/share}"/nvim/site/autoload/plug.vim --create-dirs
+                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
     autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
 " vim-plug setup (https://github.com/junegunn/vim-plug)
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
-call plug#begin('~/.vim/plugged')
+call plug#begin('~/.local/share/nvim/plugged')
 " ctgas
 Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 
 " navigation
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
-Plug 'stsewd/fzf-checkout.vim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 Plug 'lambdalisue/fern.vim'
 Plug 'lambdalisue/fern-git-status.vim'
 
 " appearance
 Plug 'gruvbox-community/gruvbox'
-Plug 'itchyny/lightline.vim'
+Plug 'nvim-lualine/lualine.nvim'
 Plug 'Yggdroot/indentLine'
 
 " spell check
@@ -172,10 +171,11 @@ Plug 'sheerun/vim-polyglot'
 Plug 'ianks/vim-tsx'
 
 " lsp client
-Plug 'tpope/vim-dispatch'
-Plug 'prabirshrestha/async.vim'
-Plug 'prabirshrestha/vim-lsp'
-Plug 'prabirshrestha/asyncomplete.vim'
+Plug 'neovim/nvim-lspconfig'
+
+" preview / floating window
+Plug 'ncm2/float-preview.nvim'
+
 
 " js / html / css
 Plug 'pangloss/vim-javascript'
@@ -208,23 +208,41 @@ autocmd VimEnter *
 " ===                                                    Plugin Configuration                                                   === "
 " ================================================================================================================================= "
 
-" ===                                                     FZF                                                                   === "
+" ===                                                  Telescope                                                                === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
-nnoremap <silent> <C-p> :Files<CR>
-nnoremap <silent> <C-b> :Buffers<CR>
-nnoremap <silent> <C-g> :GFiles?<CR>
-nnoremap <silent> <C-f> :Ag<CR>
 
-let g:fzf_commits_log_options = '--graph --color=always
-  \ --format="%C(yellow)%h%C(red)%d%C(reset)
-  \ - %C(bold green)(%ar)%C(reset) %s %C(blue)<%an>%C(reset)"'
+lua << EOF
+require('telescope').setup({
+  defaults = {
+    layout_strategy = 'vertical',
+    layout_config = {
+      vertical = { width = 0.65 }
+      -- other layout configuration here
+    },
+    -- other defaults configuration here
+  },
+  -- other configuration values here
+})
+EOF
 
-nnoremap <silent> <Leader>c  :Commits<CR>
-nnoremap <silent> <Leader>bc :BCommits<CR>
+nnoremap <silent> <C-p> <cmd>Telescope find_files<CR>
+nnoremap <silent> <C-f> <cmd>Telescope live_grep<CR>
+nnoremap <silent> <C-b> <cmd>Telescope buffers<CR>
+nnoremap <silent> <C-g> <cmd>Telescope git_files<CR>
+nnoremap <silent> <Leader>c <cmd>Telescope git_commits<CR>
+nnoremap <silent> <Leader>bc <cmd>Telescope git_bcommits<CR>
+nnoremap <Leader>ch <cmd>Telescope git_branches<CR>
+
+" LSP mappings
+nnoremap <silent> <Leader>ca <cmd>Telescope lsp_code_actions<CR>
+nnoremap <silent> <Leader>d <cmd>Telescope lsp_definitions<CR>
+nnoremap <silent> <Leader>i <cmd>Telescope lsp_implementations<CR>
+nnoremap <silent> <Leader>pd <cmd>Telescope lsp_type_definitions<CR>
+nnoremap <silent> <Leader>r <cmd>Telescope lsp_references<CR>
+nnoremap <silent> <Leader>dd <cmd>Telescope lsp_workspace_diagnostics<CR>
 
 " ===                                                 FZF Checkout                                                              === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
-nnoremap <Leader>ch :GCheckout<CR>
 let g:fzf_branch_actions = {
       \ 'track': {'keymap': 'ctrl-t'},
       \ 'merge': {'keymap': 'ctrl-m'},
@@ -269,69 +287,39 @@ else
   hi Visual guibg=#98971a guifg=#3c3836
 endif
 
-" ===                                                   LightLine                                                               === "
+" ===                                                    LuaLine                                                                === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
-let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'relativepath' ],
-      \             [ 'fileencoding', 'filetype' ] ],
-      \   'right': [ [ 'date', 'lineinfo' , 'linescount' ] ]
-      \ },
-      \ 'inactive': {
-      \   'left': [ [ 'filename' ] ],
-      \   'right': [ [ 'linescount' ] ]
-      \ },
-      \ 'component_function': {
-      \   'relativepath': 'LightlineRelativePath',
-      \   'date': 'LightlineDate',
-      \   'linescount': "LightlineCount",
-      \   'paste': "LightlinePaste",
-      \   'gitbranch': "LightlineGitbranch",
-      \   'fileencoding': "LightlineFileEncoding",
-      \   'filetype': "LightlineFileType",
-      \   'readonly': "LightlineReadonly",
-      \ },
-      \ 'separator': { 'left': '', 'right': '' },
-      \ 'subseparator': { 'left': '╲', 'right': '╱' },
-      \ }
-
-function! LightlineReadonly()
-  return winwidth(0) > 70 && &ft !~? 'help' && &readonly ? 'RO' : ''
-endfunction
-
-function! LightlineFileType()
-  return winwidth(0) > 70 ? &filetype : ''
-endfunction
-
-function! LightlineFileEncoding()
-  return winwidth(0) > 70 ? &fileencoding : ''
-endfunction
-
-function! LightlineGitbranch()
-  return winwidth(0) > 70 ? FugitiveHead() : ''
-endfunction
-
-function! LightlinePaste()
-  return winwidth(0) > 70 && &paste ? 'PASTE' : ''
-endfunction
-
-function! LightlineCount()
-  return winwidth(0) > 70 ? line('$') : ''
-endfunction
-
-function! LightlineDate()
-  return winwidth(0) > 70 ? strftime("%a %H:%M, %d %b %z") : ''
-endfunction
-
-function! LightlineRelativePath()
-  let relativepath = expand('%:f') !=# '' ? expand('%:f') : '[No Name]'
-  let modified = &modified ? ' +' : ''
-  let filename = expand('%:t') !=# '' ? expand('%:t') : '[No Name]'
-
-  return winwidth(0) > 70 ? relativepath . modified : filename
-endfunction
+lua << END
+require'lualine'.setup {
+  options = {
+    icons_enabled = true,
+    theme = 'auto',
+    component_separators = { left = '╲', right = '╱'},
+    section_separators = { left = '', right = ''},
+    disabled_filetypes = {},
+    always_divide_middle = true,
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch', 'diff',
+                  {'diagnostics', sources={'nvim_lsp'}}},
+    lualine_c = {'filename'},
+    lualine_x = {'encoding', 'fileformat', 'filetype'},
+    lualine_y = {'progress'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  extensions = {}
+}
+END
 
 " ===                                                      Fern                                                                 === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
@@ -580,206 +568,94 @@ au BufRead,BufNewFile go.sum set filetype=gosum
 
 " ===                                                    LSP                                                                    === "
 " --------------------------------------------------------------------------------------------------------------------------------- "
-augroup elixir_lsp
-  au!
-  au User lsp_setup call lsp#register_server({
-    \ 'name': 'elixir-ls',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, '~/.lsp/elixir-ls/release/language_server.sh']},
-    \ 'whitelist': ['elixir', 'eelixir'],
-    \ })
-augroup END
-augroup fsharp_lsp
-  au!
-  au User lsp_setup call lsp#register_server({
-    \ 'name': 'FSAC',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, 'dotnet ~/.lsp/fsac/fsautocomplete.dll --background-service-enabled']},
-    \ 'initialization_options': {'AutomaticWorkspaceInit': 1},
-    \ 'workspace_config': {
-        \ 'FSharp': {
-            \ 'keywordsAutocomplete': 1,
-            \ 'ExternalAutocomplete': 1,
-            \ 'Linter': 1,
-            \ 'UnionCaseStubGeneration': 1,
-            \ 'UnionCaseStubGenerationBody': 'failwith \"Not Implemented\"',
-            \ 'RecordStubGeneration': 1,
-            \ 'RecordStubGenerationBody': 'failwith \"Not Implemented\"',
-            \ 'InterfaceStubGeneration': 1,
-            \ 'InterfaceStubGenerationObjectIdentifier': '__',
-            \ 'InterfaceStubGenerationMethodBody': 'failwith \"Not Implemented\"',
-            \ 'UnusedOpensAnalyzer': 1,
-            \ 'UnusedDeclarationsAnalyzer': 1,
-            \ 'UseSdkScripts': 1,
-            \ 'SimplifyNameAnalyzer': 0,
-            \ 'ResolveNamespaces': 1,
-            \ 'EnableReferenceCodeLens': 1,
-            \ 'dotNetRoot': '/usr/local/share/dotnet',
-            \ 'fsiExtraParameters': ['--langversion:preview']
-        \ }
-    \ },
-    \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), '*.fsproj'))},
-    \ 'whitelist': ['fsharp'],
-    \ })
-augroup END
-if executable('gopls')
-    augroup go_lsp
-        au!
-        au User lsp_setup call lsp#register_server({
-            \ 'name': 'gopls',
-            \ 'cmd': {server_info->['gopls']},
-            \ 'whitelist': ['go'],
-            \ })
-        autocmd BufWritePre *.go LspDocumentFormatSync
-    augroup END
-endif
-if executable('typescript-language-server')
-    augroup typescript_lsp
-        au!
-        au User lsp_setup call lsp#register_server({
-            \ 'name': 'typescript-language-server',
-            \ 'cmd': {server_info->[&shell, &shellcmdflag, 'typescript-language-server --stdio']},
-            \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'tsconfig.json'))},
-            \ 'whitelist': ['typescript', 'typescript.tsx', 'typescriptreact'],
-            \ })
-    augroup END
-endif
-if executable('javascript-typescript-stdio')
-    augroup js_lsp
-        au!
-        au User lsp_setup call lsp#register_server({
-            \ 'name': 'javascript support',
-            \ 'cmd': {server_info->[&shell, &shellcmdflag, 'javascript-typescript-stdio --stdio']},
-            \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), 'package.json'))},
-            \ 'whitelist': ['javascript', 'javascript.jsx', 'javascriptreact'],
-            \ })
-    augroup END
-endif
-if executable('html-languageserver')
-    augroup html_lsp
-        au!
-        au User lsp_setup call lsp#register_server({
-          \ 'name': 'html-languageserver',
-          \ 'cmd': {server_info->[&shell, &shellcmdflag, 'html-languageserver --stdio']},
-          \ 'whielist': ['html'],
-        \ })
-    augroup END
-endif
-if executable('css-languageserver')
-    augroup css_lsp
-        au!
-            au User lsp_setup call lsp#register_server({
-                \ 'name': 'css-languageserver',
-                \ 'cmd': {server_info->[&shell, &shellcmdflag, 'css-languageserver --stdio']},
-                \ 'whitelist': ['css', 'less', 'sass'],
-                \ })
-    augroup END
-endif
-if executable('docker-langserver')
-    augroup docker_lsp
-        au!
-        au User lsp_setup call lsp#register_server({
-            \ 'name': 'docker-langserver',
-            \ 'cmd': {server_info->[&shell, &shellcmdflag, 'docker-langserver --stdio']},
-            \ 'whitelist': ['dockerfile'],
-            \ })
-    augroup END
-endif
-if executable('vim-language-server')
-  augroup vim_lsp
-    au!
-    au User lsp_setup call lsp#register_server({
-      \ 'name': 'vim-language-server',
-      \ 'cmd': {server_info->[&shell, &shellcmdflag, 'vim-language-server --stdio']},
-      \ 'initialization_options': { 'vimruntime': $VIMRUNTIME, 'runtimepath': &rtp },
-      \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), ['.git/', '.vim/', 'vimfiles/']))},
-      \ 'whitelist': ['vim'],
-      \ })
-  augroup END
-endif
-if executable('bash-language-server')
-  augroup bash_lsp
-    au!
-    au User lsp_setup call lsp#register_server({
-      \ 'name': 'bash-language-server',
-      \ 'cmd': {server_info->[&shell, &shellcmdflag, 'bash-language-server --stdio']},
-      \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), ['.git/']))},
-      \ 'whitelist': ['sh'],
-      \ })
-  augroup END
-endif
-if executable('tsserver')
-  augroup angular_lsp
-    au!
-    au User lsp_setup call lsp#register_server({
-      \ 'name': 'angular-language-server',
-      \ 'cmd': {server_info->[&shell, &shellcmdflag, '. ~/.lsp/angular-language-server --stdio']},
-      \ 'root_uri':{server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), ['angular.json']))},
-      \ 'whitelist': ['html'],
-      \ })
-  augroup END
-endif
-augroup csharp_lsp
-  au!
-  au User lsp_setup call lsp#register_server({
-    \ 'name': 'omnisharp-lsp',
-    \ 'cmd': {server_info->[&shell, &shellcmdflag, '~/.lsp/omnisharp-osx/run -lsp']},
-    \ 'whitelist': ['cs'],
-    \ 'initialization_options': {},
-    \ 'config': {},
-    \ 'workspace_config': {},
-    \ })
-augroup END
-if executable('solargraph')
-    " gem install solargraph
-    au User lsp_setup call lsp#register_server({
-        \ 'name': 'solargraph',
-        \ 'cmd': {server_info->[&shell, &shellcmdflag, 'solargraph stdio']},
-        \ 'initialization_options': {"diagnostics": "true"},
-        \ 'whitelist': ['ruby'],
-        \ })
-endif
+lua << EOF
+local nvim_lsp = require('lspconfig')
 
-let g:lsp_diagnostics_signs_enabled = 1 " enable signs
-let g:lsp_diagnostics_echo_cursor = 1 " enable echo under cursor when in normal mode
-let g:lsp_diagnostics_signs_error = {'text': '✘'}
-let g:lsp_diagnostics_signs_warning = {'text': '⚡'}
-let g:lsp_diagnostics_signs_hint = {'text': '𝙞'}
-let g:lsp_diagnostics_signs_priority = 11
-let g:lsp_document_code_action_signs_enabled = 1
-let g:lsp_document_code_action_signs_hint = {'text': '𝙖'}
-let g:lsp_preview_keep_focus = 0
-highlight link LspErrorHighlight ALEErrorSign
-highlight link LspWarningHighlight ALEWarningSign
-highlight link LspErrorText ALEErrorSign
-highlight link LspWarningText ALEWarningSign
+nvim_lsp.elixirls.setup{
+  cmd = { '~/.lsp/elixir-ls/release/language_server.sh' };
+}
+nvim_lsp.angularls.setup{}
+nvim_lsp.fsautocomplete.setup{}
+nvim_lsp.gopls.setup{}
+nvim_lsp.dockerls.setup{}
+nvim_lsp.vimls.setup{}
+nvim_lsp.bashls.setup{}
+nvim_lsp.tsserver.setup{}
+nvim_lsp.csharp_ls.setup{}
+nvim_lsp.solargraph.setup{}
 
-function! s:on_lsp_buffer_enabled() abort
-    setlocal omnifunc=lsp#complete
-    setlocal signcolumn=yes
-" refer to doc to add more commands
-nmap <silent> <Leader>e <Plug>(lsp-next-error)
-nmap <silent> <Leader>w <Plug>(lsp-next-warning)
-nmap <silent> <Leader>D <Plug>(lsp-declaration)
-nmap <silent> <Leader>pD <Plug>(lsp-peek-declaration)
-nmap <silent> <Leader>d <Plug>(lsp-definition)
-nmap <silent> <Leader>pd <Plug>(lsp-peek-definition)
-nmap <silent> <Leader>i <Plug>(lsp-implementation)
-nmap <silent> <Leader>pi <Plug>(lsp-peek-implementation)
-nmap <silent> <Leader>pt <Plug>(lsp-peek-type-definition)
-nmap <silent> <Leader>r <Plug>(lsp-references)
-nmap <silent> <Leader>dd <Plug>(lsp-document-diagnostics)
-nmap <silent> <Leader>cl <Plug>(lsp-code-lens)
-nmap <silent> <Leader>R <Plug>(lsp-rename)
-nmap <silent> <Leader>ca <Plug>(lsp-code-action)
-" Use K to show documentation in preview window
-nmap <silent> <Leader>K <Plug>(lsp-hover)
-nmap <Leader>kd <Plug>(lsp-document-format)
-endfunction
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
-augroup lsp_install
-    au!
-    " call s:on_lsp_buffer_enabled only for languages that has the server registered.
-    autocmd User lsp_buffer_enabled call s:on_lsp_buffer_enabled()
-augroup END
+  -- Enable completion triggered by <c-x><c-o>
+  buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  local opts = { noremap=true, silent=true }
+
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  buf_set_keymap('n', '<Leader>D', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', '<Leader>kd','<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+  buf_set_keymap('n', '<Leader>K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap('n', '<Leader>R', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+  buf_set_keymap('n', '<Leader>e', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+end
+
+-- Use a loop to conveniently call 'setup' on multiple servers and
+-- map buffer local keybindings when the language server attaches
+local servers = {
+  'angularls',
+  'fsautocomplete',
+  'gopls',
+  'dockerls',
+  'vimls',
+  'bashls',
+  'tsserver',
+  'csharp_ls',
+  'solargraph',
+}
+
+for _, lsp in ipairs(servers) do
+  nvim_lsp[lsp].setup {
+    on_attach = on_attach,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  }
+end
+
+local border = {
+  {"╭", highlight},
+      {"─", "FloatBorder"},
+      {"╮", "FloatBorder"},
+      {"│", "FloatBorder"},
+      {"╯", "FloatBorder"},
+      {"─", "FloatBorder"},
+      {"╰", "FloatBorder"},
+      {"│", "FloatBorder"},
+}
+-- To override globally
+local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+  opts = opts or {}
+  opts.border = opts.border or border
+  return orig_util_open_floating_preview(contents, syntax, opts, ...)
+end
+
+local signs = { Error = "✘ ", Warn = "⚡", Hint = " ", Info = "𝙞 " }
+
+for type, icon in pairs(signs) do
+  local hl = "LspDiagnosticsSign" .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+end
+EOF
+
+" ===                                                  FLOAT-PREVIEW                                                            === "
+" --------------------------------------------------------------------------------------------------------------------------------- "
+let g:float_preview#docked = 0
 
 " ===                                                    VIM-DELVE                                                              === "
 " --------------------------------------------------------------------------------------------------------------------------------- "

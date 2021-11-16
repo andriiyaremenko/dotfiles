@@ -1,6 +1,8 @@
 export PATH="/opt/homebrew/opt/icu4c/bin:$PATH"
 export PATH="/opt/homebrew/opt/icu4c/sbin:$PATH"
+export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
+export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.mix/escripts:$PATH"
 export PATH=$PATH:$(go env GOPATH)/bin
 export PATH="$PATH:$HOME/.cargo/bin"
@@ -11,6 +13,13 @@ eval "$(starship init zsh)"
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 # Create as alias for nuget
 alias nuget="mono /usr/local/bin/nuget.exe"
+
+# alias for neovim
+alias vim="nvim"
+alias vi="nvim"
+
+# alias ctags
+alias ctags="`brew --prefix`/bin/ctags"
 
 # alias tmux="TERM=screen-256color-bce tmux"
 

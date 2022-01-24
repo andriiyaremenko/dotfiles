@@ -44,8 +44,6 @@ daynight() {~/.tools/daynight -loc $(my_lat_lon)}
 
 # automatically change colors based on time of day
 update_term_profile() {
-  export TERM_PROFILE=$(daynight)
-
   if [[ $TERM_PROFILE == "Night" ]]; then
     echo """import:\n  - ~/.config/alacritty/themes/Gruvbox-dark.yml""" > ~/.config/alacritty/themes/theme.yml
     tmux source-file "$HOME/.config/tmux/themes/Gruvbox-dark.conf"
@@ -69,8 +67,22 @@ update_term_profile() {
   # update_term_profile
 }
 
-# TODO: spin single job for all sessions
-update_term_profile
+auto_theme() {
+  export TERM_PROFILE=$(daynight)
+  update_term_profile
+}
+
+dark_theme() {
+  export TERM_PROFILE="Night"
+  update_term_profile
+}
+
+light_theme() {
+  export TERM_PROFILE="Day"
+  update_term_profile
+}
+
+dark_theme
 
 export PGP_HOME_DIR=~/.config/gnupg
 export GPG_TTY=$(tty)

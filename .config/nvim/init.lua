@@ -150,6 +150,9 @@ Plug 'ianks/vim-tsx'
 -- lsp client
 Plug 'neovim/nvim-lspconfig'
 
+-- tree-sitter
+Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
+
 -- preview / floating window
 Plug 'kamykn/popup-menu.nvim'
 Plug 'ncm2/float-preview.nvim'
@@ -318,7 +321,7 @@ nmap('<Leader>d', '<cmd>Telescope lsp_definitions<CR>', noremap_silent)
 nmap('<Leader>i', '<cmd>Telescope lsp_implementations<CR>', noremap_silent)
 nmap('<Leader>pd', '<cmd>Telescope lsp_type_definitions<CR>', noremap_silent)
 nmap('<Leader>r', '<cmd>Telescope lsp_references<CR>', noremap_silent)
-nmap('<Leader>dd', '<cmd>Telescope lsp_workspace_diagnostics<CR>', noremap_silent)
+nmap('<Leader>dd', '<cmd>Telescope diagnostics<CR>', noremap_silent)
 
 -----                                                    LuaLine                                                                -----
 -------------------------------------------------------------------------------------------------------------------------------------
@@ -386,7 +389,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<Leader>kd','<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
   buf_set_keymap('n', '<Leader>K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   buf_set_keymap('n', '<Leader>R', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-  buf_set_keymap('n', '<Leader>e', '<cmd>lua vim.lsp.diagnostic.goto_next()<CR>', opts)
+  buf_set_keymap('n', '<Leader>e', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
 end
 
 -- Use a loop to conveniently call 'setup' on multiple servers and
@@ -433,10 +436,22 @@ end
 local signs = { Error = "✘ ", Warn = "⚡", Hint = " ", Info = "𝙞 " }
 
 for type, icon in pairs(signs) do
-  local hl = "LspDiagnosticsSign" .. type
+  local hl = "DiagnosticsSign" .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
+-----                                                   Tree-Sitter                                                             -----
+-------------------------------------------------------------------------------------------------------------------------------------
+local configs = require'nvim-treesitter.configs'
+configs.setup {
+ensure_installed = "maintained", -- Only use parsers that are maintained
+highlight = { -- enable highlighting
+  enable = true, 
+},
+indent = {
+  enable = true, -- default is disabled anyways
+}
+}
 -----                                                    Spelunker                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
 -- 2: Spellcheck displayed words in buffer. Fast and dynamic. The waiting time

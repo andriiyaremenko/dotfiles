@@ -16,6 +16,7 @@ end
 local lsp_installer_servers = require('nvim-lsp-installer.servers')
 local servers = {
   "gopls",
+  "golangci_lint_ls",
   "grammarly",
   "sumneko_lua",
   "solargraph",
@@ -24,6 +25,9 @@ local servers = {
   "cmake",
   "dockerls",
   "terraformls",
+  "cssls",
+  "html",
+  "jsonls",
 }
 
 -- Use an on_attach function to only map the following keys

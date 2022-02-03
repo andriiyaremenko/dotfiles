@@ -1,10 +1,6 @@
 local m = require "utils"
-local nmap = m.nmap
-local noremap = m.noremap
-local silent = m.silent
-local noremap_silent = m.noremap_silent
 local create_augroup = m.create_augroup
---
+
 -----                                                      Fern                                                                 -----
 -------------------------------------------------------------------------------------------------------------------------------------
 -- Disable netrw.
@@ -66,8 +62,6 @@ augroup FernEvents
 augroup END
 ]], false)
 
-nmap('<C-n>', ':Fern . -drawer -width=35 -toggle -reveal=%<CR><C-w>=', noremap_silent)   -- Toggle Fern on/off
-
 -- automatically update fern on entering
 create_augroup({
     { 'BufEnter', '<buffer>', 'silent', 'execute', '"normal <Plug>(fern-action-reload)"' }
@@ -77,8 +71,16 @@ create_augroup({
 -------------------------------------------------------------------------------------------------------------------------------------
 vim.g.fern_git_status = { disable_ignored = 1 }
 
+-----                                                    Trouble                                                                -----
+-------------------------------------------------------------------------------------------------------------------------------------
+require("trouble").setup {
+    icons = false,
+    use_diagnostic_signs = true
+}
+
 -----                                                    Telescope                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
+local trouble = require("trouble.providers.telescope")
 
 require('telescope').setup({
   defaults = {
@@ -87,26 +89,13 @@ require('telescope').setup({
       vertical = { width = 0.65 }
       -- other layout configuration here
     },
-    -- other defaults configuration here
+    mappings = {
+      i = { ["<Leader>t"] = trouble.open_with_trouble },
+      n = { ["<Leader>t"] = trouble.open_with_trouble },
+    },
   },
   -- other configuration values here
 })
-
-nmap('<C-p>', '<cmd>Telescope find_files<CR>', noremap_silent)
-nmap('<C-f>', '<cmd>Telescope live_grep<CR>', noremap_silent)
-nmap('<C-b>', '<cmd>Telescope buffers<CR>', noremap_silent)
-nmap('<C-g>', '<cmd>Telescope git_files<CR>', noremap_silent)
-nmap('<Leader>c', '<cmd>Telescope git_commits<CR>', noremap_silent)
-nmap('<Leader>bc', '<cmd>Telescope git_bcommits<CR>', noremap_silent)
-nmap('<Leader>ch', '<cmd>Telescope git_branches<CR>', noremap)
-
--- LSP mappings
-nmap('<Leader>ca', '<cmd>Telescope lsp_code_actions<CR>', noremap_silent)
-nmap('<Leader>d', '<cmd>Telescope lsp_definitions<CR>', noremap_silent)
-nmap('<Leader>i', '<cmd>Telescope lsp_implementations<CR>', noremap_silent)
-nmap('<Leader>pd', '<cmd>Telescope lsp_type_definitions<CR>', noremap_silent)
-nmap('<Leader>r', '<cmd>Telescope lsp_references<CR>', noremap_silent)
-nmap('<Leader>dd', '<cmd>Telescope diagnostics<CR>', noremap_silent)
 
 -----                                                    LuaLine                                                                -----
 -------------------------------------------------------------------------------------------------------------------------------------
@@ -147,6 +136,7 @@ configs.setup {
   ensure_installed = "maintained", -- Only use parsers that are maintained
   highlight = { -- enable highlighting
     enable = true,
+    additional_vim_regex_highlighting = true
   },
   indent = {
     enable = true, -- default is disabled anyways
@@ -160,36 +150,20 @@ vim.g.spelunker_check_type = 2
 
 -----                                                    VIM-DELVE                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
-nmap('<Leader>b', ':DlvToggleBreakpoint<CR>', silent)
 vim.g.delve_breakpoint_sign = "◉"
 vim.g.delve_breakpoint_sign_highlight = "ALEErrorSign"
 vim.g.delve_new_command = 'enew'
 vim.g.delve_enable_syntax_highlighting = 1
 
------                                                    Vim-Fugitive                                                           -----
--------------------------------------------------------------------------------------------------------------------------------------
-nmap('<Leader>gb', ':Git blame<CR>', {})      -- git blame
-nmap('<Leader>gs', ':G<CR>', {})           -- git status
-nmap('<Leader>gd', ':Gdiffsplit<CR>', {})  -- git diff
-nmap('<Leader>gc', ':Git commit<CR>', {})     -- git commit
-nmap('<Leader>gp', ':Git push<CR>', {})    -- git push
-nmap('<Leader>gm', ':Gdiffsplit!<CR>', {}) -- git diff for merge (3 tabs)
-nmap('<Leader>gf', ':diffget //2<CR>', {}) -- git merge select left
-nmap('<Leader>gh', ':diffget //3<CR>', {}) -- git merge select right
 
 -----                                                   Git-Messenger                                                           -----
 -------------------------------------------------------------------------------------------------------------------------------------
 vim.g.git_messenger_no_default_mappings = true
 vim.g.git_messenger_into_popup_after_show = true
 vim.g.git_messenger_close_on_cursor_moved = true
-nmap('<Leader>m', '<Plug>(git-messenger)', {})
-nmap('<Leader>mc', '<Plug>(git-messenger-close)', {})
-nmap('<Leader>j', '<Plug>(git-messenger-scroll-down-half)', {})
-nmap('<Leader>k', '<Plug>(git-messenger-scroll-up-half)', {})
 
 -----                                                Symbols-Outline                                                            -----
 -------------------------------------------------------------------------------------------------------------------------------------
-nmap('<Leader>tt', ':SymbolsOutline<CR>', {})
 vim.g.symbols_outline = {
   width = 50,
   auto_preview = false,
@@ -206,3 +180,4 @@ vim.cmd 'au BufRead,BufNewFile *.tmpl set filetype=gotexttmpl'
 vim.cmd 'au BufRead,BufNewFile *.html.tmpl set filetype=gohtmltmpl'
 vim.cmd 'au BufRead,BufNewFile go.mod set filetype=gomod'
 vim.cmd 'au BufRead,BufNewFile go.sum set filetype=gosum'
+

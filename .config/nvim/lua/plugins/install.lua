@@ -54,6 +54,7 @@ Plug 'ianks/vim-tsx'
 -- lsp client
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
+Plug 'folke/trouble.nvim'
 
 -- tree-sitter
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })

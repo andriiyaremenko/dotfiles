@@ -37,6 +37,7 @@ Plug 'simrat39/symbols-outline.nvim'
 Plug 'gruvbox-community/gruvbox'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'Yggdroot/indentLine'
+Plug 'folke/lsp-colors.nvim'
 
 -- spell check
 Plug 'kamykn/spelunker.vim'
@@ -46,9 +47,6 @@ Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'rhysd/git-messenger.vim'
-
--- Language syntax highlight
-Plug 'sheerun/vim-polyglot'
 
 -- typescript
 Plug 'ianks/vim-tsx'

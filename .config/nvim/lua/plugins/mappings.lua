@@ -29,10 +29,7 @@ nmap('<Leader>b', ':DlvToggleBreakpoint<CR>', silent)
 -----                                                    Vim-Fugitive                                                           -----
 -------------------------------------------------------------------------------------------------------------------------------------
 nmap('<Leader>gb', ':Git blame<CR>', {})   -- git blame
-nmap('<Leader>gs', ':G<CR>', {})           -- git status
 nmap('<Leader>gd', ':Gdiffsplit<CR>', {})  -- git diff
-nmap('<Leader>gc', ':Git commit<CR>', {})  -- git commit
-nmap('<Leader>gp', ':Git push<CR>', {})    -- git push
 nmap('<Leader>gm', ':Gdiffsplit!<CR>', {}) -- git diff for merge (3 tabs)
 nmap('<Leader>gf', ':diffget //2<CR>', {}) -- git merge select left
 nmap('<Leader>gh', ':diffget //3<CR>', {}) -- git merge select right
@@ -52,3 +49,7 @@ nmap('<Leader>tt', ':SymbolsOutline<CR>', {})
 -------------------------------------------------------------------------------------------------------------------------------------
 nmap('<Leader>dd', '<cmd>TroubleToggle workspace_diagnostics<CR>', noremap_silent)
 nmap('<Leader>r', '<cmd>TroubleToggle lsp_references<CR>', noremap_silent)
+
+-----                                                    Lazygit                                                                -----
+-------------------------------------------------------------------------------------------------------------------------------------
+nmap('<Leader>gs', '<cmd>LazyGit<CR>', noremap_silent)

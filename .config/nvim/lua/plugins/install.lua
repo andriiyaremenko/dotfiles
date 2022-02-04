@@ -38,6 +38,7 @@ Plug 'gruvbox-community/gruvbox'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'Yggdroot/indentLine'
 Plug 'folke/lsp-colors.nvim'
+Plug 'norcalli/nvim-colorizer.lua'
 
 -- spell check
 Plug 'kamykn/spelunker.vim'

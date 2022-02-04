@@ -181,3 +181,11 @@ vim.cmd 'au BufRead,BufNewFile *.html.tmpl set filetype=gohtmltmpl'
 vim.cmd 'au BufRead,BufNewFile go.mod set filetype=gomod'
 vim.cmd 'au BufRead,BufNewFile go.sum set filetype=gosum'
 
+-----                                                      go                                                                   -----
+-------------------------------------------------------------------------------------------------------------------------------------
+require'colorizer'.setup({ '*' },
+    {
+        mode = 'foreground'; -- Set the display mode. Available modes: foreground, background
+        RRGGBBAA = false;
+    }
+)

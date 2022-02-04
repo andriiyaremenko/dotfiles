@@ -41,6 +41,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.so = 999
 vim.opt.diffopt:append 'vertical'                               -- set vertical diff split
+vim.opt.termguicolors = true
 
 -- global
 vim.g.mapleader = ' '

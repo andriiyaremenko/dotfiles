@@ -189,3 +189,11 @@ require'colorizer'.setup({ '*' },
         RRGGBBAA = false;
     }
 )
+
+-----                                                  Toggleterm                                                               -----
+-------------------------------------------------------------------------------------------------------------------------------------
+
+require 'toggleterm'.setup{
+    open_mapping = [[<C-c>]],
+    direction = 'float', -- options: 'vertical' | 'horizontal' | 'window' | 'float'
+}

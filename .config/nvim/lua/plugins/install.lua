@@ -85,4 +85,7 @@ Plug 'segeljakt/vim-silicon'
 -- Scroll
 Plug 'psliwka/vim-smoothie'
 
+-- Terminal
+Plug 'akinsho/toggleterm.nvim'
+
 vim.call('plug#end')

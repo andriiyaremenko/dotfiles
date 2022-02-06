@@ -181,7 +181,7 @@ vim.cmd 'au BufRead,BufNewFile *.html.tmpl set filetype=gohtmltmpl'
 vim.cmd 'au BufRead,BufNewFile go.mod set filetype=gomod'
 vim.cmd 'au BufRead,BufNewFile go.sum set filetype=gosum'
 
------                                                      go                                                                   -----
+-----                                                  Colorizer                                                                -----
 -------------------------------------------------------------------------------------------------------------------------------------
 require'colorizer'.setup({ '*' },
     {
@@ -195,5 +195,8 @@ require'colorizer'.setup({ '*' },
 
 require 'toggleterm'.setup{
     open_mapping = [[<C-c>]],
-    direction = 'float', -- options: 'vertical' | 'horizontal' | 'window' | 'float'
+    direction = 'float',  -- options: 'vertical' | 'horizontal' | 'window' | 'float'
+    float_opts = {
+        border = 'curved' -- 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
+    }
 }

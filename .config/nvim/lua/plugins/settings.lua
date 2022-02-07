@@ -1,5 +1,6 @@
-local m = require "utils"
+local m = require 'utils'
 local create_augroup = m.create_augroup
+local M = {}
 
 -----                                                      Fern                                                                 -----
 -------------------------------------------------------------------------------------------------------------------------------------
@@ -27,11 +28,11 @@ augroup END
 
 let g:fern#disable_default_mappings = 1
 let g:fern#disable_drawer_auto_quit = 1
-let g:fern#renderer#default#leading = "│"
-let g:fern#renderer#default#root_symbol = "┬ "
-let g:fern#renderer#default#leaf_symbol = "├─ "
-let g:fern#renderer#default#collapsed_symbol = "├─ "
-let g:fern#renderer#default#expanded_symbol = "├┬ "
+let g:fern#renderer#default#leading = '│'
+let g:fern#renderer#default#root_symbol = '┬ '
+let g:fern#renderer#default#leaf_symbol = '├─ '
+let g:fern#renderer#default#collapsed_symbol = '├─ '
+let g:fern#renderer#default#expanded_symbol = '├┬ '
 let g:fern#mark_symbol = '✓'
 
 function! FernInit() abort
@@ -73,25 +74,19 @@ vim.g.fern_git_status = { disable_ignored = 1 }
 
 -----                                                    Trouble                                                                -----
 -------------------------------------------------------------------------------------------------------------------------------------
-require("trouble").setup {
+require 'trouble'.setup {
     icons = false,
     use_diagnostic_signs = true
 }
 
 -----                                                    Telescope                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
-local trouble = require("trouble.providers.telescope")
-
-require('telescope').setup({
+require 'telescope'.setup({
   defaults = {
     layout_strategy = 'vertical',
     layout_config = {
       vertical = { width = 0.65 }
       -- other layout configuration here
-    },
-    mappings = {
-      i = { ["<Leader>t"] = trouble.open_with_trouble },
-      n = { ["<Leader>t"] = trouble.open_with_trouble },
     },
   },
   -- other configuration values here
@@ -133,7 +128,7 @@ require'lualine'.setup {
 -------------------------------------------------------------------------------------------------------------------------------------
 local configs = require'nvim-treesitter.configs'
 configs.setup {
-  ensure_installed = "maintained", -- Only use parsers that are maintained
+  ensure_installed = 'maintained', -- Only use parsers that are maintained
   highlight = { -- enable highlighting
     enable = true,
     additional_vim_regex_highlighting = true
@@ -150,8 +145,8 @@ vim.g.spelunker_check_type = 2
 
 -----                                                    VIM-DELVE                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
-vim.g.delve_breakpoint_sign = "◉"
-vim.g.delve_breakpoint_sign_highlight = "ALEErrorSign"
+vim.g.delve_breakpoint_sign = '◉'
+vim.g.delve_breakpoint_sign_highlight = 'ALEErrorSign'
 vim.g.delve_new_command = 'enew'
 vim.g.delve_enable_syntax_highlighting = 1
 
@@ -169,7 +164,7 @@ vim.g.symbols_outline = {
   auto_preview = false,
   highlight_hovered_item = false,
   keymaps = {
-    close = { "<Leader>tt" },
+    close = { '<Leader>tt' },
   }
 }
 
@@ -200,3 +195,12 @@ require 'toggleterm'.setup{
         border = 'curved' -- 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
     }
 }
+
+local Terminal = require'toggleterm.terminal'.Terminal
+local lazygit = Terminal:new({ cmd = 'lazygit', hidden = true })
+
+M.lazygit_toggle = function()
+  lazygit:toggle()
+end
+
+return M

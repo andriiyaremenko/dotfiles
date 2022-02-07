@@ -48,7 +48,6 @@ Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'rhysd/git-messenger.vim'
-Plug 'kdheepak/lazygit.nvim'
 
 -- typescript
 Plug 'ianks/vim-tsx'

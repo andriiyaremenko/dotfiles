@@ -1,4 +1,4 @@
-local m = require "utils"
+local m = require 'utils'
 local nmap = m.nmap
 local noremap = m.noremap
 local silent = m.silent
@@ -52,4 +52,8 @@ nmap('<Leader>r', '<cmd>TroubleToggle lsp_references<CR>', noremap_silent)
 
 -----                                                    Lazygit                                                                -----
 -------------------------------------------------------------------------------------------------------------------------------------
-nmap('<Leader>gs', '<cmd>LazyGit<CR>', noremap_silent)
+function _Lazygit_toggle()
+    require 'plugins/settings'.lazygit_toggle()
+end
+
+nmap('<Leader>gs', '<cmd>lua _Lazygit_toggle()<CR>', noremap_silent)

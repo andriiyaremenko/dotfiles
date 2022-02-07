@@ -1,12 +1,12 @@
-local m = require "utils"
+local m = require 'utils'
 
 -----                                                    LSP                                                                    -----
 -------------------------------------------------------------------------------------------------------------------------------------
 -- To override globally
-local signs = { Error = "✘ ", Warn = "⚡", Hint = " ", Info = "𝙞 " }
+local signs = { Error = '✘ ', Warn = '⚡', Hint = ' ', Info = '𝙞 ' }
 
 for type, icon in pairs(signs) do
-  local hl = "DiagnosticSign" .. type
+  local hl = 'DiagnosticSign' .. type
   vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
 end
 
@@ -17,21 +17,21 @@ vim.diagnostic.config({
 })
 -----                                                  LSP-Installer                                                            -----
 -------------------------------------------------------------------------------------------------------------------------------------
-local lsp_installer_servers = require('nvim-lsp-installer.servers')
+local lsp_installer_servers = require 'nvim-lsp-installer.servers'
 local servers = {
-  "gopls",
-  "golangci_lint_ls",
-  "grammarly",
-  "sumneko_lua",
-  "solargraph",
-  "tsserver",
-  "bashls",
-  "cmake",
-  "dockerls",
-  "terraformls",
-  "cssls",
-  "html",
-  "jsonls",
+  'gopls',
+  'golangci_lint_ls',
+  'grammarly',
+  'sumneko_lua',
+  'solargraph',
+  'tsserver',
+  'bashls',
+  'cmake',
+  'dockerls',
+  'terraformls',
+  'cssls',
+  'html',
+  'jsonls',
 }
 
 -- Use an on_attach function to only map the following keys
@@ -72,7 +72,7 @@ for _, server_name in pairs(servers) do
               }
             }
 
-            if server.name == "sumneko_lua" then
+            if server.name == 'sumneko_lua' then
               opts = {
                 on_attach = on_attach,
                 flags = {

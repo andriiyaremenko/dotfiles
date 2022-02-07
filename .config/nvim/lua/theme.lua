@@ -13,9 +13,9 @@ vim.g.gruvbox_improved_warnings =1
 vim.g.gruvbox_improved_strings = 0
 vim.g.gruvbox_invert_selection=0
 
-local term_profile = os.getenv("TERM_PROFILE")
+local term_profile = os.getenv('TERM_PROFILE')
 
-if term_profile == "Night" then
+if term_profile == 'Night' then
     vim.opt.background='dark'
 else
     vim.opt.background='light'

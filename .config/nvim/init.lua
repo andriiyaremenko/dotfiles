@@ -1,4 +1,4 @@
-local m = require "utils"
+local m = require 'utils'
 local map = m.map
 local nmap = m.nmap
 local imap = m.imap
@@ -26,7 +26,7 @@ vim.opt.softtabstop = 0
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
+vim.opt.foldexpr = 'nvim_treesitter#foldexpr()'
 vim.opt.foldnestmax = 5
 vim.opt.foldlevelstart = 20
 vim.opt.spell = false
@@ -81,8 +81,8 @@ create_augroup({
 -------------------------------------------------------------------------------------------------------------------------------------
 -----                                                  Plugins Configuration                                                    -----
 -------------------------------------------------------------------------------------------------------------------------------------
-require "plugins.install"                                       -- installs plugins
-require "plugins.settings"                                      -- plugin-specific configurations
-require "plugins.mappings"                                      -- key-mappings
-require "theme"                                                 -- theme configuration
-require "lsp"                                                   -- LSP configuration and key-mappings
+require 'plugins.install'                                       -- installs plugins
+require 'plugins.settings'                                      -- plugin-specific configurations
+require 'plugins.mappings'                                      -- key-mappings
+require 'theme'                                                 -- theme configuration
+require 'lsp'                                                   -- LSP configuration and key-mappings

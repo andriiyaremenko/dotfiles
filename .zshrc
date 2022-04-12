@@ -34,25 +34,28 @@ ip() {
 }
 
 postal() {
-  echo $(curl -s https://ipinfo.io/postal || echo "-.-.-.-")
+  echo $(curl -s https://ipinfo.io/postal || echo "-----")
 }
 
 location() {
-  echo $(curl -s https://ipinfo.io/loc || echo "-.-.-.-")
+  echo $(curl -s https://ipinfo.io/loc || echo "--.----,--.----")
+}
+
+city() {
+  echo $(curl -s https://ipinfo.io/city || echo "Kyiv")
 }
 
 weather() {
     if [ "$1" != "" ]; then
-        echo "$1"
         curl http://wttr.in/"$1"
     else
-        curl http://wttr.in/
+        curl http://wttr.in/$(city)
     fi
 }
 
-export MY_LAT_LON=$(my_lat_lon)
+export MY_LAT_LON=$(location)
 
-daynight() {~/.tools/daynight -loc $(my_lat_lon)}
+daynight() {~/.tools/daynight -loc $(location)}
 
 # automatically change colors based on time of day
 update_term_profile() {

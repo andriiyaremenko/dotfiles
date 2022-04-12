@@ -18,6 +18,9 @@ alias nuget="mono /usr/local/bin/nuget.exe"
 alias vim="nvim"
 alias vi="nvim"
 
+# python
+alias python=python3
+
 # alias ctags
 alias ctags="`brew --prefix`/bin/ctags"
 
@@ -26,16 +29,25 @@ alias ctags="`brew --prefix`/bin/ctags"
 # I honestly do not remember what it is for
 precmd () {print -Pn "\e]0;${PWD##*/}\a"}
 
-my_ip() {
+ip() {
   echo $(curl -s https://ipinfo.io/ip || echo "-.-.-.-")
 }
 
-my_postal() {
-  echo $(curl -s ipinfo.io/$(my_ip) || echo "{\"postal\": \"-----\"}" | jq '.postal')
+postal() {
+  echo $(curl -s https://ipinfo.io/postal || echo "-.-.-.-")
 }
 
-my_lat_lon() {
-  echo $(curl -s ipinfo.io/$(my_ip) || echo "{\"loc\": \"-,-\"}"  | jq '.loc')
+location() {
+  echo $(curl -s https://ipinfo.io/loc || echo "-.-.-.-")
+}
+
+weather() {
+    if [ "$1" != "" ]; then
+        echo "$1"
+        curl http://wttr.in/"$1"
+    else
+        curl http://wttr.in/
+    fi
 }
 
 export MY_LAT_LON=$(my_lat_lon)

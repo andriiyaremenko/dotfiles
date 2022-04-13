@@ -5,9 +5,9 @@ local M = {}
 -----                                                      Fern                                                                 -----
 -------------------------------------------------------------------------------------------------------------------------------------
 -- Disable netrw.
-vim.g.loaded_netrw  = 1
-vim.g.loaded_netrwPlugin = 1
-vim.g.loaded_netrwSettings = 1
+vim.g.loaded_netrw             = 1
+vim.g.loaded_netrwPlugin       = 1
+vim.g.loaded_netrwSettings     = 1
 vim.g.loaded_netrwFileHandlers = 1
 
 -- I could not find any other way to make it work
@@ -48,7 +48,7 @@ function! FernInit() abort
   nmap <buffer> d <Plug>(fern-action-remove)
   nmap <buffer> m <Plug>(fern-action-move)
   nmap <buffer> M <Plug>(fern-action-rename)
-  nmap <buffer> h <Plug>(fern-action-hidden-toggle)
+  nmap <buffer> h <Plug>(fern-action-hidden:toggle)
   nmap <buffer> r <Plug>(fern-action-reload)
   nmap <buffer> b <Plug>(fern-action-open:split)
   nmap <buffer> v <Plug>(fern-action-open:vsplit)
@@ -82,60 +82,84 @@ require 'trouble'.setup {
 -----                                                    Telescope                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
 require 'telescope'.setup({
-  defaults = {
-    layout_strategy = 'vertical',
-    layout_config = {
-      vertical = { width = 0.65 }
-      -- other layout configuration here
+    defaults = {
+        layout_strategy = 'vertical',
+        layout_config = {
+            vertical = { width = 0.65 }
+            -- other layout configuration here
+        },
     },
-  },
-  -- other configuration values here
+    -- other configuration values here
 })
 
 -----                                                    LuaLine                                                                -----
 -------------------------------------------------------------------------------------------------------------------------------------
-require'lualine'.setup {
-  options = {
-    icons_enabled = true,
-    theme = 'auto',
-    component_separators = { left = '╲', right = '╱'},
-    section_separators = { left = '', right = ''},
-    disabled_filetypes = {},
-    always_divide_middle = true,
-  },
-  sections = {
-    lualine_a = {'mode'},
-    lualine_b = {'branch', 'diff',
-                  {'diagnostics', sources={'nvim_lsp'}}},
-    lualine_c = {'filename'},
-    lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
-    lualine_z = {'location'}
-  },
-  inactive_sections = {
-    lualine_a = {},
-    lualine_b = {},
-    lualine_c = {'filename'},
-    lualine_x = {'location'},
-    lualine_y = {},
-    lualine_z = {}
-  },
-  tabline = {},
-  extensions = {}
+require 'lualine'.setup {
+    options = {
+        icons_enabled = true,
+        theme = 'auto',
+        component_separators = { left = '╲', right = '╱' },
+        section_separators = { left = '', right = '' },
+        disabled_filetypes = { 'fern' },
+        always_divide_middle = true,
+    },
+    sections = {
+        lualine_a = {
+            {
+                'mode',
+            }
+        },
+        lualine_b = { 'filename' },
+        lualine_c = {
+            'location',
+            'progress',
+            {
+                'diagnostics',
+                sources = { 'nvim_lsp' },
+                sections = { 'error', 'warn' },
+                symbols = { error = '✘ ', warn = '⚡' },
+            }
+        },
+        lualine_z = { 'encoding', 'filetype' },
+        lualine_y = {
+            {
+                'diff',
+                colored = true, -- Displays a colored diff status if set to true
+                diff_color = {
+                    -- Same color values as the general color option can be used here.
+                    added    = 'ALEInfoSign', -- Changes the diff's added color
+                    modified = 'ALEWarningSign', -- Changes the diff's modified color
+                    removed  = 'ALEErrorSign', -- Changes the diff's removed color you
+                },
+                symbols = { added = '+', modified = '±', removed = '-' }
+            }
+        },
+        lualine_x = { 'branch' },
+    },
+    inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = { 'filename' },
+        lualine_x = { 'location' },
+        lualine_y = {},
+        lualine_z = {}
+    },
+    tabline = {},
+    extensions = {}
 }
 
 -----                                                   Tree-Sitter                                                             -----
 -------------------------------------------------------------------------------------------------------------------------------------
-local configs = require'nvim-treesitter.configs'
+local configs = require 'nvim-treesitter.configs'
 configs.setup {
-  ensure_installed = 'maintained', -- Only use parsers that are maintained
-  highlight = { -- enable highlighting
-    enable = true,
-    additional_vim_regex_highlighting = true
-  },
-  indent = {
-    enable = true, -- default is disabled anyways
-  }
+    ensure_installed = 'maintained', -- Only use parsers that are maintained
+    highlight = { -- enable highlighting
+        enable = true,
+        additional_vim_regex_highlighting = true
+    },
+    indent = {
+        enable = true, -- default is disabled anyways
+    }
 }
 -----                                                    Spelunker                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
@@ -160,12 +184,12 @@ vim.g.git_messenger_close_on_cursor_moved = true
 -----                                                Symbols-Outline                                                            -----
 -------------------------------------------------------------------------------------------------------------------------------------
 vim.g.symbols_outline = {
-  width = 50,
-  auto_preview = false,
-  highlight_hovered_item = false,
-  keymaps = {
-    close = { '<Leader>tt' },
-  }
+    width = 50,
+    auto_preview = false,
+    highlight_hovered_item = false,
+    keymaps = {
+        close = { '<Leader>tt' },
+    }
 }
 
 -----                                                      go                                                                   -----
@@ -178,7 +202,7 @@ vim.cmd 'au BufRead,BufNewFile go.sum set filetype=gosum'
 
 -----                                                  Colorizer                                                                -----
 -------------------------------------------------------------------------------------------------------------------------------------
-require'colorizer'.setup({ '*' },
+require 'colorizer'.setup({ '*' },
     {
         mode = 'foreground'; -- Set the display mode. Available modes: foreground, background
         RRGGBBAA = false;
@@ -188,19 +212,20 @@ require'colorizer'.setup({ '*' },
 -----                                                  Toggleterm                                                               -----
 -------------------------------------------------------------------------------------------------------------------------------------
 
-require 'toggleterm'.setup{
+require 'toggleterm'.setup {
     open_mapping = [[<C-c>]],
-    direction = 'float',  -- options: 'vertical' | 'horizontal' | 'window' | 'float'
+    direction = 'float', -- options: 'vertical' | 'horizontal' | 'window' | 'float'
     float_opts = {
         border = 'curved' -- 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
     }
 }
 
-local Terminal = require'toggleterm.terminal'.Terminal
+local Terminal = require 'toggleterm.terminal'.Terminal
 local lazygit = Terminal:new({ cmd = 'lazygit', hidden = true })
 
 M.lazygit_toggle = function()
-  lazygit:toggle()
+    lazygit:toggle()
 end
 
 return M
+

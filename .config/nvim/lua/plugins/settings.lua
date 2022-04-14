@@ -236,4 +236,11 @@ M.lazygit_toggle = function()
     lazygit:toggle()
 end
 
+-----                                                LSP_Signature                                                              -----
+-------------------------------------------------------------------------------------------------------------------------------------
+require "lsp_signature".setup {
+    hint_prefix = " ",
+    floating_window = false,
+}
+
 return M

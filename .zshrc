@@ -61,7 +61,9 @@ daynight() {~/.tools/daynight -loc $(location)}
 update_term_profile() {
   if [[ $TERM_PROFILE == "Night" ]]; then
     echo """import:\n  - ~/.config/alacritty/themes/Gruvbox-dark.yml""" > ~/.config/alacritty/themes/theme.yml
+    tmux source-file "$HOME/.tmux.conf"
     tmux source-file "$HOME/.config/tmux/themes/Gruvbox-dark.conf"
+
     export BAT_THEME="gruvbox-dark"
     export FZF_DEFAULT_OPTS='
     --color fg:#ebdbb2,bg:#32302f,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f

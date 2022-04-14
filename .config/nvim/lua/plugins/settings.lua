@@ -152,7 +152,16 @@ require 'lualine'.setup {
 -------------------------------------------------------------------------------------------------------------------------------------
 local configs = require 'nvim-treesitter.configs'
 configs.setup {
-    ensure_installed = 'maintained', -- Only use parsers that are maintained
+    ensure_installed = {
+        'go', 'gomod', 'gowork', 'comment', -- every day use
+        'cmake', 'dockerfile', 'make', 'regex', 'toml', 'yaml', 'nix', -- configs
+        'graphql', -- db
+        'lua', 'bash', 'vim', -- vim, dot files
+        'c_sharp', 'ruby', 'solidity', -- i know this
+        'elixir', 'erlang', 'heex', 'eex', -- i know this
+        'http', 'javascript', 'json', 'jsdoc', 'html', 'css', 'scss', 'tsx', 'typescript', 'vue', -- i know this
+        'c', 'cpp', 'rust', 'java', 'kotlin', 'php', 'python', 'scala', -- don't know but might encounter
+    },
     highlight = { -- enable highlighting
         enable = true,
         additional_vim_regex_highlighting = true
@@ -192,7 +201,7 @@ vim.g.symbols_outline = {
     }
 }
 
------                                                      go                                                                   -----
+-----                                                      Go                                                                   -----
 -------------------------------------------------------------------------------------------------------------------------------------
 vim.cmd 'au BufRead,BufNewFile *.go set filetype=go'
 vim.cmd 'au BufRead,BufNewFile *.tmpl set filetype=gotexttmpl'
@@ -228,4 +237,3 @@ M.lazygit_toggle = function()
 end
 
 return M
-

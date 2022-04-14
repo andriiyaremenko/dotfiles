@@ -4,7 +4,7 @@ export PATH="/opt/homebrew/bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="$HOME/.mix/escripts:$PATH"
-export PATH=$PATH:$(go env GOPATH)/bin
+export PATH="$PATH:$(go env GOPATH)/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export LC_ALL=en_US.UTF-8
 
@@ -112,3 +112,6 @@ zmodload -i zsh/complist
 [ -f ~/.local.zsh ] && source ~/.local.zsh
 
 if [ "$TMUX" = "" ]; then tmux; fi
+
+ulimit -u 2048
+ulimit -n 2048

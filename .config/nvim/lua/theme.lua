@@ -37,8 +37,6 @@ nightfox.setup({
         }
     },
 })
--- Create/update the compile files
-nightfox.compile()
 
 local palette = require 'nightfox.palette'.load "nordfox"
 

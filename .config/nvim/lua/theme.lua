@@ -11,6 +11,7 @@ nightfox.setup({
             keywords = "bold",
             strings = "italic",
             types = "bold",
+            conditionals = "bold",
         },
     },
     specs = {
@@ -18,25 +19,27 @@ nightfox.setup({
             syntax = {
                 bracket = "orange.bright", -- Brackets and Punctuation
                 --builtin0 = "pink.bright", -- Builtin variable
-                builtin1 = "green.bright", -- Builtin type
+                --builtin1 = "green.bright", -- Builtin type
                 --builtin2 = "red.bright", -- Builtin const
-                field = "green.base",
+                --field = "green.base",
                 ident = "yellow.base", -- Identifiers
                 regex = "yellow.bright",
                 -- statement
-                conditional = "red.base",
+                conditional = "green.base",
                 --const = "red.base", --Constants, imports and booleans
-                func = "green.base",
-                --keyword = "orange.base",
-                number = "magenta.base",
+                --func = "green.base",
+                keyword = "red.base",
+                number = "green.dim",
                 operator = "orange.bright",
-                string = "blue.base",
+                string = "magenta.dim",
                 type = "yellow.dim",
                 --variable = "white.dim",
             },
         }
     },
 })
+
+nightfox.compile()
 
 local palette = require 'nightfox.palette'.load "nordfox"
 

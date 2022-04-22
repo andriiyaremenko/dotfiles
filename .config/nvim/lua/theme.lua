@@ -1,31 +1,50 @@
 if vim.fn.has('termguicolors') then
-  vim.opt.termguicolors = true
+    vim.opt.termguicolors = true
 end
 
-vim.g.gruvbox_contrast_dark = 'soft'
-vim.g.gruvbox_contrast_light = 'soft'
-vim.g.gruvbox_italic = 1
-vim.g.gruvbox_bold = 1
-vim.g.gruvbox_underline = 1
-vim.g.gruvbox_undercurl = 1
-vim.g.gruvbox_italicize_comments = 1
-vim.g.gruvbox_improved_warnings =1
-vim.g.gruvbox_improved_strings = 0
-vim.g.gruvbox_invert_selection=0
+local nightfox = require 'nightfox'
 
-local term_profile = os.getenv('TERM_PROFILE')
+nightfox.setup({
+    options = {
+        styles = { -- Style to be applied to different syntax groups
+            comments = "italic", -- Value is any valid attr-list value `:help attr-list`
+            keywords = "bold",
+            strings = "italic",
+            types = "bold",
+        },
+    },
+    specs = {
+        nordfox = {
+            syntax = {
+                bracket = "orange.bright", -- Brackets and Punctuation
+                --builtin0 = "pink.bright", -- Builtin variable
+                builtin1 = "green.bright", -- Builtin type
+                --builtin2 = "red.bright", -- Builtin const
+                field = "green.base",
+                ident = "yellow.base", -- Identifiers
+                regex = "yellow.bright",
+                -- statement
+                conditional = "red.base",
+                --const = "red.base", --Constants, imports and booleans
+                func = "green.base",
+                --keyword = "orange.base",
+                number = "magenta.base",
+                operator = "orange.bright",
+                string = "blue.base",
+                type = "yellow.dim",
+                --variable = "white.dim",
+            },
+        }
+    },
+})
+-- Create/update the compile files
+nightfox.compile()
 
-if term_profile == 'Night' then
-    vim.opt.background='dark'
-else
-    vim.opt.background='light'
-end
+local palette = require 'nightfox.palette'.load "nordfox"
 
-vim.cmd 'colorscheme gruvbox'
+vim.cmd(string.format('hi MyGreenText guibg=NONE guifg=%s', palette.green.base))
+vim.cmd(string.format('hi MyYellowText guibg=NONE guifg=%s', palette.yellow.base))
+vim.cmd(string.format('hi MyRedText guibg=NONE guifg=%s', palette.red.base))
 
-if (vim.opt.background == 'dark') then
-  vim.cmd 'hi Visual guibg=#98971a guifg=#ebdbb2'
-else
-  vim.cmd 'hi Visual guibg=#98971a guifg=#3c3836'
-end
 
+vim.cmd 'colorscheme nordfox'

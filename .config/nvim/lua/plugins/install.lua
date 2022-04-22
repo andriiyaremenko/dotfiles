@@ -34,7 +34,7 @@ Plug 'lambdalisue/fern-git-status.vim'
 Plug 'simrat39/symbols-outline.nvim'
 
 -- appearance
-Plug 'gruvbox-community/gruvbox'
+Plug 'EdenEast/nightfox.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'Yggdroot/indentLine'
 Plug 'folke/lsp-colors.nvim'

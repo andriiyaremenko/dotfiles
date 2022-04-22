@@ -125,12 +125,6 @@ require 'lualine'.setup {
             {
                 'diff',
                 colored = true, -- Displays a colored diff status if set to true
-                diff_color = {
-                    -- Same color values as the general color option can be used here.
-                    added    = 'ALEInfoSign', -- Changes the diff's added color
-                    modified = 'ALEWarningSign', -- Changes the diff's modified color
-                    removed  = 'ALEErrorSign', -- Changes the diff's removed color you
-                },
                 symbols = { added = '+', modified = '±', removed = '-' }
             }
         },
@@ -179,7 +173,7 @@ vim.g.spelunker_check_type = 2
 -----                                                    VIM-DELVE                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
 vim.g.delve_breakpoint_sign = '◉'
-vim.g.delve_breakpoint_sign_highlight = 'ALEErrorSign'
+vim.g.delve_breakpoint_sign_highlight = 'MyGreenText'
 vim.g.delve_new_command = 'enew'
 vim.g.delve_enable_syntax_highlighting = 1
 
@@ -242,5 +236,15 @@ require "lsp_signature".setup {
     hint_prefix = " ",
     floating_window = false,
 }
+
+-----                                                 Vim_Signify                                                               -----
+-------------------------------------------------------------------------------------------------------------------------------------
+vim.g.signify_sign_change = '±'
+
+local palette = require 'nightfox.palette'.load "nordfox"
+
+vim.cmd(string.format('hi SignifySignAdd guibg=NONE guifg=%s', palette.green.base))
+vim.cmd(string.format('hi SignifySignChange guibg=NONE guifg=%s', palette.yellow.base))
+vim.cmd(string.format('hi SignifySignDelete guibg=NONE guifg=%s', palette.red.base))
 
 return M

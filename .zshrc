@@ -60,9 +60,9 @@ daynight() {~/.tools/daynight -loc $(location)}
 # automatically change colors based on time of day
 update_term_profile() {
   if [[ $TERM_PROFILE == "Night" ]]; then
-    echo """import:\n  - ~/.config/alacritty/themes/Gruvbox-dark.yml""" > ~/.config/alacritty/themes/theme.yml
+    echo """import:\n  - ~/.config/alacritty/themes/nordfox.yml""" > ~/.config/alacritty/themes/theme.yml
     tmux source-file "$HOME/.tmux.conf"
-    tmux source-file "$HOME/.config/tmux/themes/Gruvbox-dark.conf"
+    tmux source-file "$HOME/.config/tmux/themes/nordfox.tmux"
 
     export BAT_THEME="gruvbox-dark"
     export FZF_DEFAULT_OPTS='

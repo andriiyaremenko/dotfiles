@@ -39,8 +39,6 @@ nightfox.setup({
     },
 })
 
-nightfox.compile()
-
 local palette = require 'nightfox.palette'.load "nordfox"
 
 vim.cmd(string.format('hi MyGreenText guibg=NONE guifg=%s', palette.green.base))

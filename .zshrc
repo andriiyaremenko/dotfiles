@@ -10,6 +10,9 @@ export LC_ALL=en_US.UTF-8
 
 eval "$(starship init zsh)"
 
+ulimit -u 2048
+ulimit -n 2048
+
 alias config='/usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
 # Create as alias for nuget
 alias nuget="mono /usr/local/bin/nuget.exe"
@@ -64,10 +67,12 @@ update_term_profile() {
     tmux source-file "$HOME/.tmux.conf"
     tmux source-file "$HOME/.config/tmux/themes/nordfox.tmux"
 
-    export BAT_THEME="gruvbox-dark"
+    export BAT_THEME="Nord"
     export FZF_DEFAULT_OPTS='
-    --color fg:#ebdbb2,bg:#32302f,hl:#fabd2f,fg+:#ebdbb2,bg+:#3c3836,hl+:#fabd2f
-    --color info:#83a598,prompt:#bdae93,spinner:#fabd2f,pointer:#83a598,marker:#fe8019,header:#665c54
+    --color=fg:#e5e9f0,bg:#2e3440,hl:#81a1c1
+    --color=fg+:#e5e9f0,bg+:#2e3440,hl+:#81a1c1
+    --color=info:#eacb8a,prompt:#bf6069,pointer:#b48dac
+    --color=marker:#a3be8b,spinner:#b48dac,header:#a3be8b
     '
   else
     echo """import:\n  - ~/.config/alacritty/themes/Gruvbox-light.yml""" > ~/.config/alacritty/themes/theme.yml
@@ -114,6 +119,3 @@ zmodload -i zsh/complist
 [ -f ~/.local.zsh ] && source ~/.local.zsh
 
 if [ "$TMUX" = "" ]; then tmux; fi
-
-ulimit -u 2048
-ulimit -n 2048

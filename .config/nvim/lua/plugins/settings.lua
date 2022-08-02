@@ -72,13 +72,6 @@ create_augroup({
 -------------------------------------------------------------------------------------------------------------------------------------
 vim.g.fern_git_status = { disable_ignored = 1 }
 
------                                                    Trouble                                                                -----
--------------------------------------------------------------------------------------------------------------------------------------
-require 'trouble'.setup {
-    icons = false,
-    use_diagnostic_signs = true
-}
-
 -----                                                    Telescope                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
 require 'telescope'.setup({
@@ -229,6 +222,19 @@ local lazygit = Terminal:new({ cmd = 'lazygit', hidden = true })
 M.lazygit_toggle = function()
     lazygit:toggle()
 end
+
+-----                                                   LSP_Saga                                                                -----
+-------------------------------------------------------------------------------------------------------------------------------------
+-- use default config
+require 'lspsaga'.init_lsp_saga({
+    code_action_icon = "  ",
+    -- same as nvim-lightbulb but async
+    code_action_lightbulb = {
+        enable = false,
+    },
+    border_style = "plus",
+    saga_winblend = 10,
+})
 
 -----                                                LSP_Signature                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------

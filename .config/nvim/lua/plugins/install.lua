@@ -29,7 +29,7 @@ vim.call('plug#begin', '~/.config/nvim/plugged')
 -- navigation
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'lambdalisue/fern.vim'
+Plug('lambdalisue/fern.vim', { ['branch'] = 'main' })
 Plug 'lambdalisue/fern-git-status.vim'
 Plug 'simrat39/symbols-outline.nvim'
 
@@ -55,8 +55,11 @@ Plug 'ianks/vim-tsx'
 -- lsp client
 Plug 'neovim/nvim-lspconfig'
 Plug 'williamboman/nvim-lsp-installer'
-Plug 'folke/trouble.nvim'
 Plug 'ray-x/lsp_signature.nvim'
+Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
+Plug('glepnir/lspsaga.nvim', { ['branch'] = 'main' })
+
+Plug 'vim-test/vim-test'
 
 -- tree-sitter
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })

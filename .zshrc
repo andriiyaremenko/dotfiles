@@ -7,6 +7,7 @@ export PATH="$HOME/.mix/escripts:$PATH"
 export PATH="$PATH:$(go env GOPATH)/bin"
 export PATH="$PATH:$HOME/.cargo/bin"
 export LC_ALL=en_US.UTF-8
+export TERM_PROFILE="Night"
 
 eval "$(starship init zsh)"
 
@@ -58,53 +59,16 @@ weather() {
 
 export MY_LAT_LON=$(location)
 
-daynight() {~/.tools/daynight -loc $(location)}
+tmux source-file "$HOME/.tmux.conf"
+tmux source-file "$HOME/.config/tmux/themes/nordfox.tmux"
 
-# automatically change colors based on time of day
-update_term_profile() {
-  if [[ $TERM_PROFILE == "Night" ]]; then
-    echo """import:\n  - ~/.config/alacritty/themes/nordfox.yml""" > ~/.config/alacritty/themes/theme.yml
-    tmux source-file "$HOME/.tmux.conf"
-    tmux source-file "$HOME/.config/tmux/themes/nordfox.tmux"
-
-    export BAT_THEME="Nord"
-    export FZF_DEFAULT_OPTS='
-    --color=fg:#e5e9f0,bg:#2e3440,hl:#81a1c1
-    --color=fg+:#e5e9f0,bg+:#2e3440,hl+:#81a1c1
-    --color=info:#eacb8a,prompt:#bf6069,pointer:#b48dac
-    --color=marker:#a3be8b,spinner:#b48dac,header:#a3be8b
-    '
-  else
-    echo """import:\n  - ~/.config/alacritty/themes/Gruvbox-light.yml""" > ~/.config/alacritty/themes/theme.yml
-    tmux source-file "$HOME/.config/tmux/themes/Gruvbox-light.conf"
-    export BAT_THEME="gruvbox-light"
-    export FZF_DEFAULT_OPTS='
-    --color fg:#3c3836,bg:#f2e5bc,hl:#b57614,fg+:#3c3836,bg+:#ebdbb2,hl+:#b57614
-    --color info:#076678,prompt:#665c54,spinner:#b57614,pointer:#076678,marker:#af3a03,header:#bdae93
-    '
-  fi
-
-  # sleep 600
-
-  # update_term_profile
-}
-
-auto_theme() {
-  export TERM_PROFILE=$(daynight)
-  update_term_profile
-}
-
-dark_theme() {
-  export TERM_PROFILE="Night"
-  update_term_profile
-}
-
-light_theme() {
-  export TERM_PROFILE="Day"
-  update_term_profile
-}
-
-dark_theme
+export BAT_THEME="Nord"
+export FZF_DEFAULT_OPTS='
+--color=fg:#e5e9f0,bg:#2e3440,hl:#81a1c1
+--color=fg+:#e5e9f0,bg+:#2e3440,hl+:#81a1c1
+--color=info:#eacb8a,prompt:#bf6069,pointer:#b48dac
+--color=marker:#a3be8b,spinner:#b48dac,header:#a3be8b
+'
 
 export PGP_HOME_DIR=~/.config/gnupg
 export GPG_TTY=$(tty)

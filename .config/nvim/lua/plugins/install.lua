@@ -58,6 +58,7 @@ Plug 'williamboman/nvim-lsp-installer'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 Plug('glepnir/lspsaga.nvim', { ['branch'] = 'main' })
+Plug 'RRethy/vim-illuminate'
 
 Plug 'vim-test/vim-test'
 
@@ -89,5 +90,8 @@ Plug 'psliwka/vim-smoothie'
 
 -- Terminal
 Plug 'akinsho/toggleterm.nvim'
+
+-- Surround
+Plug 'kylechui/nvim-surround'
 
 vim.call('plug#end')

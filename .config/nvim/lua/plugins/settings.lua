@@ -253,4 +253,17 @@ vim.cmd(string.format('hi SignifySignAdd guibg=NONE guifg=%s', palette.green.bas
 vim.cmd(string.format('hi SignifySignChange guibg=NONE guifg=%s', palette.yellow.base))
 vim.cmd(string.format('hi SignifySignDelete guibg=NONE guifg=%s', palette.red.base))
 
+-----                                                 Illuminate                                                                -----
+-------------------------------------------------------------------------------------------------------------------------------------
+vim.cmd(string.format('hi IlluminatedWordText guibg=%s guifg=NONE', palette.black.bright))
+vim.cmd(string.format('hi IlluminatedWordRead guibg=%s guifg=NONE', palette.black.bright))
+vim.cmd(string.format('hi IlluminatedWordWrite guibg=%s guifg=NONE', palette.black.bright))
+
+require 'illuminate'.configure {}
+
+-----                                                NVIM-Surround                                                              -----
+-------------------------------------------------------------------------------------------------------------------------------------
+require 'nvim-surround'.setup {
+}
+
 return M

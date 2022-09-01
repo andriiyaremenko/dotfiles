@@ -13,6 +13,9 @@ nightfox.setup({
             types = "bold",
             conditionals = "bold",
         },
+        modules = {
+            lsp_saga = false,
+        }
     },
     specs = {
         nordfox = {

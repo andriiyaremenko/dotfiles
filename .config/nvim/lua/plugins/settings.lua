@@ -2,6 +2,8 @@ local m = require 'utils'
 local create_augroup = m.create_augroup
 local M = {}
 
+local palette = require 'nightfox.palette'.load "nordfox"
+
 -----                                                      Fern                                                                 -----
 -------------------------------------------------------------------------------------------------------------------------------------
 -- Disable netrw.
@@ -157,11 +159,20 @@ configs.setup {
         enable = true, -- default is disabled anyways
     }
 }
+
 -----                                                    Spelunker                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
+
+vim.cmd(string.format('hi PmenuSel guibg=%s guifg=NONE', palette.green.bright))
+
 -- 2: Spellcheck displayed words in buffer. Fast and dynamic. The waiting time
 -- depends on the setting of CursorHold `set updatetime=1000`.
+vim.g.spelunker_check_type = 2
 vim.g.spelunker_highlight_type = 2
+vim.g.enable_spelunker_vim_on_readonly = 0
+vim.g.spelunker_disable_uri_checking = 1
+vim.g.spelunker_disable_email_checking = 1
+vim.g.spelunker_disable_acronym_checking = 1
 
 -----                                                    VIM-DELVE                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
@@ -225,6 +236,7 @@ end
 
 -----                                                   LSP_Saga                                                                -----
 -------------------------------------------------------------------------------------------------------------------------------------
+
 -- use default config
 require 'lspsaga'.init_lsp_saga({
     code_action_icon = "  ",
@@ -232,7 +244,7 @@ require 'lspsaga'.init_lsp_saga({
     code_action_lightbulb = {
         enable = false,
     },
-    border_style = "plus",
+    border_style = "rounded",
     saga_winblend = 10,
 })
 
@@ -246,8 +258,6 @@ require "lsp_signature".setup {
 -----                                                 Vim_Signify                                                               -----
 -------------------------------------------------------------------------------------------------------------------------------------
 vim.g.signify_sign_change = '±'
-
-local palette = require 'nightfox.palette'.load "nordfox"
 
 vim.cmd(string.format('hi SignifySignAdd guibg=NONE guifg=%s', palette.green.base))
 vim.cmd(string.format('hi SignifySignChange guibg=NONE guifg=%s', palette.yellow.base))

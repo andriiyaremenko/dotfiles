@@ -167,7 +167,7 @@ vim.cmd(string.format('hi PmenuSel guibg=%s guifg=NONE', palette.green.bright))
 
 -- 2: Spellcheck displayed words in buffer. Fast and dynamic. The waiting time
 -- depends on the setting of CursorHold `set updatetime=1000`.
-vim.g.spelunker_check_type = 2
+vim.g.spelunker_check_type = 1
 vim.g.spelunker_highlight_type = 2
 vim.g.enable_spelunker_vim_on_readonly = 0
 vim.g.spelunker_disable_uri_checking = 1

@@ -166,7 +166,7 @@ configs.setup {
 -- 2: Spellcheck displayed words in buffer. Fast and dynamic. The waiting time
 -- depends on the setting of CursorHold `set updatetime=1000`.
 vim.g.spelunker_check_type = 1
-vim.g.spelunker_highlight_type = 2
+vim.g.spelunker_highlight_type = 1
 vim.g.enable_spelunker_vim_on_readonly = 0
 vim.g.spelunker_disable_uri_checking = 1
 vim.g.spelunker_disable_email_checking = 1
@@ -271,7 +271,14 @@ require 'illuminate'.configure {}
 
 -----                                                NVIM-Surround                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
-require 'nvim-surround'.setup {
-}
+require 'nvim-surround'.setup {}
+
+-----                                                 NVIM-notify                                                               -----
+-------------------------------------------------------------------------------------------------------------------------------------
+vim.notify = require 'notify'
+
+-----                                               Dressing.nvim                                                               -----
+-------------------------------------------------------------------------------------------------------------------------------------
+require 'dressing'.setup {}
 
 return M

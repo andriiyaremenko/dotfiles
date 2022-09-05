@@ -39,6 +39,8 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'Yggdroot/indentLine'
 Plug 'folke/lsp-colors.nvim'
 Plug 'norcalli/nvim-colorizer.lua'
+Plug 'stevearc/dressing.nvim'
+Plug 'rcarriga/nvim-notify'
 
 -- spell check
 Plug 'kamykn/spelunker.vim'
@@ -60,13 +62,11 @@ Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 Plug('glepnir/lspsaga.nvim', { ['branch'] = 'main' })
 Plug 'RRethy/vim-illuminate'
 
+-- tests
 Plug 'vim-test/vim-test'
 
 -- tree-sitter
 Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
-
--- preview / floating window
-Plug 'kamykn/popup-menu.nvim'
 
 -- js / html / css
 Plug 'pangloss/vim-javascript'
@@ -93,5 +93,11 @@ Plug 'akinsho/toggleterm.nvim'
 
 -- Surround
 Plug 'kylechui/nvim-surround'
+
+-- Decompile and debug
+Plug 'krady21/compiler-explorer.nvim'
+
+-- Utilities
+Plug 'nvim-lua/plenary.nvim'
 
 vim.call('plug#end')

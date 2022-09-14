@@ -47,3 +47,7 @@ function _Lazygit_toggle()
 end
 
 nmap('<Leader>gs', '<cmd>lua _Lazygit_toggle()<CR>', noremap_silent)
+
+-----                                               TODO-comments                                                               -----
+-------------------------------------------------------------------------------------------------------------------------------------
+nmap('<Leader>td', ':TodoTelescope<CR>', noremap_silent)

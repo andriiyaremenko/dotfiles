@@ -32,6 +32,7 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug('lambdalisue/fern.vim', { ['branch'] = 'main' })
 Plug 'lambdalisue/fern-git-status.vim'
 Plug 'simrat39/symbols-outline.nvim'
+Plug 'folke/todo-comments.nvim'
 
 -- appearance
 Plug 'EdenEast/nightfox.nvim'

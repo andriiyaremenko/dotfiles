@@ -47,7 +47,7 @@ local on_attach = function(_, bufnr)
 
     -- See `:help vim.lsp.*` for documentation on any of the below functions
     buf_set_keymap('n', '<Leader>D', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    buf_set_keymap('n', '<Leader>kd', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+    buf_set_keymap('n', '<Leader>kd', '<cmd>lua vim.lsp.buf.format { async = true }<CR>', opts)
     buf_set_keymap('n', '<Leader>K', '<cmd>Lspsaga hover_doc<CR>', opts)
     buf_set_keymap('n', '<Leader>R', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
     buf_set_keymap('n', '<Leader>e', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
@@ -59,7 +59,7 @@ local on_attach = function(_, bufnr)
     buf_set_keymap('n', '<Leader>dd', '<cmd>Telescope diagnostics<CR>', opts)
 
     -- Format on save
-    m.create_augroup({ { 'BufWritePost', '*', 'lua vim.lsp.buf.formatting()' } }, 'LSPFormatOnSave')
+    m.create_augroup({ { 'BufWritePost', '*', 'lua vim.lsp.buf.format { async = true }' } }, 'LSPFormatOnSave')
 end
 
 -- Loop through the servers listed above.

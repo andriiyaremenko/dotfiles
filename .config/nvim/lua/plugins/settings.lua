@@ -1,8 +1,8 @@
-local m = require 'utils'
-local create_augroup = m.create_augroup
-local M = {}
+local m                        = require 'utils'
+local create_augroup           = m.create_augroup
+local M                        = {}
 
-local palette = require 'nightfox.palette'.load "nordfox"
+local palette                  = require 'nightfox.palette'.load "nordfox"
 
 -----                                                      Fern                                                                 -----
 -------------------------------------------------------------------------------------------------------------------------------------
@@ -142,16 +142,19 @@ require 'lualine'.setup {
 local configs = require 'nvim-treesitter.configs'
 configs.setup {
     ensure_installed = {
-        'go', 'gomod', 'gowork', 'comment', -- every day use
-        'cmake', 'dockerfile', 'make', 'regex', 'toml', 'yaml', 'nix', -- configs
-        'graphql', -- db
-        'lua', 'bash', 'vim', -- vim, dot files
-        'c_sharp', 'ruby', 'solidity', -- i know this
-        'elixir', 'erlang', 'heex', 'eex', -- i know this
+        'markdown', 'markdown_inline',                                                            -- requierd by Lpsaga
+        'go', 'gomod', 'gowork', 'comment',                                                       -- every day use
+        'cmake', 'dockerfile', 'make', 'regex', 'toml', 'yaml', 'nix',                            -- configs
+        'graphql',                                                                                -- db
+        'lua', 'bash', 'vim',                                                                     -- vim, dot files
+        'c_sharp', 'ruby', 'solidity',                                                            -- i know this
+        'elixir', 'erlang', 'heex', 'eex',                                                        -- i know this
         'http', 'javascript', 'json', 'jsdoc', 'html', 'css', 'scss', 'tsx', 'typescript', 'vue', -- i know this
-        'c', 'cpp', 'rust', 'java', 'kotlin', 'php', 'python', 'scala', -- don't know but might encounter
+        'c', 'cpp', 'rust', 'java', 'kotlin', 'php', 'python',
+        'scala',                                                                                  -- don't know but might encounter
     },
-    highlight = { -- enable highlighting
+    highlight = {
+        -- enable highlighting
         enable = true,
         additional_vim_regex_highlighting = true
     },
@@ -186,16 +189,6 @@ vim.g.git_messenger_no_default_mappings = true
 vim.g.git_messenger_into_popup_after_show = true
 vim.g.git_messenger_close_on_cursor_moved = true
 
------                                                Symbols-Outline                                                            -----
--------------------------------------------------------------------------------------------------------------------------------------
-vim.g.symbols_outline = {
-    width = 50,
-    auto_preview = false,
-    highlight_hovered_item = false,
-    keymaps = {
-        close = { '<Leader>tt' },
-    }
-}
 
 -----                                                      Go                                                                   -----
 -------------------------------------------------------------------------------------------------------------------------------------
@@ -209,8 +202,8 @@ vim.cmd 'au BufRead,BufNewFile go.sum set filetype=gosum'
 -------------------------------------------------------------------------------------------------------------------------------------
 require 'colorizer'.setup({ '*' },
     {
-        mode = 'foreground'; -- Set the display mode. Available modes: foreground, background
-        RRGGBBAA = false;
+        mode = 'foreground', -- Set the display mode. Available modes: foreground, background
+        RRGGBBAA = false,
     }
 )
 
@@ -219,7 +212,7 @@ require 'colorizer'.setup({ '*' },
 
 require 'toggleterm'.setup {
     open_mapping = [[<C-c>]],
-    direction = 'float', -- options: 'vertical' | 'horizontal' | 'window' | 'float'
+    direction = 'float',  -- options: 'vertical' | 'horizontal' | 'window' | 'float'
     float_opts = {
         border = 'curved' -- 'single' | 'double' | 'shadow' | 'curved' | ... other options supported by win open
     }
@@ -236,15 +229,38 @@ end
 -------------------------------------------------------------------------------------------------------------------------------------
 
 -- use default config
-require 'lspsaga'.init_lsp_saga({
-    code_action_icon = "  ",
-    -- same as nvim-lightbulb but async
-    code_action_lightbulb = {
-        enable = false,
+require 'lspsaga'.setup({
+    ui = {
+        code_action = "",
+        -- same as nvim-lightbulb but async
+        border = "rounded",
+        winblend = 10,
     },
-    border_style = "rounded",
-    saga_winblend = 10,
+    lightbulb = {
+        enable_in_insert = false,
+        sign = false,
+    },
+    symbol_in_winbar = {
+        respect_root = true,
+        color_mode = false,
+    },
+    outline = {
+        auto_preview = false,
+        keys = {
+            jump = "o",
+            expand_collapse = "t",
+            quit = "q",
+        },
+    },
+    diagnostic = {
+        on_insert = false,
+        show_virt_line = false,
+        show_code_action = false,
+        show_source = false,
+    },
 })
+
+vim.cmd(string.format('hi SagaWinbarSep guibg=NONE guifg=%s', palette.blue.base))
 
 -----                                                LSP_Signature                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
@@ -284,5 +300,26 @@ require 'dressing'.setup {}
 -----                                               TODO-comments                                                               -----
 -------------------------------------------------------------------------------------------------------------------------------------
 require 'todo-comments'.setup {}
+
+-----                                                   Mason                                                                   -----
+-------------------------------------------------------------------------------------------------------------------------------------
+require("mason").setup()
+require("mason-lspconfig").setup {
+    ensure_installed = {
+        'gopls',
+        'golangci_lint_ls',
+        'grammarly',
+        'lua_ls',
+        'tsserver',
+        'bashls',
+        'cmake',
+        'dockerls',
+        'terraformls',
+        'cssls',
+        'html',
+        'jsonls',
+        'sqlls',
+    }
+}
 
 return M

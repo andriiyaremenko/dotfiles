@@ -23,8 +23,8 @@ nmap('<Leader>ch', '<cmd>Telescope git_branches<CR>', noremap)
 nmap('<Leader>b', ':DlvToggleBreakpoint<CR>', silent)
 -----                                                    Vim-Fugitive                                                           -----
 -------------------------------------------------------------------------------------------------------------------------------------
-nmap('<Leader>gb', ':Git blame<CR>', {}) -- git blame
-nmap('<Leader>gd', ':Gdiffsplit<CR>', {}) -- git diff
+nmap('<Leader>gb', ':Git blame<CR>', {})   -- git blame
+nmap('<Leader>gd', ':Gdiffsplit<CR>', {})  -- git diff
 nmap('<Leader>gm', ':Gdiffsplit!<CR>', {}) -- git diff for merge (3 tabs)
 nmap('<Leader>gf', ':diffget //2<CR>', {}) -- git merge select left
 nmap('<Leader>gh', ':diffget //3<CR>', {}) -- git merge select right
@@ -36,9 +36,9 @@ nmap('<Leader>mc', '<Plug>(git-messenger-close)', {})
 nmap('<Leader>j', '<Plug>(git-messenger-scroll-down-half)', {})
 nmap('<Leader>k', '<Plug>(git-messenger-scroll-up-half)', {})
 
------                                                Symbols-Outline                                                            -----
+-----                                                   LSP_Saga                                                                -----
 -------------------------------------------------------------------------------------------------------------------------------------
-nmap('<Leader>tt', ':SymbolsOutline<CR>', {})
+nmap('<Leader>tt', ':Lspsaga outline<CR>', {})
 
 -----                                                    Lazygit                                                                -----
 -------------------------------------------------------------------------------------------------------------------------------------

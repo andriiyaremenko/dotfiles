@@ -31,7 +31,6 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug('lambdalisue/fern.vim', { ['branch'] = 'main' })
 Plug 'lambdalisue/fern-git-status.vim'
-Plug 'simrat39/symbols-outline.nvim'
 Plug 'folke/todo-comments.nvim'
 
 -- appearance
@@ -55,19 +54,21 @@ Plug 'rhysd/git-messenger.vim'
 -- typescript
 Plug 'ianks/vim-tsx'
 
+-- tree-sitter
+Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
+
 -- lsp client
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'williamboman/nvim-lsp-installer'
 Plug 'ray-x/lsp_signature.nvim'
 Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
+Plug 'nvim-tree/nvim-web-devicons'
 Plug('glepnir/lspsaga.nvim', { ['branch'] = 'main' })
 Plug 'RRethy/vim-illuminate'
 
 -- tests
 Plug 'vim-test/vim-test'
-
--- tree-sitter
-Plug('nvim-treesitter/nvim-treesitter', { ['do'] = ':TSUpdate' })
 
 -- js / html / css
 Plug 'pangloss/vim-javascript'

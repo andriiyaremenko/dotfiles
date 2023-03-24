@@ -11,100 +11,73 @@ for type, icon in pairs(signs) do
 end
 
 vim.diagnostic.config({
-    virtual_text = {
-        prefix = '❰'
-    }
+    virtual_text = false
 })
------                                                  LSP-Installer                                                            -----
+
+-----                                                 NVIM-LSPConfig                                                            -----
 -------------------------------------------------------------------------------------------------------------------------------------
-local lsp_installer_servers = require 'nvim-lsp-installer.servers'
-local servers = {
-    'gopls',
-    'golangci_lint_ls',
-    'grammarly',
-    'sumneko_lua',
-    'solargraph',
-    'tsserver',
-    'bashls',
-    'cmake',
-    'dockerls',
-    'terraformls',
-    'cssls',
-    'html',
-    'jsonls',
+
+local lspconfig = require('lspconfig')
+lspconfig.gopls.setup {}
+lspconfig.golangci_lint_ls.setup {}
+lspconfig.grammarly.setup {}
+lspconfig.lua_ls.setup {
+    settings = {
+        Lua = {
+            diagnostics = {
+                globals = { 'vim', 'use' }
+            },
+            workspace = {
+                -- Make the server aware of Neovim runtime files
+                library = {
+                    [vim.fn.expand('$VIMRUNTIME/lua')] = true,
+                    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true
+                }
+            }
+        }
+    }
 }
+lspconfig.solargraph.setup {}
+lspconfig.tsserver.setup {}
+lspconfig.bashls.setup {}
+lspconfig.cmake.setup {}
+lspconfig.dockerls.setup {}
+lspconfig.terraformls.setup {}
+lspconfig.cssls.setup {}
+lspconfig.html.setup {}
+lspconfig.jsonls.setup {}
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(_, bufnr)
-    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+vim.api.nvim_create_autocmd('LspAttach', {
+    group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+    callback = function(ev)
+        -- Enable completion triggered by <c-x><c-o>
+        vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+        -- Enable completion triggered by <c-x><c-o>
+        local opts = { noremap = true, silent = true, buffer = ev.buf }
 
-    -- Enable completion triggered by <c-x><c-o>
-    buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-    local opts = { noremap = true, silent = true }
+        -- See `:help vim.lsp.*` for documentation on any of the below functions
+        vim.keymap.set('n', '<Leader>D', vim.lsp.buf.declaration, opts)
+        vim.keymap.set('n', '<Leader>kd', function()
+            vim.lsp.buf.format { async = true }
+        end, opts)
+        vim.keymap.set('n', '<Leader>K', '<cmd>Lspsaga hover_doc<CR>', opts)
+        vim.keymap.set('n', '<Leader>R', vim.lsp.buf.rename, opts)
+        vim.keymap.set('n', '<Leader>e', vim.diagnostic.goto_next, opts)
+        vim.keymap.set('n', '<Leader>i', '<cmd>Telescope lsp_implementations<CR>', opts)
+        vim.keymap.set('n', '<Leader>ca', '<cmd>Lspsaga code_action<CR>', opts)
+        vim.keymap.set('n', '<Leader>d', '<cmd>Telescope lsp_definitions<CR>', opts)
+        vim.keymap.set('n', '<Leader>pd', '<cmd>Lspsaga peek_definition<CR>', opts)
+        vim.keymap.set('n', '<Leader>r', '<cmd>Telescope lsp_references<CR>', opts)
+        vim.keymap.set('n', '<Leader>dd', '<cmd>Telescope diagnostics<CR>', opts)
 
-    -- See `:help vim.lsp.*` for documentation on any of the below functions
-    buf_set_keymap('n', '<Leader>D', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-    buf_set_keymap('n', '<Leader>kd', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-    buf_set_keymap('n', '<Leader>K', '<cmd>Lspsaga hover_doc<CR>', opts)
-    buf_set_keymap('n', '<Leader>R', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-    buf_set_keymap('n', '<Leader>e', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-    buf_set_keymap('n', '<Leader>i', '<cmd>Telescope lsp_implementations<CR>', opts)
-    buf_set_keymap('n', '<Leader>ca', '<cmd>Lspsaga code_action<CR>', opts)
-    buf_set_keymap('n', '<Leader>d', '<cmd>Telescope lsp_definitions<CR>', opts)
-    buf_set_keymap('n', '<Leader>pd', '<cmd>Lspsaga preview_definition<CR>', opts)
-    buf_set_keymap('n', '<Leader>r', '<cmd>Telescope lsp_references<CR>', opts)
-    buf_set_keymap('n', '<Leader>dd', '<cmd>Telescope diagnostics<CR>', opts)
+        -- Format on save
+        m.create_augroup({ { 'BufWritePost', '*', 'lua vim.lsp.buf.format { async = true }' } }, 'LSPFormatOnSave')
+    end,
+})
 
-    -- Format on save
-    m.create_augroup({ { 'BufWritePost', '*', 'lua vim.lsp.buf.formatting()' } }, 'LSPFormatOnSave')
-end
-
--- Loop through the servers listed above.
-for _, server_name in pairs(servers) do
-    local server_available, server = lsp_installer_servers.get_server(server_name)
-    if server_available then
-        server:on_ready(function()
-            -- When this particular server is ready (i.e. when installation is finished or the server is already installed),
-            -- this function will be invoked. Make sure not to use the "catch-all" lsp_installer.on_server_ready()
-            -- function to set up servers, to avoid doing setting up a server twice.
-            local opts = {
-                on_attach = on_attach,
-                flags = {
-                    debounce_text_changes = 150,
-                }
-            }
-
-            if server.name == 'sumneko_lua' then
-                opts = {
-                    on_attach = on_attach,
-                    flags = {
-                        debounce_text_changes = 150,
-                    },
-                    settings = {
-                        Lua = {
-                            diagnostics = {
-                                globals = { 'vim', 'use' }
-                            },
-                            workspace = {
-                                -- Make the server aware of Neovim runtime files
-                                library = { [vim.fn.expand('$VIMRUNTIME/lua')] = true,
-                                    [vim.fn.expand('$VIMRUNTIME/lua/vim/lsp')] = true }
-                            }
-                        }
-                    }
-                }
-            end
-            server:setup(opts)
-        end)
-        if not server:is_installed() then
-            -- Queue the server to be installed.
-            server:install()
-        end
-    end
-end
 
 -----                                                    LSP-Lines                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------

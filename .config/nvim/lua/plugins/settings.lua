@@ -152,6 +152,7 @@ configs.setup {
         'http', 'javascript', 'json', 'jsdoc', 'html', 'css', 'scss', 'tsx', 'typescript', 'vue', -- i know this
         'c', 'cpp', 'rust', 'java', 'kotlin', 'php', 'python',
         'scala',                                                                                  -- don't know but might encounter
+        'hcl',                                                                                    -- terraform
     },
     highlight = {
         -- enable highlighting
@@ -315,6 +316,7 @@ require("mason-lspconfig").setup {
         'cmake',
         'dockerls',
         'terraformls',
+        'tflint',
         'cssls',
         'html',
         'jsonls',

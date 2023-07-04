@@ -66,6 +66,7 @@ Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug('glepnir/lspsaga.nvim', { ['branch'] = 'main' })
 Plug 'RRethy/vim-illuminate'
+Plug 'jose-elias-alvarez/null-ls.nvim'
 
 -- tests
 Plug 'vim-test/vim-test'

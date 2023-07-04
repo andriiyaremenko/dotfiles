@@ -74,7 +74,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set('n', '<Leader>dd', '<cmd>Telescope diagnostics<CR>', opts)
 
         -- Format on save
-        m.create_augroup({ { 'BufWritePost', '*', 'lua vim.lsp.buf.format { async = true }' } }, 'LSPFormatOnSave')
+        m.create_augroup({ { 'BufWritePre', '*', 'lua vim.lsp.buf.format { async = true }' } }, 'LSPFormatOnSave')
     end,
 })
 

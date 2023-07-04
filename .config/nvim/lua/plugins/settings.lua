@@ -143,9 +143,8 @@ local configs = require 'nvim-treesitter.configs'
 configs.setup {
     ensure_installed = {
         'markdown', 'markdown_inline',                                                            -- requierd by Lpsaga
-        'go', 'gomod', 'gowork', 'comment',                                                       -- every day use
+        'go', 'gomod', 'gowork', 'comment', 'sql', 'json',                                        -- every day use
         'cmake', 'dockerfile', 'make', 'regex', 'toml', 'yaml', 'nix',                            -- configs
-        'graphql',                                                                                -- db
         'lua', 'bash', 'vim',                                                                     -- vim, dot files
         'c_sharp', 'ruby', 'solidity',                                                            -- i know this
         'elixir', 'erlang', 'heex', 'eex',                                                        -- i know this

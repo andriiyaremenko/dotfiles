@@ -79,7 +79,11 @@ Plug 'othree/html5.vim'
 Plug 'SirVer/ultisnips'
 
 -- Go
-Plug 'sebdah/vim-delve'
+Plug 'mfussenegger/nvim-dap'
+Plug 'rcarriga/nvim-dap-ui'
+Plug 'ray-x/go.nvim'
+Plug 'ray-x/guihua.lua'
+Plug 'ray-x/guihua.lua'
 
 -- Elixir/Phoenix
 Plug 'elixir-editors/vim-elixir'

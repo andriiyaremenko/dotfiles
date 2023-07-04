@@ -304,8 +304,8 @@ require 'todo-comments'.setup {}
 
 -----                                                   Mason                                                                   -----
 -------------------------------------------------------------------------------------------------------------------------------------
-require("mason").setup()
-require("mason-lspconfig").setup {
+require "mason".setup()
+require "mason-lspconfig".setup {
     ensure_installed = {
         'gopls',
         'golangci_lint_ls',
@@ -322,6 +322,12 @@ require("mason-lspconfig").setup {
         'jsonls',
         'sqlls',
     }
+}
+
+-----                                                  go.nvim                                                                  -----
+-------------------------------------------------------------------------------------------------------------------------------------
+require 'go'.setup {
+    icons = { breakpoint = '◉', currentpos = '' }
 }
 
 return M

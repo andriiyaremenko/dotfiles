@@ -175,14 +175,6 @@ vim.g.spelunker_disable_uri_checking = 1
 vim.g.spelunker_disable_email_checking = 1
 vim.g.spelunker_disable_acronym_checking = 1
 
------                                                    VIM-DELVE                                                              -----
--------------------------------------------------------------------------------------------------------------------------------------
-vim.g.delve_breakpoint_sign = '◉'
-vim.g.delve_breakpoint_sign_highlight = 'MyGreenText'
-vim.g.delve_new_command = 'enew'
-vim.g.delve_enable_syntax_highlighting = 1
-
-
 -----                                                   Git-Messenger                                                           -----
 -------------------------------------------------------------------------------------------------------------------------------------
 vim.g.git_messenger_no_default_mappings = true
@@ -328,26 +320,5 @@ require "mason-lspconfig".setup {
 require 'go'.setup {
     icons = { breakpoint = '◉', currentpos = '' }
 }
-
------                                                  null-ls                                                                  -----
--------------------------------------------------------------------------------------------------------------------------------------
-local null_ls = require("null-ls")
-local sources = {
-    null_ls.builtins.diagnostics.revive,
-    null_ls.builtins.formatting.golines.with({
-        extra_args = {
-            "--max-len=180",
-            "--base-formatter=gofumpt",
-        },
-    })
-}
-
-local gotest = require("go.null_ls").gotest()
-local gotest_codeaction = require("go.null_ls").gotest_action()
-local golangci_lint = require("go.null_ls").golangci_lint()
-table.insert(sources, gotest)
-table.insert(sources, golangci_lint)
-table.insert(sources, gotest_codeaction)
-null_ls.setup({ sources = sources, debounce = 1000, default_timeout = 5000 })
 
 return M

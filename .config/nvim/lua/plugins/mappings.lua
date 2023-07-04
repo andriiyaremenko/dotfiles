@@ -20,7 +20,7 @@ nmap('<Leader>ch', '<cmd>Telescope git_branches<CR>', noremap)
 
 -----                                                    VIM-DELVE                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
-nmap('<Leader>b', '<cmd>lua require\'dap\'.toggle_breakpoint()<CR>', silent)
+nmap('<Leader>b', '<cmd>GoBreakToggle<CR>', silent)
 -----                                                    Vim-Fugitive                                                           -----
 -------------------------------------------------------------------------------------------------------------------------------------
 nmap('<Leader>gb', ':Git blame<CR>', {})   -- git blame

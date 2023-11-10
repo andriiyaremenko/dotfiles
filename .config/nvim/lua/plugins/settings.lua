@@ -78,9 +78,9 @@ vim.g.fern_git_status = { disable_ignored = 1 }
 -------------------------------------------------------------------------------------------------------------------------------------
 require 'telescope'.setup({
     defaults = {
-        layout_strategy = 'vertical',
+        layout_strategy = 'horizontal',
         layout_config = {
-            vertical = { width = 0.65 }
+            horizontal = { width = 0.95 }
             -- other layout configuration here
         },
     },

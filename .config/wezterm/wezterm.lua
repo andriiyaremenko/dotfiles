@@ -3,18 +3,18 @@ local act = wezterm.action
 
 return {
     font = wezterm.font(
-        'JetBrains Mono',
-        { weight = 'DemiBold', stretch = 'ExtraCondensed' }
+        'Monaspace Neon',
+        { weight = 'Bold' }
     ),
     color_scheme = 'nordfox',
-    font_size = 13,
+    font_size = 12,
     default_cursor_style = 'BlinkingBlock',
     cursor_blink_rate = 800,
     enable_tab_bar = false,
     keys = {
         -- Turn off the default CMD-m Hide action, allowing CMD-m to
         -- be potentially recognized and handled by the tab
-        { key = 'LeftArrow', mods = 'SHIFT|CTRL', action = 'DisableDefaultAssignment' },
+        { key = 'LeftArrow',  mods = 'SHIFT|CTRL', action = 'DisableDefaultAssignment' },
         { key = 'RightArrow', mods = 'SHIFT|CTRL', action = 'DisableDefaultAssignment' },
     },
     mouse_bindings = { -- TODO: this stupid thing still does not work (links would not open)... need to find out why later

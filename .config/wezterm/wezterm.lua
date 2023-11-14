@@ -4,7 +4,7 @@ local act = wezterm.action
 return {
     font = wezterm.font(
         'Monaspace Neon',
-        { weight = 'Bold' }
+        { weight = 'Medium' }
     ),
     color_scheme = 'nordfox',
     font_size = 12,

@@ -2,10 +2,14 @@ local wezterm = require 'wezterm'
 local act = wezterm.action
 
 return {
-    font = wezterm.font(
-        'Monaspace Neon',
-        { weight = 'Medium' }
-    ),
+    font = wezterm.font {
+        family = 'Monaspace Neon',
+        weight = 'Medium',
+        harfbuzz_features = {
+            'calt', 'liga', 'dlig',
+            'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss05', 'ss06', 'ss07', 'ss08',
+        },
+    },
     color_scheme = 'nordfox',
     font_size = 12,
     default_cursor_style = 'BlinkingBlock',

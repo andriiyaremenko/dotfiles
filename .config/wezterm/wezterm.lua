@@ -11,7 +11,7 @@ return {
         },
     },
     color_scheme = 'nordfox',
-    font_size = 12,
+    font_size = 11,
     default_cursor_style = 'BlinkingBlock',
     cursor_blink_rate = 800,
     enable_tab_bar = false,

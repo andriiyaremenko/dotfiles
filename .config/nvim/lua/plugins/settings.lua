@@ -180,6 +180,8 @@ vim.g.spelunker_disable_acronym_checking = 1
 vim.g.git_messenger_no_default_mappings = true
 vim.g.git_messenger_into_popup_after_show = true
 vim.g.git_messenger_close_on_cursor_moved = true
+vim.g.git_messenger_floating_win_opts = { border = 'single' }
+vim.g.git_messenger_popup_content_margins = false
 
 
 -----                                                      Go                                                                   -----
@@ -233,8 +235,7 @@ require 'lspsaga'.setup({
         sign = false,
     },
     symbol_in_winbar = {
-        respect_root = true,
-        color_mode = false,
+        enable = true,
     },
     outline = {
         auto_preview = false,
@@ -250,6 +251,13 @@ require 'lspsaga'.setup({
         show_code_action = false,
         show_source = false,
     },
+    code_action = {
+        extend_gitsigns = true,
+    },
+    --implement = {
+    --    enable = true,
+    --    sign = false,
+    --},
 })
 
 vim.cmd(string.format('hi SagaWinbarSep guibg=NONE guifg=%s', palette.blue.base))
@@ -261,13 +269,85 @@ require "lsp_signature".setup {
     floating_window = false,
 }
 
------                                                 Vim_Signify                                                               -----
+-----                                              symbol-usage.nvim                                                            -----
+-------------------------------------------------------------------------------------------------------------------------------------
+local SymbolKind = vim.lsp.protocol.SymbolKind
+local function h(name) return vim.api.nvim_get_hl(0, { name = name }) end
+
+vim.api.nvim_set_hl(0, 'SymbolUsageRef', { bg = h('Normal').bg, fg = h('Type').fg, bold = true })
+vim.api.nvim_set_hl(0, 'SymbolUsageRefRound', { fg = h('Normal').bg })
+
+vim.api.nvim_set_hl(0, 'SymbolUsageDef', { bg = h('Normal').bg, fg = h('Function').fg, bold = true })
+vim.api.nvim_set_hl(0, 'SymbolUsageDefRound', { fg = h('Normal').bg })
+
+vim.api.nvim_set_hl(0, 'SymbolUsageImpl', { bg = h('Normal').bg, fg = h('@parameter').fg, bold = true })
+vim.api.nvim_set_hl(0, 'SymbolUsageImplRound', { fg = h('Normal').bg })
+
+local function text_format(symbol)
+    local res = {}
+
+    -- Indicator that shows if there are any other symbols in the same line
+    local stacked_functions_content = symbol.stacked_count > 0
+        and ("+%s"):format(symbol.stacked_count)
+        or ''
+
+    if symbol.implementation then
+        if #res > 0 then
+            table.insert(res, { ' ', 'NonText' })
+        end
+        table.insert(res, { '∈' .. tostring(symbol.implementation) .. ' ', 'SymbolUsageImpl' })
+    end
+
+    if symbol.definition then
+        if #res > 0 then
+            table.insert(res, { ' ', 'NonText' })
+        end
+        table.insert(res, { '󰳽 ' .. tostring(symbol.definition) .. ' ', 'SymbolUsageDef' })
+    end
+
+    if symbol.references then
+        table.insert(res, { '󰌹 ' .. tostring(symbol.references) .. ' ', 'SymbolUsageRef' })
+    end
+
+    if stacked_functions_content ~= '' then
+        if #res > 0 then
+            table.insert(res, { ' ', 'NonText' })
+        end
+        table.insert(res, { ' ' .. tostring(stacked_functions_content) .. ' ', 'SymbolUsageImpl' })
+    end
+
+    return res
+end
+
+require "symbol-usage".setup {
+    kinds = { SymbolKind.Function, SymbolKind.Method, SymbolKind.Interface },
+    implementation = { enabled = true },
+    text_format = text_format,
+}
+
+-----                                                gitsigns.nvim                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
 vim.g.signify_sign_change = '±'
 
-vim.cmd(string.format('hi SignifySignAdd guibg=NONE guifg=%s', palette.green.base))
-vim.cmd(string.format('hi SignifySignChange guibg=NONE guifg=%s', palette.yellow.base))
-vim.cmd(string.format('hi SignifySignDelete guibg=NONE guifg=%s', palette.red.base))
+vim.cmd(string.format('hi GitSignsAdd guibg=NONE guifg=%s', palette.green.base))
+vim.cmd(string.format('hi GitSignsChange guibg=NONE guifg=%s', palette.yellow.base))
+vim.cmd(string.format('hi GitSignsDelete guibg=NONE guifg=%s', palette.red.base))
+vim.cmd(string.format('hi GitSignsTopdelete guibg=NONE guifg=%s', palette.red.base))
+vim.cmd(string.format('hi GitSignsChangedelete guibg=NONE guifg=%s', palette.orange.base))
+vim.cmd(string.format('hi GitSignsUntracked guibg=NONE guifg=%s', palette.black.dim))
+
+require "gitsigns".setup {
+    signs                        = {
+        add          = { text = '+' },
+        change       = { text = '±' },
+        delete       = { text = '-' },
+        topdelete    = { text = '‾' },
+        changedelete = { text = '~' },
+        untracked    = { text = '┆' },
+    },
+    current_line_blame           = true,
+    current_line_blame_formatter = '<author> • <author_time:%R> • <summary>',
+}
 
 -----                                                 Illuminate                                                                -----
 -------------------------------------------------------------------------------------------------------------------------------------

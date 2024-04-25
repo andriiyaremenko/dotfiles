@@ -46,7 +46,7 @@ Plug 'rcarriga/nvim-notify'
 Plug 'kamykn/spelunker.vim'
 
 -- git
-Plug 'mhinz/vim-signify'
+Plug 'lewis6991/gitsigns.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'rhysd/git-messenger.vim'
@@ -66,6 +66,7 @@ Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug('glepnir/lspsaga.nvim', { ['branch'] = 'main' })
 Plug 'RRethy/vim-illuminate'
+Plug 'Wansmer/symbol-usage.nvim'
 
 -- tests
 Plug 'vim-test/vim-test'

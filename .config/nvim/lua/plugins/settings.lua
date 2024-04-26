@@ -254,10 +254,10 @@ require 'lspsaga'.setup({
     code_action = {
         extend_gitsigns = true,
     },
-    --implement = {
-    --    enable = true,
-    --    sign = false,
-    --},
+    implement = {
+        enable = true,
+        sign = false,
+    },
 })
 
 vim.cmd(string.format('hi SagaWinbarSep guibg=NONE guifg=%s', palette.blue.base))
@@ -265,7 +265,7 @@ vim.cmd(string.format('hi SagaWinbarSep guibg=NONE guifg=%s', palette.blue.base)
 -----                                                LSP_Signature                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
 require "lsp_signature".setup {
-    hint_prefix = " ",
+    hint_prefix = "💡",
     floating_window = false,
 }
 
@@ -274,13 +274,13 @@ require "lsp_signature".setup {
 local SymbolKind = vim.lsp.protocol.SymbolKind
 local function h(name) return vim.api.nvim_get_hl(0, { name = name }) end
 
-vim.api.nvim_set_hl(0, 'SymbolUsageRef', { bg = h('Normal').bg, fg = h('Type').fg, bold = true })
+vim.api.nvim_set_hl(0, 'SymbolUsageRef', { bg = h('Normal').bg, fg = palette.orange.dim, bold = false, italic = true })
 vim.api.nvim_set_hl(0, 'SymbolUsageRefRound', { fg = h('Normal').bg })
 
-vim.api.nvim_set_hl(0, 'SymbolUsageDef', { bg = h('Normal').bg, fg = h('Function').fg, bold = true })
+vim.api.nvim_set_hl(0, 'SymbolUsageDef', { bg = h('Normal').bg, fg = palette.green.dim, bold = false, italic = true })
 vim.api.nvim_set_hl(0, 'SymbolUsageDefRound', { fg = h('Normal').bg })
 
-vim.api.nvim_set_hl(0, 'SymbolUsageImpl', { bg = h('Normal').bg, fg = h('@parameter').fg, bold = true })
+vim.api.nvim_set_hl(0, 'SymbolUsageImpl', { bg = h('Normal').bg, fg = palette.blue.dim, bold = false, italic = true })
 vim.api.nvim_set_hl(0, 'SymbolUsageImplRound', { fg = h('Normal').bg })
 
 local function text_format(symbol)
@@ -295,33 +295,38 @@ local function text_format(symbol)
         if #res > 0 then
             table.insert(res, { ' ', 'NonText' })
         end
-        table.insert(res, { '∈' .. tostring(symbol.implementation) .. ' ', 'SymbolUsageImpl' })
+        table.insert(res, { tostring(symbol.implementation) .. ' imps', 'SymbolUsageImpl' })
     end
 
     if symbol.definition then
         if #res > 0 then
             table.insert(res, { ' ', 'NonText' })
         end
-        table.insert(res, { '󰳽 ' .. tostring(symbol.definition) .. ' ', 'SymbolUsageDef' })
+        table.insert(res, { tostring(symbol.definition) .. ' defs', 'SymbolUsageDef' })
     end
 
     if symbol.references then
-        table.insert(res, { '󰌹 ' .. tostring(symbol.references) .. ' ', 'SymbolUsageRef' })
+        if #res > 0 then
+            table.insert(res, { ' ', 'NonText' })
+        end
+        local usage = symbol.references <= 1 and 'usage' or 'usages'
+        local num = symbol.references == 0 and 'no' or symbol.references
+        table.insert(res, { ('%s %s'):format(num, usage), 'SymbolUsageRef' })
     end
 
     if stacked_functions_content ~= '' then
         if #res > 0 then
             table.insert(res, { ' ', 'NonText' })
         end
-        table.insert(res, { ' ' .. tostring(stacked_functions_content) .. ' ', 'SymbolUsageImpl' })
+        table.insert(res, { ' ' .. tostring(stacked_functions_content), 'SymbolUsageImpl' })
     end
 
     return res
 end
 
 require "symbol-usage".setup {
-    kinds = { SymbolKind.Function, SymbolKind.Method, SymbolKind.Interface },
-    implementation = { enabled = true },
+    kinds = { SymbolKind.Function, SymbolKind.Method, SymbolKind.Interface, SymbolKind.Struct },
+    implementation = { enabled = false },
     text_format = text_format,
 }
 

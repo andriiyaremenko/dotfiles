@@ -3,7 +3,7 @@ local m = require 'utils'
 -----                                                    LSP                                                                    -----
 -------------------------------------------------------------------------------------------------------------------------------------
 -- To override globally
-local signs = { Error = '✘ ', Warn = '⚡', Hint = ' ', Info = '𝙞 ' }
+local signs = { Error = '✘ ', Warn = '⚡', Hint = '💡', Info = '𝙞 ' }
 
 for type, icon in pairs(signs) do
     local hl = 'DiagnosticSign' .. type

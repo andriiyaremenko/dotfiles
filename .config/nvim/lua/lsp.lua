@@ -18,7 +18,33 @@ vim.diagnostic.config({
 -------------------------------------------------------------------------------------------------------------------------------------
 
 local lspconfig = require('lspconfig')
-lspconfig.gopls.setup {}
+lspconfig.gopls.setup {
+    settings = {
+        gopls = {
+            gofumpt = true,
+            hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+            },
+            analyses = {
+                fieldalignment = true,
+                nilness = true,
+                unusedparams = true,
+                unusedwrite = true,
+                useany = true,
+            },
+            usePlaceholders = true,
+            completeUnimported = true,
+            staticcheck = true,
+            semanticTokens = true,
+        },
+    },
+}
 lspconfig.golangci_lint_ls.setup {}
 lspconfig.grammarly.setup {}
 lspconfig.lua_ls.setup {
@@ -76,12 +102,4 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- Format on save
         m.create_augroup({ { 'BufWritePre', '*', 'lua vim.lsp.buf.format { async = true }' } }, 'LSPFormatOnSave')
     end,
-})
-
------                                                    LSP-Lines                                                              -----
--------------------------------------------------------------------------------------------------------------------------------------
-require 'lsp_lines'.setup()
--- Disable virtual_text since it's redundant due to lsp_lines.
-vim.diagnostic.config({
-    virtual_text = false,
 })

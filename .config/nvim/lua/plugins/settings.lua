@@ -137,6 +137,10 @@ require 'lualine'.setup {
     extensions = {}
 }
 
+-----                                                    LSP-Lines                                                              -----
+-------------------------------------------------------------------------------------------------------------------------------------
+require 'lsp_lines'.setup()
+
 -----                                                   Tree-Sitter                                                             -----
 -------------------------------------------------------------------------------------------------------------------------------------
 local configs = require 'nvim-treesitter.configs'
@@ -274,13 +278,13 @@ require "lsp_signature".setup {
 local SymbolKind = vim.lsp.protocol.SymbolKind
 local function h(name) return vim.api.nvim_get_hl(0, { name = name }) end
 
-vim.api.nvim_set_hl(0, 'SymbolUsageRef', { bg = h('Normal').bg, fg = palette.orange.dim, bold = false, italic = true })
+vim.api.nvim_set_hl(0, 'SymbolUsageRef', { bg = h('Normal').bg, fg = palette.green.dim, bold = false, italic = true })
 vim.api.nvim_set_hl(0, 'SymbolUsageRefRound', { fg = h('Normal').bg })
 
-vim.api.nvim_set_hl(0, 'SymbolUsageDef', { bg = h('Normal').bg, fg = palette.green.dim, bold = false, italic = true })
+vim.api.nvim_set_hl(0, 'SymbolUsageDef', { bg = h('Normal').bg, fg = palette.blue.dim, bold = false, italic = true })
 vim.api.nvim_set_hl(0, 'SymbolUsageDefRound', { fg = h('Normal').bg })
 
-vim.api.nvim_set_hl(0, 'SymbolUsageImpl', { bg = h('Normal').bg, fg = palette.blue.dim, bold = false, italic = true })
+vim.api.nvim_set_hl(0, 'SymbolUsageImpl', { bg = h('Normal').bg, fg = palette.orange.dim, bold = false, italic = true })
 vim.api.nvim_set_hl(0, 'SymbolUsageImplRound', { fg = h('Normal').bg })
 
 local function text_format(symbol)
@@ -325,7 +329,15 @@ local function text_format(symbol)
 end
 
 require "symbol-usage".setup {
-    kinds = { SymbolKind.Function, SymbolKind.Method, SymbolKind.Interface, SymbolKind.Struct },
+    kinds = {
+        SymbolKind.Function,
+        SymbolKind.Method,
+        SymbolKind.Interface,
+        SymbolKind.Struct,
+        SymbolKind.Constant,
+        SymbolKind.Variable,
+        SymbolKind.Class,
+    },
     implementation = { enabled = false },
     text_format = text_format,
 }

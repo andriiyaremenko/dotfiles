@@ -273,75 +273,6 @@ require "lsp_signature".setup {
     floating_window = false,
 }
 
------                                              symbol-usage.nvim                                                            -----
--------------------------------------------------------------------------------------------------------------------------------------
-local SymbolKind = vim.lsp.protocol.SymbolKind
-local function h(name) return vim.api.nvim_get_hl(0, { name = name }) end
-
-vim.api.nvim_set_hl(0, 'SymbolUsageRef', { bg = h('Normal').bg, fg = palette.green.dim, bold = false, italic = true })
-vim.api.nvim_set_hl(0, 'SymbolUsageRefRound', { fg = h('Normal').bg })
-
-vim.api.nvim_set_hl(0, 'SymbolUsageDef', { bg = h('Normal').bg, fg = palette.blue.dim, bold = false, italic = true })
-vim.api.nvim_set_hl(0, 'SymbolUsageDefRound', { fg = h('Normal').bg })
-
-vim.api.nvim_set_hl(0, 'SymbolUsageImpl', { bg = h('Normal').bg, fg = palette.orange.dim, bold = false, italic = true })
-vim.api.nvim_set_hl(0, 'SymbolUsageImplRound', { fg = h('Normal').bg })
-
-local function text_format(symbol)
-    local res = {}
-
-    -- Indicator that shows if there are any other symbols in the same line
-    local stacked_functions_content = symbol.stacked_count > 0
-        and ("+%s"):format(symbol.stacked_count)
-        or ''
-
-    if symbol.implementation then
-        if #res > 0 then
-            table.insert(res, { ' ', 'NonText' })
-        end
-        table.insert(res, { tostring(symbol.implementation) .. ' imps', 'SymbolUsageImpl' })
-    end
-
-    if symbol.definition then
-        if #res > 0 then
-            table.insert(res, { ' ', 'NonText' })
-        end
-        table.insert(res, { tostring(symbol.definition) .. ' defs', 'SymbolUsageDef' })
-    end
-
-    if symbol.references then
-        if #res > 0 then
-            table.insert(res, { ' ', 'NonText' })
-        end
-        local usage = symbol.references <= 1 and 'usage' or 'usages'
-        local num = symbol.references == 0 and 'no' or symbol.references
-        table.insert(res, { ('%s %s'):format(num, usage), 'SymbolUsageRef' })
-    end
-
-    if stacked_functions_content ~= '' then
-        if #res > 0 then
-            table.insert(res, { ' ', 'NonText' })
-        end
-        table.insert(res, { ' ' .. tostring(stacked_functions_content), 'SymbolUsageImpl' })
-    end
-
-    return res
-end
-
-require "symbol-usage".setup {
-    kinds = {
-        SymbolKind.Function,
-        SymbolKind.Method,
-        SymbolKind.Interface,
-        SymbolKind.Struct,
-        SymbolKind.Constant,
-        SymbolKind.Variable,
-        SymbolKind.Class,
-    },
-    implementation = { enabled = false },
-    text_format = text_format,
-}
-
 -----                                                gitsigns.nvim                                                              -----
 -------------------------------------------------------------------------------------------------------------------------------------
 vim.g.signify_sign_change = '±'
@@ -412,8 +343,8 @@ require "mason-lspconfig".setup {
     }
 }
 
------                                                  go.nvim                                                                  -----
--------------------------------------------------------------------------------------------------------------------------------------
+------                                                  go.nvim                                                                  -----
+--------------------------------------------------------------------------------------------------------------------------------------
 require 'go'.setup {
     icons = { breakpoint = '◉', currentpos = '' }
 }

@@ -46,7 +46,6 @@ lspconfig.gopls.setup {
     },
 }
 lspconfig.golangci_lint_ls.setup {}
-lspconfig.grammarly.setup {}
 lspconfig.lua_ls.setup {
     settings = {
         Lua = {
@@ -72,6 +71,8 @@ lspconfig.terraformls.setup {}
 lspconfig.cssls.setup {}
 lspconfig.html.setup {}
 lspconfig.jsonls.setup {}
+lspconfig.elixirls.setup {}
+lspconfig.angularls.setup {}
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
@@ -102,4 +103,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
         -- Format on save
         m.create_augroup({ { 'BufWritePre', '*', 'lua vim.lsp.buf.format { async = true }' } }, 'LSPFormatOnSave')
     end,
+})
+
+-----                                                     Linters                                                               -----
+-------------------------------------------------------------------------------------------------------------------------------------
+require('mason-nvim-lint').setup({
+    ensure_installed = { 'golangci-lint', 'vale', 'tflint', 'textlint', 'hadolint' },
 })

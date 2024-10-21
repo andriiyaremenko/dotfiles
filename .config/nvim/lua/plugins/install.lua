@@ -66,7 +66,10 @@ Plug 'https://git.sr.ht/~whynothugo/lsp_lines.nvim'
 Plug 'nvim-tree/nvim-web-devicons'
 Plug('glepnir/lspsaga.nvim', { ['branch'] = 'main' })
 Plug 'RRethy/vim-illuminate'
-Plug 'Wansmer/symbol-usage.nvim'
+
+-- linters and formatters
+Plug 'mfussenegger/nvim-lint'
+Plug "rshkarin/mason-nvim-lint"
 
 -- tests
 Plug 'vim-test/vim-test'
@@ -87,7 +90,6 @@ Plug 'nvim-telescope/telescope-dap.nvim'
 
 -- Go
 Plug 'ray-x/go.nvim'
-Plug 'ray-x/guihua.lua'
 Plug 'ray-x/guihua.lua'
 
 -- Elixir/Phoenix

@@ -32,9 +32,9 @@ lspconfig.gopls.setup {
                 rangeVariableTypes = true,
             },
             analyses = {
-                fieldalignment = true,
                 nilness = true,
                 unusedparams = true,
+                unparam = true,
                 unusedwrite = true,
                 useany = true,
             },
@@ -45,7 +45,22 @@ lspconfig.gopls.setup {
         },
     },
 }
-lspconfig.golangci_lint_ls.setup {}
+local configs = require 'lspconfig/configs'
+
+if not configs.golangcilsp then
+    configs.golangcilsp = {
+        default_config = {
+            cmd = { 'golangci-lint-langserver' },
+            root_dir = lspconfig.util.root_pattern('.git', 'go.mod'),
+            init_options = {
+                command = { "golangci-lint", "run", "--output.json.path", "stdout", "--show-stats=false", "--issues-exit-code=1" },
+            },
+        }
+    }
+end
+lspconfig.golangci_lint_ls.setup {
+    filetypes = { 'go', 'gomod' },
+}
 lspconfig.lua_ls.setup {
     settings = {
         Lua = {
@@ -108,5 +123,5 @@ vim.api.nvim_create_autocmd('LspAttach', {
 -----                                                     Linters                                                               -----
 -------------------------------------------------------------------------------------------------------------------------------------
 require('mason-nvim-lint').setup({
-    ensure_installed = { 'golangci-lint', 'vale', 'tflint', 'textlint', 'hadolint' },
+    ensure_installed = { 'revive', 'golangci-lint', 'vale', 'tflint', 'textlint', 'hadolint' },
 })

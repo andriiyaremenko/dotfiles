@@ -349,4 +349,18 @@ require 'go'.setup {
     icons = { breakpoint = '◉', currentpos = '' }
 }
 
+------                                                 nvim-lint                                                                 -----
+--------------------------------------------------------------------------------------------------------------------------------------
+require 'lint'.linters_by_ft = {
+    markdown = { 'vale' },
+    go = { 'revive' },
+}
+vim.api.nvim_create_autocmd({ "BufEnter", "BufWritePost" }, {
+    callback = function()
+        -- try_lint without arguments runs the linters defined in `linters_by_ft`
+        -- for the current filetype
+        require("lint").try_lint()
+    end,
+})
+
 return M

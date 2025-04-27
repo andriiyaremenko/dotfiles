@@ -101,6 +101,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
         -- Format on save
         m.create_augroup({ { 'BufWritePre', '*', 'lua vim.lsp.buf.format { async = true }' } }, 'LSPFormatOnSave')
+
+        vim.lsp.inlay_hint.enable(true)
     end,
 })
 

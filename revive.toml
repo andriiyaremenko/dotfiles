@@ -4,9 +4,13 @@ confidence = 0.8
 errorCode = 0
 warningCode = 0
 
+[rule.atomic]
 [rule.blank-imports]
 [rule.context-as-argument]
 [rule.context-keys-type]
+[rule.datarace]
+[rule.defer]
+  arguments = [["callChain", "loop", "method-call"]]
 [rule.error-return]
 [rule.error-strings]
 [rule.error-naming]
